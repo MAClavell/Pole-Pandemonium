@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     // The force due to gravity
-    public static readonly float GRAVITY = 9.8f;
+    public const float GRAVITY = 15f;
 
     public Pole pole;
 
@@ -29,6 +29,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pole.Update();
+
     }
 }

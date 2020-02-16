@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class Pole : MonoBehaviour
 {
-    public float currentRotation { get; private set; }
+    public float CurrentRotation { get; private set; }
 
+    private const float RESISTANCE = 1.0f;
+
+    private SpriteRenderer spriteRenderer;
     private float totalForce;
-
-    private float resistance;
-
     private float mass;
-
     private float height;
 
     void Awake()
     {
-        resistance = 1.0f;
-
-        mass = 1.0f;
-
-        height = gameObject.GetComponent<SpriteRenderer>().sprite.rect.height;
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        height = spriteRenderer.sprite.rect.height;
 
         Debug.Log("Pole Height: " + height);
     }
@@ -34,12 +30,49 @@ public class Pole : MonoBehaviour
 
     public void Init()
     {
+        //Reset vars
+        mass = 1.0f;
+        
         // Add an initial force to make the pole fall for testing purposes
         AddForce(10.0f);
     }
 
     public void Update()
     {
+        //Detect tap input
+        //Sorry for the odd preprocessors, blame unity for not allowing touch simulation in the editor
+#if UNITY_EDITOR
+        if(Input.GetMouseButtonDown(0))
+        {
+            {
+                Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+#else
+        foreach (Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Began)
+            {
+                Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
+#endif
+                //Calculate the angle between the click position and the top of the pole
+                Vector2 top = transform.TransformPoint(new Vector2(0, 1));
+                float angle = Vector2.Angle(top, position) * Mathf.Sign(position.x * top.y - position.y * top.x);
+
+                //Touch was to the left of the pole
+                if(angle > 0)
+                {
+                    Debug.Log("Left touch");
+                    AddForce(50);
+                }
+                //Touch was to the right of the pole
+                else
+                {
+                    Debug.Log("Right touch");
+                    AddForce(-50);
+                }
+            }
+        }
+
+        //Apply physics
         RotatePole();
         totalForce = 0.0f;
     }
@@ -99,18 +132,22 @@ public class Pole : MonoBehaviour
     {
         int direction = transform.eulerAngles.z < 0 ? -1 : 1;
 
-        float gravForce = direction * GameManager.GRAVITY * resistance * (Mathf.Sin((Mathf.Abs(transform.eulerAngles.z) * Mathf.Deg2Rad)));
-
-        //Debug.Log(gravForce);
-
+        float gravForce = direction * GameManager.GRAVITY * RESISTANCE * (Mathf.Sin((Mathf.Abs(transform.eulerAngles.z) * Mathf.Deg2Rad)));
         totalForce += gravForce;
 
-        float rotation = Mathf.Pow((totalForce / mass), 2) * Time.deltaTime;
+        float rotation = Mathf.Sign(totalForce) * Mathf.Pow(totalForce / mass, 2) * Time.deltaTime;
 
-        currentRotation += rotation;
-
-        currentRotation = Mathf.Clamp(currentRotation, -90.0f, 90.0f);
-
-        transform.rotation = Quaternion.Euler(0.0f, 0.0f, currentRotation);
+        CurrentRotation += rotation;
+        CurrentRotation = Mathf.Clamp(CurrentRotation, -90.0f, 90.0f);
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, CurrentRotation);
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        var position = transform.TransformPoint(new Vector2(0, 1));
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(position, Vector3.one);
+    }
+#endif
 }
