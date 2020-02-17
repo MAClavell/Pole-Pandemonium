@@ -12,6 +12,7 @@ public class Pole : MonoBehaviour
     private float totalForce;
     private float mass;
     private float height;
+    private float rotation;
 
     void Awake()
     {
@@ -31,10 +32,10 @@ public class Pole : MonoBehaviour
     public void Init()
     {
         //Reset vars
-        mass = 1.0f;
+        mass = 20.0f;
         
         // Add an initial force to make the pole fall for testing purposes
-        AddForce(10.0f);
+        AddForce(100.0f);
     }
 
     public void Update()
@@ -61,13 +62,13 @@ public class Pole : MonoBehaviour
                 if(angle > 0)
                 {
                     Debug.Log("Left touch");
-                    AddForce(50);
+                    AddForce(100);
                 }
                 //Touch was to the right of the pole
                 else
                 {
                     Debug.Log("Right touch");
-                    AddForce(-50);
+                    AddForce(-100);
                 }
             }
         }
@@ -84,7 +85,7 @@ public class Pole : MonoBehaviour
     /// <param name="vPos">At what height on the pole is it being applied to</param>
     public void AddForce(float force, float vPos = 1.0f)
     {
-        totalForce += force;
+        totalForce += force / mass;
     }
 
     /// <summary>
@@ -135,9 +136,9 @@ public class Pole : MonoBehaviour
         float gravForce = direction * GameManager.GRAVITY * RESISTANCE * (Mathf.Sin((Mathf.Abs(transform.eulerAngles.z) * Mathf.Deg2Rad)));
         totalForce += gravForce;
 
-        float rotation = Mathf.Sign(totalForce) * Mathf.Pow(totalForce / mass, 2) * Time.deltaTime;
+        rotation += Mathf.Sign(totalForce) * Mathf.Pow(totalForce, 2) * Time.deltaTime;
 
-        CurrentRotation += rotation;
+        CurrentRotation += rotation * Time.deltaTime;
         CurrentRotation = Mathf.Clamp(CurrentRotation, -90.0f, 90.0f);
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, CurrentRotation);
     }

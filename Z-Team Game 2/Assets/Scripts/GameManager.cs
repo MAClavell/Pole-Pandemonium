@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     // The force due to gravity
-    public const float GRAVITY = 15f;
+    public const float GRAVITY = 10f;
 
     public Pole pole;
 
