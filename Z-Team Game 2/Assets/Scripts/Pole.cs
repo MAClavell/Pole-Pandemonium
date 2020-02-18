@@ -7,39 +7,42 @@ public class Pole : MonoBehaviour
     public float CurrentRotation { get; private set; }
 
     private const float RESISTANCE = 1.0f;
+    private const float STARTING_FORCE = 100.0f;
 
     private SpriteRenderer spriteRenderer;
-    private float totalForce;
-    private float mass;
     private float height;
+    private float totalForce;
     private float rotation;
+    private float mass;
 
     void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         height = spriteRenderer.sprite.rect.height;
-
-        Debug.Log("Pole Height: " + height);
+        Debug.Log($"Pole Height: {height}");
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-
+    /// <summary>
+    /// Reset the pole to its starting state
+    /// </summary>
     public void Init()
     {
         //Reset vars
-        mass = 20.0f;
-        
+        mass = 10.0f;
+        totalForce = 0;
+        rotation = 0;
+        CurrentRotation = 0;
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+
         // Add an initial force to make the pole fall for testing purposes
-        AddForce(100.0f);
+        AddForce((Random.value < .5 ? 1 : -1) * STARTING_FORCE);
     }
 
     public void Update()
     {
+        if (!GameManager.Instance.IsPlaying)
+            return;
+
         //Detect tap input
         //Sorry for the odd preprocessors, blame unity for not allowing touch simulation in the editor
 #if UNITY_EDITOR
@@ -142,13 +145,4 @@ public class Pole : MonoBehaviour
         CurrentRotation = Mathf.Clamp(CurrentRotation, -90.0f, 90.0f);
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, CurrentRotation);
     }
-
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        var position = transform.TransformPoint(new Vector2(0, 1));
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(position, Vector3.one);
-    }
-#endif
 }
