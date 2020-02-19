@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pole : MonoBehaviour
 {
-    public float CurrentRotation { get; private set; }
+    public float Rotation { get; private set; }
 
     private const float RESISTANCE = 1.0f;
     private const float STARTING_FORCE = 100.0f;
@@ -12,7 +12,7 @@ public class Pole : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private float height;
     private float totalForce;
-    private float rotation;
+    private float rotationalVelocity;
     private float mass;
 
     void Awake()
@@ -28,10 +28,10 @@ public class Pole : MonoBehaviour
     public void Init()
     {
         //Reset vars
-        mass = 10.0f;
+        mass = 1.0f;
         totalForce = 0;
-        rotation = 0;
-        CurrentRotation = 0;
+        Rotation = 0;
+        rotationalVelocity = 0;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
         // Add an initial force to make the pole fall for testing purposes
@@ -65,13 +65,13 @@ public class Pole : MonoBehaviour
                 if(angle > 0)
                 {
                     Debug.Log("Left touch");
-                    AddForce(100);
+                    AddForce(1000);
                 }
                 //Touch was to the right of the pole
                 else
                 {
                     Debug.Log("Right touch");
-                    AddForce(-100);
+                    AddForce(-1000);
                 }
             }
         }
@@ -82,13 +82,37 @@ public class Pole : MonoBehaviour
     }
 
     /// <summary>
+    /// Calculate the force due to gravity then rotate the pole based on all of the acting forces.
+    /// </summary>
+    private void RotatePole()
+    {
+        CalculateRotationalVelocity();
+
+        Rotation += rotationalVelocity * Time.deltaTime;
+        Rotation = Mathf.Clamp(Rotation, -90.0f, 90.0f);
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, Rotation);
+    }
+
+    /// <summary>
+    /// Calculate the rotational velocity of the pole
+    /// </summary>
+    private void CalculateRotationalVelocity()
+    {
+        float gravAcceleration = Mathf.Sign(transform.eulerAngles.z) * GameManager.GRAVITY * RESISTANCE * (Mathf.Sin(Mathf.Abs(transform.eulerAngles.z) * Mathf.Deg2Rad));
+
+        float rotationalAcceleration = gravAcceleration + totalForce / mass;
+
+        rotationalVelocity += rotationalAcceleration * Time.deltaTime;
+    }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="force">The amount of the force that is being applied. Negative is counter clockwise, Positive is clockwise</param>
     /// <param name="vPos">At what height on the pole is it being applied to</param>
     public void AddForce(float force, float vPos = 1.0f)
     {
-        totalForce += force / mass;
+        totalForce += force;
     }
 
     /// <summary>
@@ -127,22 +151,5 @@ public class Pole : MonoBehaviour
     public void AddMass(float mass, float vPos = 0.5f, float offSet = 0.0f, int side = 1)
     {
         
-    }
-
-    /// <summary>
-    /// Calculate the force due to gravity then rotate the pole based on all of the acting forces.
-    /// </summary>
-    private void RotatePole()
-    {
-        int direction = transform.eulerAngles.z < 0 ? -1 : 1;
-
-        float gravForce = direction * GameManager.GRAVITY * RESISTANCE * (Mathf.Sin((Mathf.Abs(transform.eulerAngles.z) * Mathf.Deg2Rad)));
-        totalForce += gravForce;
-
-        rotation += Mathf.Sign(totalForce) * Mathf.Pow(totalForce, 2) * Time.deltaTime;
-
-        CurrentRotation += rotation * Time.deltaTime;
-        CurrentRotation = Mathf.Clamp(CurrentRotation, -90.0f, 90.0f);
-        transform.rotation = Quaternion.Euler(0.0f, 0.0f, CurrentRotation);
     }
 }

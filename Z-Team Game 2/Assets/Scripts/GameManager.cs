@@ -7,7 +7,7 @@ public enum GameState { MainMenu, Playing, Paused, GameOver }
 public class GameManager : Singleton<GameManager>
 {
     // The force due to gravity
-    public const float GRAVITY = 10f;
+    public const float GRAVITY = 40f;
     private const float LOSING_ROTATION = 89.9f;
 
     /// <summary>
@@ -51,7 +51,7 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             case GameState.Playing:
-                if (Mathf.Abs(pole.CurrentRotation) > LOSING_ROTATION)
+                if (Mathf.Abs(pole.Rotation) > LOSING_ROTATION)
                     EndGame();
                 break;
             
