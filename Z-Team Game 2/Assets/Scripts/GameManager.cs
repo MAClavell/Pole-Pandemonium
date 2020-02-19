@@ -26,6 +26,7 @@ public class GameManager : Singleton<GameManager>
     void Awake()
     {
         CurrentState = GameState.MainMenu;
+        Resize();
     }
 
     // Start is called before the first frame update
@@ -39,7 +40,10 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void Resize()
     {
-        float aspect = Camera.main.aspect;
+        Vector2 resolution = new Vector2(Screen.width, Screen.height);
+        float aspectRatio = resolution.x / resolution.y;
+
+       // Camera.main.aspect = aspectRatio;
     }
 
     // Update is called once per frame

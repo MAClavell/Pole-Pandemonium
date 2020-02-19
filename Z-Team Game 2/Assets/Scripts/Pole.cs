@@ -48,31 +48,28 @@ public class Pole : MonoBehaviour
 #if UNITY_EDITOR
         if(Input.GetMouseButtonDown(0))
         {
-            {
-                Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 #else
-        foreach (Touch touch in Input.touches)
+        Touch touch = Input.GetTouch(0);
+        if (touch.phase == TouchPhase.Began)
         {
-            if (touch.phase == TouchPhase.Began)
-            {
-                Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
+            Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
 #endif
-                //Calculate the angle between the click position and the top of the pole
-                Vector2 top = transform.TransformPoint(new Vector2(0, 1));
-                float angle = Vector2.Angle(top, position) * Mathf.Sign(position.x * top.y - position.y * top.x);
+            //Calculate the angle between the click position and the top of the pole
+            Vector2 top = transform.TransformPoint(new Vector2(0, 1));
+            float angle = Vector2.Angle(top, position) * Mathf.Sign(position.x * top.y - position.y * top.x);
 
-                //Touch was to the left of the pole
-                if(angle > 0)
-                {
-                    Debug.Log("Left touch");
-                    AddForce(1000);
-                }
-                //Touch was to the right of the pole
-                else
-                {
-                    Debug.Log("Right touch");
-                    AddForce(-1000);
-                }
+            //Touch was to the left of the pole
+            if(angle > 0)
+            {
+                Debug.Log("Left touch");
+                AddForce(1000);
+            }
+            //Touch was to the right of the pole
+            else
+            {
+                Debug.Log("Right touch");
+                AddForce(-1000);
             }
         }
 
