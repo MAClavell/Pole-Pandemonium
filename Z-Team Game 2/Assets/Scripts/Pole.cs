@@ -46,30 +46,34 @@ public class Pole : MonoBehaviour
         //Detect tap input
         //Sorry for the odd preprocessors, blame unity for not allowing touch simulation in the editor
 #if UNITY_EDITOR
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            {
+                Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 #else
-        Touch touch = Input.GetTouch(0);
-        if (touch.phase == TouchPhase.Began)
+        if (Input.touchCount > 0)
         {
-            Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
 #endif
-            //Calculate the angle between the click position and the top of the pole
-            Vector2 top = transform.TransformPoint(new Vector2(0, 1));
-            float angle = Vector2.Angle(top, position) * Mathf.Sign(position.x * top.y - position.y * top.x);
+                //Calculate the angle between the click position and the top of the pole
+                Vector2 top = transform.TransformPoint(new Vector2(0, 1));
+                float angle = Vector2.Angle(top, position) * Mathf.Sign(position.x * top.y - position.y * top.x);
 
-            //Touch was to the left of the pole
-            if(angle > 0)
-            {
-                Debug.Log("Left touch");
-                AddForce(1000);
-            }
-            //Touch was to the right of the pole
-            else
-            {
-                Debug.Log("Right touch");
-                AddForce(-1000);
+                //Touch was to the left of the pole
+                if (angle > 0)
+                {
+                    Debug.Log("Left touch");
+                    AddForce(1000);
+                }
+                //Touch was to the right of the pole
+                else
+                {
+                    Debug.Log("Right touch");
+                    AddForce(-1000);
+                }
             }
         }
 
