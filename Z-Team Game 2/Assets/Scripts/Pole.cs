@@ -8,6 +8,7 @@ public class Pole : MonoBehaviour
 
     private const float RESISTANCE = 1.0f;
     private const float STARTING_FORCE = 100.0f;
+    private const int SEGMENTS = 10;
 
     private SpriteRenderer spriteRenderer;
     private float height;
@@ -15,10 +16,15 @@ public class Pole : MonoBehaviour
     private float rotationalVelocity;
     private float mass;
 
+    private float totalTorque;
+
+    private List<AddedMass> addedMasses;
+
     void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         height = spriteRenderer.sprite.rect.height;
+        addedMasses = new List<AddedMass>();
         Debug.Log($"Pole Height: {height}");
     }
 
@@ -33,6 +39,7 @@ public class Pole : MonoBehaviour
         Rotation = 0;
         rotationalVelocity = 0;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+        addedMasses.Clear();
 
         // Add an initial force to make the pole fall for testing purposes
         AddForce((Random.value < .5 ? 1 : -1) * STARTING_FORCE);
@@ -107,6 +114,21 @@ public class Pole : MonoBehaviour
     }
 
     /// <summary>
+    /// Calculate the torque acting on the pole
+    /// </summary>
+    private void CalculateTorque()
+    {
+        for (int i = 0; i < SEGMENTS; i++)
+        {
+
+        }
+        foreach (AddedMass obj in addedMasses)
+        {
+
+        }
+    }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="force">The amount of the force that is being applied. Negative is counter clockwise, Positive is clockwise</param>
@@ -151,6 +173,21 @@ public class Pole : MonoBehaviour
     /// <param name="side">The direction of the offset. Negative is left side, positive is right side</param>
     public void AddMass(float mass, float vPos = 0.5f, float offSet = 0.0f, int side = 1)
     {
-        
+        addedMasses.Add(new AddedMass(mass, vPos));
+    }
+}
+
+/// <summary>
+/// Additional masses attached to a pole that contain a reference to object
+/// </summary>
+struct AddedMass
+{
+    public float mass;
+    public float position;
+
+    public AddedMass(float mass, float position)
+    {
+        this.mass = mass;
+        this.position = position;
     }
 }
