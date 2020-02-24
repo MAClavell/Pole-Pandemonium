@@ -55,6 +55,8 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             case GameState.Playing:
+                pole.OnUpdate();
+
                 if (Mathf.Abs(pole.Rotation) > LOSING_ROTATION)
                     EndGame();
                 break;

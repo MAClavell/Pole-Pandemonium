@@ -38,7 +38,7 @@ public class Pole : MonoBehaviour
         AddForce((Random.value < .5 ? 1 : -1) * STARTING_FORCE);
     }
 
-    public void Update()
+    public void OnUpdate()
     {
         if (!GameManager.Instance.IsPlaying)
             return;
@@ -147,7 +147,7 @@ public class Pole : MonoBehaviour
     /// </summary>
     /// <param name="mass">The amount of mass to add</param>
     /// <param name="vPos">How high up the pole the mass is </param>
-    /// <param name="offSet">The distance offset perpendicular to the pole the mass is applied</param>
+    /// <param name="offSet">The distance offset, perpendicular to the pole, that the mass is applied</param>
     /// <param name="side">The direction of the offset. Negative is left side, positive is right side</param>
     public void AddMass(float mass, float vPos = 0.5f, float offSet = 0.0f, int side = 1)
     {
