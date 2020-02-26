@@ -15,11 +15,14 @@ public class Pole : MonoBehaviour
     private float rotationalVelocity;
     private float mass;
 
+    private AudioSource tapSound;
+
     void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         height = spriteRenderer.sprite.rect.height;
         Debug.Log($"Pole Height: {height}");
+        tapSound = GameObject.Find("tapSound").GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -67,6 +70,7 @@ public class Pole : MonoBehaviour
                 {
                     Debug.Log("Left touch");
                     AddForce(1000);
+                    
                 }
                 //Touch was to the right of the pole
                 else
@@ -74,6 +78,7 @@ public class Pole : MonoBehaviour
                     Debug.Log("Right touch");
                     AddForce(-1000);
                 }
+                tapSound.Play();
             }
         }
 
