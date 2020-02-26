@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public enum GameState { MainMenu, Playing, Paused, GameOver }
 
@@ -21,6 +23,11 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField]
     private Pole pole;
+
+    [SerializeField]
+    private TextMeshProUGUI timerText;
+
+    private double totalTime;
 
     // Start is called before the first frame update
     void Awake()
@@ -57,6 +64,10 @@ public class GameManager : Singleton<GameManager>
             case GameState.Playing:
                 pole.OnUpdate();
 
+                //Update UI timer
+                totalTime += Time.deltaTime;
+                timerText.text = $"<mspace=0.6em>{TimeSpan.FromSeconds(totalTime).ToString("mm':'ss'.'ff")}</mspace>";
+
                 if (Mathf.Abs(pole.Rotation) > LOSING_ROTATION)
                     EndGame();
                 break;
@@ -79,6 +90,7 @@ public class GameManager : Singleton<GameManager>
     public void NewGame()
     {
         pole.Init();
+        totalTime = 0;
         CurrentState = GameState.Playing;
     }
 
