@@ -68,14 +68,14 @@ public class Pole : MonoBehaviour
                 //Touch was to the left of the pole
                 if (angle > 0)
                 {
-                    Debug.Log("Left touch");
+                    //Debug.Log("Left touch");
                     AddForce(1000);
                     
                 }
                 //Touch was to the right of the pole
                 else
                 {
-                    Debug.Log("Right touch");
+                    //Debug.Log("Right touch");
                     AddForce(-1000);
                 }
                 tapSound.Play();
