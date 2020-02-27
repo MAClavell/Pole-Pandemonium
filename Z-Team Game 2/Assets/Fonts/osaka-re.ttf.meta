@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eaa09881639d3a24990313fa8e53c037
+guid: 65d4378048ea77c4388ce143dfffe53b
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,11 +8,10 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Japanese Robot
+  fontName: Osaka-Sans Serif
   fontNames:
-  - Japanese Robot
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 6264987ec82a60c4a90357f50060f4ad, type: 3}
+  - Osaka-Sans Serif
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
