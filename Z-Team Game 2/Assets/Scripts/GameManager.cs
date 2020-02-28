@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Crystal;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,29 +22,21 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField]
     private Pole pole;
+    [SerializeField]
+    private MenuManager menuManager;
+
+    private double totalTime;
 
     // Start is called before the first frame update
     void Awake()
     {
         CurrentState = GameState.MainMenu;
-        Resize();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        NewGame();
-    }
-
-    /// <summary>
-    /// Resize the game based on the height of the device
-    /// </summary>
-    private void Resize()
-    {
-        Vector2 resolution = new Vector2(Screen.width, Screen.height);
-        float aspectRatio = resolution.x / resolution.y;
-
-       // Camera.main.aspect = aspectRatio;
+        SafeArea.Sim = SafeArea.SimDevice.Pixel3XL_LSR;
     }
 
     // Update is called once per frame
@@ -57,6 +50,10 @@ public class GameManager : Singleton<GameManager>
             case GameState.Playing:
                 pole.OnUpdate();
 
+                //Update UI timer
+                totalTime += Time.deltaTime;
+                menuManager.SetTimerText(totalTime);
+
                 if (Mathf.Abs(pole.Rotation) > LOSING_ROTATION)
                     EndGame();
                 break;
@@ -65,7 +62,6 @@ public class GameManager : Singleton<GameManager>
                 break;
             
             case GameState.GameOver:
-                NewGame();
                 break;
             
             default:
@@ -79,6 +75,8 @@ public class GameManager : Singleton<GameManager>
     public void NewGame()
     {
         pole.Init();
+        totalTime = 0;
+        menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
     }
 
@@ -87,24 +85,28 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void EndGame()
     {
+        menuManager.SetEndTimerText(totalTime);
+        menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.End });
         CurrentState = GameState.GameOver;
     }
 
     /// <summary>
+    /// [UI EVENT CALLBACK]
     /// Pause the game
-    /// Used by UI events
     /// </summary>
     public void Pause()
     {
+        menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game, MenuCanvas.Pause });
         CurrentState = GameState.Paused;
     }
 
     /// <summary>
+    /// [UI EVENT CALLBACK]
     /// Un-pause the game
-    /// Used by UI events
     /// </summary>
     public void UnPause()
     {
+        menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
     }
 
