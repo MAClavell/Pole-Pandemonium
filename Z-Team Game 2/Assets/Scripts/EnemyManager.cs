@@ -27,7 +27,6 @@ public class EnemyManager : MonoBehaviour
                 SpawnEnemy();
             }
         }
-
     }
 
     private void SpawnEnemy()
@@ -46,4 +45,5 @@ public class EnemyManager : MonoBehaviour
         }
         time = 0.0f;
     }
+
 }

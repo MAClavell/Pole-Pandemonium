@@ -48,7 +48,11 @@ public class Enemy : MonoBehaviour
             return;
 
         transform.position += velocity;
-    
+
+        if (transform.position.x > 12.0f || transform.position.x < -12.0f|| transform.position.y < -3.0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
 
@@ -64,6 +68,11 @@ public class Enemy : MonoBehaviour
     }
 
 
+    private void DestoryEnemy()
+    {
+        Destroy(gameObject);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject == player)
@@ -72,6 +81,9 @@ public class Enemy : MonoBehaviour
             Bounce();
         }
     }
+
+
+
 
 
 }
