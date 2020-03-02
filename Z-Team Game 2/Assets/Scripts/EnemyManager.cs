@@ -27,6 +27,16 @@ public class EnemyManager : MonoBehaviour
                 SpawnEnemy();
             }
         }
+
+        if (transform.GetComponent<GameManager>().CurrentState == GameState.GameOver)
+        {
+            foreach (var deadEnemy in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                Destroy(deadEnemy);
+            }
+        }
+        
+
     }
 
     private void SpawnEnemy()
@@ -36,11 +46,13 @@ public class EnemyManager : MonoBehaviour
         if (side <= .499999f)
         {
             GameObject enemySpawn = GameObject.Instantiate(enemyPrefab, new Vector3(-11.5f, 0.0f, 0.0f),Quaternion.identity);
+            enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
             enemySpawn.GetComponent<Enemy>().side = 0;
         }
         else
         {
             GameObject enemySpawn = GameObject.Instantiate(enemyPrefab, new Vector3(11.5f, 0.0f, 0.0f), Quaternion.identity);
+            enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
             enemySpawn.GetComponent<Enemy>().side = 1;
         }
         time = 0.0f;

@@ -30,12 +30,12 @@ public class Enemy : MonoBehaviour
             case 0:
                 //Velocity to the right
                 velocity = new Vector3(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.25f),0.0f);
-                force = -10000.0f * velocity.x;
+                force = -5000.0f * velocity.x;
                 break;
             case 1:
                 //Velocity to the left
                 velocity = new Vector3(Random.Range(-0.5f, -0.1f), Random.Range(0.1f, 0.25f),0.0f);
-                force = -10000.0f * velocity.x;
+                force = -5000.0f * velocity.x;
                 break;
         }
 
@@ -59,7 +59,9 @@ public class Enemy : MonoBehaviour
 
     private void Stick()
     {
-
+        gameObject.transform.SetParent(player.transform);
+        Destroy(gameObject.GetComponent<Rigidbody2D>());
+        velocity = Vector3.zero;
     }
 
     private void Bounce()
@@ -67,18 +69,12 @@ public class Enemy : MonoBehaviour
         velocity.x = -velocity.x;
     }
 
-
-    private void DestoryEnemy()
-    {
-        Destroy(gameObject);
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject == player)
         {
             player.GetComponent<Pole>().AddForce(force);
-            Bounce();
+            Stick();
         }
     }
 
