@@ -61,22 +61,36 @@ public class Pole : MonoBehaviour
             {
                 Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
 #endif
-                //Calculate the angle between the click position and the top of the pole
-                Vector2 top = transform.TransformPoint(new Vector2(0, 1));
-                float angle = Vector2.Angle(top, position) * Mathf.Sign(position.x * top.y - position.y * top.x);
+                float invertScalar = Config.Instance.Invert ? -1 : 1;
+                float angle = 0;
+
+                //Pole angle based controls
+                if (Config.Instance.Scheme == ControlScheme.Angle)
+                {
+                    //Calculate the angle between the click position and the top of the pole
+                    Vector2 top = transform.TransformPoint(new Vector2(0, 1));
+                    angle = Vector2.Angle(top, position) * Mathf.Sign(position.x * top.y - position.y * top.x);
+                }
+                //Screen based controls
+                else
+                {
+                    if (position.x > 0)
+                        angle = 1;
+                    else angle = -1;
+                }
 
                 //Touch was to the left of the pole
                 if (angle > 0)
                 {
                     //Debug.Log("Left touch");
-                    AddForce(1000);
+                    AddForce(1000 * invertScalar);
                     
                 }
                 //Touch was to the right of the pole
                 else
                 {
                     //Debug.Log("Right touch");
-                    AddForce(-1000);
+                    AddForce(-1000 * invertScalar);
                 }
                 tapSound.Play();
             }
