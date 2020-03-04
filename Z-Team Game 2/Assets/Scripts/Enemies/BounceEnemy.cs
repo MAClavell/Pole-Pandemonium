@@ -22,4 +22,7 @@ public class BounceEnemy : Enemy
             velocity.x = -velocity.x;
         }
     }
+
+
+
 }
