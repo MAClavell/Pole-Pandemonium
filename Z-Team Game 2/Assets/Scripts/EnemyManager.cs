@@ -11,7 +11,18 @@ public class EnemyManager : MonoBehaviour
    
     private float time;
     private float spawnTime;
-    
+    private AudioSource enemyEnter1;
+    private AudioSource enemyEnter2;
+    private AudioSource enemyEnter3;
+
+    private void Awake()
+    {
+        enemyEnter1 = GameObject.Find("enemyEnter1").GetComponent<AudioSource>();
+        enemyEnter2 = GameObject.Find("enemyEnter2").GetComponent<AudioSource>();
+        enemyEnter3 = GameObject.Find("enemyEnter3").GetComponent<AudioSource>();
+
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +56,7 @@ public class EnemyManager : MonoBehaviour
     private void SpawnEnemy()
     {
         int side = Random.Range(0, 2);
+        int enterSound = Random.Range(0, 3);
 
         float xBound = (Camera.main.orthographicSize * 2) + 2;
 
