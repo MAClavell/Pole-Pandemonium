@@ -628,7 +628,7 @@ GameObject:
   - component: {fileID: 156992735}
   - component: {fileID: 156992734}
   m_Layer: 0
-  m_Name: sandGround
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3877,7 +3877,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae97ce513bc76a542a12e3822816b2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1409827111555859619, guid: 0090db5a9a21b854dafeb775612afc69,
+  bounceEnemyPrefab: {fileID: 2800864406620091598, guid: c2c59c6a07191904ea92e21a23e4619b,
+    type: 3}
+  stickEnemyPrefab: {fileID: 2800864406620091598, guid: ab8fe403e1a8edf49b2dfc3f69429474,
     type: 3}
 --- !u!114 &1205197032
 MonoBehaviour:
@@ -5162,7 +5164,7 @@ GameObject:
   - component: {fileID: 1894352074}
   - component: {fileID: 1894352076}
   - component: {fileID: 1894352077}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pole
   m_TagString: Player
   m_Icon: {fileID: 0}

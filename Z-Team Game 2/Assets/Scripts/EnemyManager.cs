@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject bounceEnemyPrefab;
+    [SerializeField]
+    private GameObject stickEnemyPrefab;
+   
     private float time;
     private float spawnTime;
-    public GameObject enemyPrefab;
     
 
     // Start is called before the first frame update
@@ -35,25 +39,27 @@ public class EnemyManager : MonoBehaviour
                 Destroy(deadEnemy);
             }
         }
-        
-
     }
 
     private void SpawnEnemy()
     {
         float side = Random.Range(0.0f, 1.0f);
 
+        GameObject prefab = bounceEnemyPrefab;
+        if (Random.Range(0, 10) == 0)
+            prefab = stickEnemyPrefab;
+
         if (side <= .499999f)
         {
-            GameObject enemySpawn = GameObject.Instantiate(enemyPrefab, new Vector3(-11.5f, 0.0f, 0.0f),Quaternion.identity);
+            GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(-11.5f, 0.0f, 0.0f),Quaternion.identity);
             enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
-            enemySpawn.GetComponent<Enemy>().side = 0;
+            enemySpawn.GetComponent<Enemy>().Side = 0;
         }
         else
         {
-            GameObject enemySpawn = GameObject.Instantiate(enemyPrefab, new Vector3(11.5f, 0.0f, 0.0f), Quaternion.identity);
+            GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(11.5f, 0.0f, 0.0f), Quaternion.identity);
             enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
-            enemySpawn.GetComponent<Enemy>().side = 1;
+            enemySpawn.GetComponent<Enemy>().Side = 1;
         }
         time = 0.0f;
     }

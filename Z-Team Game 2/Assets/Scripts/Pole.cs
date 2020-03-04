@@ -14,6 +14,7 @@ public class Pole : MonoBehaviour
     private float totalForce;
     private float rotationalVelocity;
     private float mass;
+    private float prevAngle;
 
     private AudioSource tapSound;
 
@@ -68,8 +69,22 @@ public class Pole : MonoBehaviour
                 if (Config.Instance.Scheme == ControlScheme.Angle)
                 {
                     //Calculate the angle between the click position and the top of the pole
-                    Vector2 top = transform.TransformPoint(new Vector2(0, 1));
-                    angle = Vector2.Angle(top, position) * Mathf.Sign(position.x * top.y - position.y * top.x);
+                    Vector2 top = new Vector2(0, 1);
+                    if(Rotation > 65)
+                    {
+                        top = Quaternion.AngleAxis(-15, Vector3.forward) * top;
+                    }
+                    else if(Rotation < -65)
+                    {
+                        top = Quaternion.AngleAxis(15, Vector3.forward) * top;
+                    }
+
+                    Vector2 angleVec = transform.TransformPoint(top);
+                    angle = Vector2.Angle(angleVec, position) * Mathf.Sign(position.x * angleVec.y - position.y * angleVec.x);
+
+#if UNITY_EDITOR
+                    Debug.DrawLine(Vector3.zero, angleVec * 20, Color.red, 0.5f);
+#endif
                 }
                 //Screen based controls
                 else
