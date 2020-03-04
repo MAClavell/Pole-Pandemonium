@@ -56,7 +56,7 @@ HingeJoint2D:
   m_GameObject: {fileID: 1833804033808685763}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 1
+  m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 2036987399513136515}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -69,8 +69,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_LowerAngle: -20
+    m_UpperAngle: -160
 --- !u!1 &2800864406620091598
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +275,7 @@ HingeJoint2D:
   m_GameObject: {fileID: 5142145406327127360}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 1
+  m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 2036987399513136515}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -289,7 +289,7 @@ HingeJoint2D:
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_UpperAngle: 360
 --- !u!50 &8369109118324599324
 Rigidbody2D:
   serializedVersion: 4
@@ -346,7 +346,7 @@ HingeJoint2D:
   m_GameObject: {fileID: 6128528392642026576}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 1
+  m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 2036987399513136515}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -359,8 +359,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_LowerAngle: 20
+    m_UpperAngle: 160
 --- !u!50 &4717059037505323878
 Rigidbody2D:
   serializedVersion: 4
@@ -417,7 +417,7 @@ HingeJoint2D:
   m_GameObject: {fileID: 7454100648975656246}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 1
+  m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 2036987399513136515}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -431,7 +431,7 @@ HingeJoint2D:
   m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_UpperAngle: 360
 --- !u!50 &3266935485391318877
 Rigidbody2D:
   serializedVersion: 4
@@ -478,7 +478,7 @@ HingeJoint2D:
   m_GameObject: {fileID: 8228545230703318349}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 1
+  m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 2036987399513136515}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -491,8 +491,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_LowerAngle: -10
+    m_UpperAngle: 10
 --- !u!1001 &447062700290708336
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -657,21 +657,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 443588171292707757, guid: 68036dff5b291214e9696e6f51a40f58,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 443588171292707757, guid: 68036dff5b291214e9696e6f51a40f58,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 443588171292707757, guid: 68036dff5b291214e9696e6f51a40f58,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5624249354355321655, guid: 68036dff5b291214e9696e6f51a40f58,
         type: 3}
       propertyPath: m_Name
@@ -681,21 +666,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6509744596890026305, guid: 68036dff5b291214e9696e6f51a40f58,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6509744596890026305, guid: 68036dff5b291214e9696e6f51a40f58,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6509744596890026305, guid: 68036dff5b291214e9696e6f51a40f58,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 68036dff5b291214e9696e6f51a40f58,
