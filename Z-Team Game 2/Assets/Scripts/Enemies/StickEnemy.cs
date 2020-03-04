@@ -21,7 +21,15 @@ public class StickEnemy : Enemy
             gameObject.transform.SetParent(collision.transform);
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             velocity = Vector3.zero;
+            //collision.gameObject.GetComponent<Pole>().AddMass(mass);
+            collision.gameObject.GetComponent<Pole>().PlayStickSound();
         }
+    }
+
+
+    public void RemoveEnemy()
+    {
+        gameObject.GetComponentInParent<Pole>().AddMass(-mass);
     }
 
 }

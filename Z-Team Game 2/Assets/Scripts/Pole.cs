@@ -17,6 +17,8 @@ public class Pole : MonoBehaviour
     private float prevAngle;
 
     private AudioSource tapSound;
+    private AudioSource hitPole;
+    private AudioSource stickPole;
 
     void Awake()
     {
@@ -24,6 +26,9 @@ public class Pole : MonoBehaviour
         height = spriteRenderer.sprite.rect.height;
         Debug.Log($"Pole Height: {height}");
         tapSound = GameObject.Find("tapSound").GetComponent<AudioSource>();
+        hitPole = GameObject.Find("enemyHitPole").GetComponent<AudioSource>();
+        stickPole = GameObject.Find("enemyStickPole").GetComponent<AudioSource>();
+
     }
 
     /// <summary>
@@ -179,12 +184,23 @@ public class Pole : MonoBehaviour
     /// <summary>
     /// Add a mass to the pole
     /// </summary>
-    /// <param name="mass">The amount of mass to add</param>
+    /// <param name="m">The amount of mass to add</param>
     /// <param name="vPos">How high up the pole the mass is </param>
     /// <param name="offSet">The distance offset, perpendicular to the pole, that the mass is applied</param>
     /// <param name="side">The direction of the offset. Negative is left side, positive is right side</param>
-    public void AddMass(float mass, float vPos = 0.5f, float offSet = 0.0f, int side = 1)
+    public void AddMass(float m, float vPos = 0.5f, float offSet = 0.0f, int side = 1)
     {
-        
+        mass += m;
+    }
+
+
+
+    public void PlayHitSound()
+    {
+        hitPole.Play();
+    }
+    public void PlayStickSound()
+    {
+        stickPole.Play();
     }
 }

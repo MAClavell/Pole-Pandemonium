@@ -12,6 +12,7 @@ public abstract class Enemy : MonoBehaviour
     public int Side { get; set; }
     protected Vector3 velocity;
     protected float force;
+    protected float mass;
 
     protected virtual void Awake()
     {
@@ -28,11 +29,13 @@ public abstract class Enemy : MonoBehaviour
                 //Velocity to the right
                 velocity = new Vector3(Random.Range(X_VELOCITY_MIN, X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX), 0.0f);
                 force = -300.0f * velocity.x;
+                mass = .1f;
                 break;
             case 1:
                 //Velocity to the left
                 velocity = new Vector3(Random.Range(-X_VELOCITY_MIN, -X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX),0.0f);
                 force = -300.0f * velocity.x;
+                mass = .1f;
                 break;
         }
 
