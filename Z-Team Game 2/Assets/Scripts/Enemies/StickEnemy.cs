@@ -19,7 +19,7 @@ public class StickEnemy : Enemy
         if (collision.gameObject.tag == "Player")
         {
             gameObject.transform.SetParent(collision.transform);
-            Destroy(gameObject.GetComponent<Rigidbody2D>());
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             velocity = Vector3.zero;
         }
     }

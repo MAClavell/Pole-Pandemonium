@@ -29,6 +29,7 @@ public class EnemyManager : MonoBehaviour
             if (time >= spawnTime)
             {
                 SpawnEnemy();
+                time -= spawnTime;
             }
         }
 
@@ -43,25 +44,26 @@ public class EnemyManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        float side = Random.Range(0.0f, 1.0f);
+        int side = Random.Range(0, 2);
+
+        float xBound = (Camera.main.orthographicSize * 2) + 2;
 
         GameObject prefab = bounceEnemyPrefab;
         if (Random.Range(0, 10) == 0)
             prefab = stickEnemyPrefab;
 
-        if (side <= .499999f)
+        if (side == 0)
         {
-            GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(-11.5f, 0.0f, 0.0f),Quaternion.identity);
+            GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(-xBound, 0.0f, 0.0f), Quaternion.identity);
             enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
             enemySpawn.GetComponent<Enemy>().Side = 0;
         }
         else
         {
-            GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(11.5f, 0.0f, 0.0f), Quaternion.identity);
+            GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(xBound, 0.0f, 0.0f), Quaternion.identity);
             enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
             enemySpawn.GetComponent<Enemy>().Side = 1;
         }
-        time = 0.0f;
     }
 
 }

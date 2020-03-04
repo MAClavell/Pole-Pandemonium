@@ -6,8 +6,8 @@ public abstract class Enemy : MonoBehaviour
 {
     private const int X_VELOCITY_MIN = 10;
     private const int X_VELOCITY_MAX = 25;
-    private const int Y_VELOCITY_MIN = 5;
-    private const int Y_VELOCITY_MAX = 20;
+    private const int Y_VELOCITY_MIN = 7;
+    private const int Y_VELOCITY_MAX = 17;
 
     public int Side { get; set; }
     protected Vector3 velocity;
@@ -27,12 +27,12 @@ public abstract class Enemy : MonoBehaviour
             case 0:
                 //Velocity to the right
                 velocity = new Vector3(Random.Range(X_VELOCITY_MIN, X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX), 0.0f);
-                force = -250.0f * velocity.x;
+                force = -300.0f * velocity.x;
                 break;
             case 1:
                 //Velocity to the left
                 velocity = new Vector3(Random.Range(-X_VELOCITY_MIN, -X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX),0.0f);
-                force = -250.0f * velocity.x;
+                force = -300.0f * velocity.x;
                 break;
         }
 
