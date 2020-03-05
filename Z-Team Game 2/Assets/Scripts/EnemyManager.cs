@@ -14,12 +14,18 @@ public class EnemyManager : MonoBehaviour
     private AudioSource enemyEnter1;
     private AudioSource enemyEnter2;
     private AudioSource enemyEnter3;
+    AudioSource[] audioManager;
 
     private void Awake()
     {
         enemyEnter1 = GameObject.Find("enemyEnter1").GetComponent<AudioSource>();
         enemyEnter2 = GameObject.Find("enemyEnter2").GetComponent<AudioSource>();
         enemyEnter3 = GameObject.Find("enemyEnter3").GetComponent<AudioSource>();
+        audioManager = new AudioSource[3];
+        audioManager[0] = enemyEnter1;
+        audioManager[1] = enemyEnter2;
+        audioManager[2] = enemyEnter3;
+
 
     }
 
@@ -76,6 +82,8 @@ public class EnemyManager : MonoBehaviour
             enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
             enemySpawn.GetComponent<Enemy>().Side = 1;
         }
+
+        audioManager[enterSound].Play();
     }
 
 }

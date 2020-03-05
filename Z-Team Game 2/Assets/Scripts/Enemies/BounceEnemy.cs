@@ -21,6 +21,7 @@ public class BounceEnemy : Enemy
             collision.gameObject.GetComponent<Pole>().AddForce(force);
             velocity.x = -velocity.x;
             collision.gameObject.GetComponent<Pole>().PlayHitSound();
+            Debug.Log("ENEMYBOUNCE");
         }
     }
 
