@@ -15,11 +15,14 @@ public class Pole : MonoBehaviour
     private float totalForce;
     private float rotationalVelocity;
     private float mass;
+    private float prevAngle;
 
     private float totalTorque;
 
     private List<AddedMass> addedMasses;
     private AudioSource tapSound;
+    private AudioSource hitPole;
+    private AudioSource stickPole;
 
     void Awake()
     {
@@ -28,6 +31,9 @@ public class Pole : MonoBehaviour
         addedMasses = new List<AddedMass>();
         Debug.Log($"Pole Height: {height}");
         tapSound = GameObject.Find("tapSound").GetComponent<AudioSource>();
+        hitPole = GameObject.Find("enemyHitPole").GetComponent<AudioSource>();
+        stickPole = GameObject.Find("enemyStickPole").GetComponent<AudioSource>();
+
     }
 
     /// <summary>
@@ -67,22 +73,50 @@ public class Pole : MonoBehaviour
             {
                 Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
 #endif
-                //Calculate the angle between the click position and the top of the pole
-                Vector2 top = transform.TransformPoint(new Vector2(0, 1));
-                float angle = Vector2.Angle(top, position) * Mathf.Sign(position.x * top.y - position.y * top.x);
+                float invertScalar = Config.Instance.Invert ? -1 : 1;
+                float angle = 0;
+
+                //Pole angle based controls
+                if (Config.Instance.Scheme == ControlScheme.Angle)
+                {
+                    //Calculate the angle between the click position and the top of the pole
+                    Vector2 top = new Vector2(0, 1);
+                    if(Rotation > 65)
+                    {
+                        top = Quaternion.AngleAxis(-15, Vector3.forward) * top;
+                    }
+                    else if(Rotation < -65)
+                    {
+                        top = Quaternion.AngleAxis(15, Vector3.forward) * top;
+                    }
+
+                    Vector2 angleVec = transform.TransformPoint(top);
+                    angle = Vector2.Angle(angleVec, position) * Mathf.Sign(position.x * angleVec.y - position.y * angleVec.x);
+
+#if UNITY_EDITOR
+                    Debug.DrawLine(Vector3.zero, angleVec * 20, Color.red, 0.5f);
+#endif
+                }
+                //Screen based controls
+                else
+                {
+                    if (position.x > 0)
+                        angle = 1;
+                    else angle = -1;
+                }
 
                 //Touch was to the left of the pole
                 if (angle > 0)
                 {
                     //Debug.Log("Left touch");
-                    AddForce(1000);
+                    AddForce(1000 * invertScalar);
 
                 }
                 //Touch was to the right of the pole
                 else
                 {
                     //Debug.Log("Right touch");
-                    AddForce(-1000);
+                    AddForce(-1000 * invertScalar);
                 }
                 tapSound.Play();
             }
@@ -171,13 +205,26 @@ public class Pole : MonoBehaviour
     /// <summary>
     /// Add a mass to the pole
     /// </summary>
-    /// <param name="mass">The amount of mass to add</param>
+    /// <param name="m">The amount of mass to add</param>
     /// <param name="vPos">How high up the pole the mass is </param>
     /// <param name="offSet">The distance offset, perpendicular to the pole, that the mass is applied</param>
     /// <param name="side">The direction of the offset. Negative is left side, positive is right side</param>
-    public void AddMass(float mass, float vPos = 0.5f, float offSet = 0.0f, int side = 1)
+    public void AddMass(float m, float vPos = 0.5f, float offSet = 0.0f, int side = 1)
     {
+        mass += m;
+        PlayStickSound();
         addedMasses.Add(new AddedMass(mass, vPos));
+    }
+
+
+
+    public void PlayHitSound()
+    {
+        hitPole.Play();
+    }
+    public void PlayStickSound()
+    {
+      stickPole.Play();
     }
 }
 

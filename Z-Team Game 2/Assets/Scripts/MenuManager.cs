@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4 }
 
@@ -13,6 +14,14 @@ public class MenuManager : MonoBehaviour
     private TextMeshProUGUI timerText;
     [SerializeField]
     private TextMeshProUGUI endTimerText;
+
+    [SerializeField]
+    private Toggle controlToggle;
+    public Toggle ControlToggle { get; }
+
+    [SerializeField]
+    private Toggle invertToggle;
+    public Toggle InvertToggle { get; }
 
     private GameObject[] menuCanvases;
     private MenuCanvas[] currCanvases;
@@ -94,5 +103,25 @@ public class MenuManager : MonoBehaviour
     public void HideSettings()
     {
         SetActiveCanvases(prevCanvases);
+    }
+
+    /// <summary>
+    /// [UI EVENT CALLBACK]
+    /// The toggle for the control scheme changed
+    /// </summary>
+    /// <param name="tog">Toggle object</param>
+    public void OnControlToggleChanged(Toggle tog)
+    {
+        Config.Instance.SetControlScheme(tog.isOn);
+    }
+
+    /// <summary>
+    /// [UI EVENT CALLBACK]
+    /// The toggle for the inverted controls changed
+    /// </summary>
+    /// <param name="tog">Toggle object</param>
+    public void OnInvertToggleChanged(Toggle tog)
+    {
+        Config.Instance.SetInvertedControls(tog.isOn);
     }
 }
