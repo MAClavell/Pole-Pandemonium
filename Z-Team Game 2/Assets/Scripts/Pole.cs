@@ -33,7 +33,6 @@ public class Pole : MonoBehaviour
         tapSound = GameObject.Find("tapSound").GetComponent<AudioSource>();
         hitPole = GameObject.Find("enemyHitPole").GetComponent<AudioSource>();
         stickPole = GameObject.Find("enemyStickPole").GetComponent<AudioSource>();
-
     }
 
     /// <summary>
@@ -209,14 +208,12 @@ public class Pole : MonoBehaviour
     /// <param name="vPos">How high up the pole the mass is </param>
     /// <param name="offSet">The distance offset, perpendicular to the pole, that the mass is applied</param>
     /// <param name="side">The direction of the offset. Negative is left side, positive is right side</param>
-    public void AddMass(float m, float vPos = 0.5f, float offSet = 0.0f, int side = 1)
+    public void AddMass(float m, float vPos = 0.5f, int side = 1)
     {
         mass += m;
         PlayStickSound();
         addedMasses.Add(new AddedMass(mass, vPos));
     }
-
-
 
     public void PlayHitSound()
     {
