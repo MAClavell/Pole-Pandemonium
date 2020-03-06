@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CloudMover : MonoBehaviour
 {
-    const float MIN_DELAY = 2.0f;
-    const float MAX_DELAY = 5.0f;
+    const float MIN_DELAY = 3.0f;
+    const float MAX_DELAY = 8.0f;
 
     const float MIN_SPEED = 0.5f;
     const float MAX_SPEED = 1.5f;
@@ -49,10 +49,14 @@ public class CloudMover : MonoBehaviour
         {
             spawnTimer += Time.deltaTime;
 
+            MoveClouds();
+
             if (spawnTimer > spawnDelay)
             {
                 spawnTimer = 0;
                 spawnDelay = Random.Range(MIN_DELAY, MAX_DELAY);
+
+                currentCloud = (currentCloud + 1) % clouds.Count;
 
                 if (clouds[currentCloud].active)
                 {
@@ -65,12 +69,10 @@ public class CloudMover : MonoBehaviour
 
                     clouds[currentCloud].Spawn(speed, leftBound, yPos, MAX_SPEED, MIN_SPEED);
 
-                    currentCloud = (currentCloud + 1) % clouds.Count;
+                    
                     Debug.Log(currentCloud);
                 }
             }
-
-            MoveClouds();
         }
     }
 
