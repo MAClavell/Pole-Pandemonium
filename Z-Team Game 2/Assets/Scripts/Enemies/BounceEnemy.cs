@@ -6,6 +6,7 @@ public class BounceEnemy : Enemy
 {
     protected override void Awake()
     {
+        base.Awake();
     }
 
     // Start is called before the first frame update
@@ -19,6 +20,7 @@ public class BounceEnemy : Enemy
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<Pole>().AddForce(force);
+            rb.velocity = Vector2.zero;
             velocity.x = -velocity.x;
             collision.gameObject.GetComponent<Pole>().PlayHitSound();
         }

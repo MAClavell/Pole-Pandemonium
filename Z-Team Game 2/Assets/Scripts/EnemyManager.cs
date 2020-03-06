@@ -28,7 +28,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         time = 0.0f;
-        spawnTime = 1.0f;
+        spawnTime = 1.5f;
     }
 
     // Update is called once per frame
@@ -58,10 +58,10 @@ public class EnemyManager : MonoBehaviour
         int side = Random.Range(0, 2);
         int enterSound = Random.Range(0, 3);
 
-        float xBound = (Camera.main.orthographicSize * 2) / Screen.height * Screen.width;
+        float xBound = (Camera.main.orthographicSize) * ((float)Screen.width / Screen.height) + 2;
 
         GameObject prefab = bounceEnemyPrefab;
-        if (Random.Range(0, 10) == 0)
+        if (Random.Range(0, 1) == 0)
             prefab = stickEnemyPrefab;
 
         if (side == 0)

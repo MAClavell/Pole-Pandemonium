@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3820093644589871558}
   - component: {fileID: 881004370904364637}
   m_Layer: 10
-  m_Name: arm2
+  m_Name: rightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,8 +69,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -511424813
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 3286163911610860551, guid: 6353e7e27cbe6fc4ba4dd59815dc368c,
     type: 3}
@@ -127,8 +127,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 20
-    m_UpperAngle: 160
+    m_LowerAngle: 0
+    m_UpperAngle: 360
 --- !u!61 &881004370904364637
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 5169733283159210362}
   - component: {fileID: 5600049256118810785}
   m_Layer: 9
-  m_Name: Torso
+  m_Name: torso
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,8 +260,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -511424813
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 3286163911610860551, guid: d4bfd64449324a741a56af21ac7a3f17,
     type: 3}
@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 3381915310131582796}
   - component: {fileID: 4631925662928122060}
   m_Layer: 10
-  m_Name: arm1
+  m_Name: leftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -403,8 +403,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -511424813
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 3286163911610860551, guid: 6353e7e27cbe6fc4ba4dd59815dc368c,
     type: 3}
@@ -461,8 +461,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -20
-    m_UpperAngle: -160
+    m_LowerAngle: 0
+    m_UpperAngle: 360
 --- !u!61 &4631925662928122060
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 1496010801248847657}
   - component: {fileID: 5915370098767598044}
   m_Layer: 10
-  m_Name: leg2
+  m_Name: rightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -558,8 +558,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -511424813
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 3286163911610860551, guid: 6353e7e27cbe6fc4ba4dd59815dc368c,
     type: 3}
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 1999242112950435081}
   - component: {fileID: 7456454142467520979}
   m_Layer: 10
-  m_Name: Head
+  m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -713,8 +713,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -511424813
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 3286163911610860551, guid: 68036dff5b291214e9696e6f51a40f58,
     type: 3}
@@ -803,7 +803,7 @@ GameObject:
   - component: {fileID: 8662784365033472340}
   - component: {fileID: 8230687622255184302}
   m_Layer: 10
-  m_Name: leg1
+  m_Name: leftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -858,8 +858,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -511424813
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 3286163911610860551, guid: 6353e7e27cbe6fc4ba4dd59815dc368c,
     type: 3}
