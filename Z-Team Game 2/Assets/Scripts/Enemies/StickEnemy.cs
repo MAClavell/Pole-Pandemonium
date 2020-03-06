@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class StickEnemy : Enemy
 {
+    [SerializeField]
+    private GameObject hinge;
+
     protected override void Awake()
     {
     }
@@ -18,11 +21,11 @@ public class StickEnemy : Enemy
     {
         if (collision.gameObject.tag == "Player")
         {
-            gameObject.transform.SetParent(collision.transform);
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-            velocity = Vector3.zero;
+            //gameObject.transform.SetParent(collision.transform);
+            //gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            //velocity = Vector3.zero;
             //collision.gameObject.GetComponent<Pole>().AddMass(mass);
-            collision.gameObject.GetComponent<Pole>().PlayStickSound();
+            //collision.gameObject.GetComponent<Pole>().PlayStickSound();
         }
     }
 
@@ -30,6 +33,12 @@ public class StickEnemy : Enemy
     public void RemoveEnemy()
     {
         gameObject.GetComponentInParent<Pole>().AddMass(-mass);
+    }
+
+    private void OnDestroy()
+    {
+        if (hinge != null)
+            Destroy(hinge);
     }
 
 }

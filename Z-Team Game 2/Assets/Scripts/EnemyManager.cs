@@ -58,7 +58,7 @@ public class EnemyManager : MonoBehaviour
         int side = Random.Range(0, 2);
         int enterSound = Random.Range(0, 3);
 
-        float xBound = (Camera.main.orthographicSize * 2) + 2;
+        float xBound = (Camera.main.orthographicSize * 2) / Screen.height * Screen.width;
 
         GameObject prefab = bounceEnemyPrefab;
         if (Random.Range(0, 10) == 0)
@@ -68,13 +68,13 @@ public class EnemyManager : MonoBehaviour
         {
             GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(-xBound, 0.0f, 0.0f), Quaternion.identity);
             enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
-            enemySpawn.GetComponent<Enemy>().Side = 0;
+            enemySpawn.GetComponentInChildren<Enemy>().Side = 0;
         }
         else
         {
             GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(xBound, 0.0f, 0.0f), Quaternion.identity);
             enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
-            enemySpawn.GetComponent<Enemy>().Side = 1;
+            enemySpawn.GetComponentInChildren<Enemy>().Side = 1;
         }
     }
 

@@ -49,9 +49,9 @@ public abstract class Enemy : MonoBehaviour
 
         transform.position += velocity * Time.fixedDeltaTime;
 
-        if (transform.position.x > 12.0f || transform.position.x < -12.0f|| transform.position.y < -3.0f)
+        if (transform.position.y < -3.0f)
         {
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 
