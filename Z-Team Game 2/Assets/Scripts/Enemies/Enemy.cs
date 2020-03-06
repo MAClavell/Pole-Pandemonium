@@ -31,13 +31,13 @@ public abstract class Enemy : MonoBehaviour
             case 0:
                 //Velocity to the right
                 velocity = new Vector2(Random.Range(X_VELOCITY_MIN, X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX));
-                force = -1; //-300.0f * velocity.x;
+                force = -6.0f * velocity.x;
                 mass = .1f;
                 break;
             case 1:
                 //Velocity to the left
                 velocity = new Vector2(Random.Range(-X_VELOCITY_MIN, -X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX));
-                force = -1; //-300.0f * velocity.x;
+                force = -6.0f * velocity.x;
                 mass = .1f;
                 break;
         }

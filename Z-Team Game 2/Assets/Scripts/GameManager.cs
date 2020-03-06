@@ -20,6 +20,11 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public bool IsPlaying { get => CurrentState == GameState.Playing; }
 
+    /// <summary>
+    /// Get the pole object
+    /// </summary>
+    public Pole Pole { get => pole; }
+
     [SerializeField]
     private Pole pole;
     [SerializeField]

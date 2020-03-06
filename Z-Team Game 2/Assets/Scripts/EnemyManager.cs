@@ -20,7 +20,6 @@ public class EnemyManager : MonoBehaviour
         enemyEnter1 = GameObject.Find("enemyEnter1").GetComponent<AudioSource>();
         enemyEnter2 = GameObject.Find("enemyEnter2").GetComponent<AudioSource>();
         enemyEnter3 = GameObject.Find("enemyEnter3").GetComponent<AudioSource>();
-
     }
 
 
@@ -48,7 +47,7 @@ public class EnemyManager : MonoBehaviour
         {
             foreach (var deadEnemy in GameObject.FindGameObjectsWithTag("Enemy"))
             {
-                Destroy(deadEnemy);
+                Destroy(deadEnemy.transform.parent.gameObject);
             }
         }
     }
@@ -61,7 +60,7 @@ public class EnemyManager : MonoBehaviour
         float xBound = (Camera.main.orthographicSize) * ((float)Screen.width / Screen.height) + 2;
 
         GameObject prefab = bounceEnemyPrefab;
-        if (Random.Range(0, 1) == 0)
+        if (Random.Range(0, 6) == 0)
             prefab = stickEnemyPrefab;
 
         if (side == 0)
