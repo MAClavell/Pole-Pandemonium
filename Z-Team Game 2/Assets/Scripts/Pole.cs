@@ -19,15 +19,17 @@ public class Pole : MonoBehaviour
     private AudioSource tapSound;
     private AudioSource hitPole;
     private AudioSource stickPole;
+    private AudioSource swipedOff;
 
     void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         height = spriteRenderer.sprite.rect.height;
-        Debug.Log($"Pole Height: {height}");
+
         tapSound = GameObject.Find("tapSound").GetComponent<AudioSource>();
         hitPole = GameObject.Find("enemyHitPole").GetComponent<AudioSource>();
         stickPole = GameObject.Find("enemyStickPole").GetComponent<AudioSource>();
+        swipedOff = GameObject.Find("enemySwipedOff").GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -229,5 +231,9 @@ public class Pole : MonoBehaviour
     public void PlayStickSound()
     {
       stickPole.Play();
+    }
+    public void PlaySwipedSound()
+    {
+        swipedOff.Play();
     }
 }

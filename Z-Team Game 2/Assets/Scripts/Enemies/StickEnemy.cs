@@ -62,6 +62,7 @@ public class StickEnemy : Enemy, IBeginDragHandler, IDragHandler
     public void RemoveEnemy()
     {
         GameManager.Instance.Pole.AddMass(-mass);
+        GameManager.Instance.Pole.PlaySwipedSound();
         hinge.connectedBody = null;
         canDrag = false;
     }

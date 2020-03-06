@@ -53,7 +53,7 @@ public abstract class Enemy : MonoBehaviour
         if(move)
             rb.velocity = new Vector2(velocity.x * Time.fixedDeltaTime, (rb.velocity.y * Time.fixedDeltaTime) + velocity.y);
 
-        if (transform.position.y < -3.0f)
+        if (transform.position.y < -3.0f || transform.position.y > (Camera.main.orthographicSize * 2) + 3)
         {
             Destroy(gameObject.transform.parent.gameObject);
         }

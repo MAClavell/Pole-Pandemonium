@@ -68,9 +68,6 @@ public class CloudMover : MonoBehaviour
                     float yPos = Random.Range(minY, maxY);
 
                     clouds[currentCloud].Spawn(speed, leftBound, yPos, MAX_SPEED, MIN_SPEED);
-
-                    
-                    Debug.Log(currentCloud);
                 }
             }
         }

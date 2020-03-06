@@ -25,8 +25,6 @@ public class EnemyManager : MonoBehaviour
         audioManager[0] = enemyEnter1;
         audioManager[1] = enemyEnter2;
         audioManager[2] = enemyEnter3;
-
-
     }
 
 
@@ -67,7 +65,7 @@ public class EnemyManager : MonoBehaviour
         float xBound = (Camera.main.orthographicSize) * ((float)Screen.width / Screen.height) + 2;
 
         GameObject prefab = bounceEnemyPrefab;
-        if (Random.Range(0, 6) == 0)
+        if (Random.Range(0, 4) == 0)
             prefab = stickEnemyPrefab;
 
         if (side == 0)
