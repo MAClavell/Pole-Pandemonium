@@ -23,6 +23,7 @@ public class BounceEnemy : Enemy
             rb.velocity = Vector2.zero;
             velocity.x = -velocity.x;
             collision.gameObject.GetComponent<Pole>().PlayHitSound();
+            Debug.Log("ENEMYBOUNCE");
         }
     }
 

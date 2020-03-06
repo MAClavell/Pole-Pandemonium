@@ -15,7 +15,6 @@ public class Pole : MonoBehaviour
     private float totalForce;
     private float rotationalVelocity;
     private float mass;
-    private float prevAngle;
 
     private AudioSource tapSound;
     private AudioSource hitPole;
@@ -29,7 +28,6 @@ public class Pole : MonoBehaviour
         tapSound = GameObject.Find("tapSound").GetComponent<AudioSource>();
         hitPole = GameObject.Find("enemyHitPole").GetComponent<AudioSource>();
         stickPole = GameObject.Find("enemyStickPole").GetComponent<AudioSource>();
-
     }
 
     /// <summary>
@@ -116,14 +114,14 @@ public class Pole : MonoBehaviour
                 if (angle > 0)
                 {
                     //Debug.Log("Left touch");
-                    AddForce(1000 * invertScalar);
-                    
+                    AddForce(1200 * invertScalar);
+
                 }
                 //Touch was to the right of the pole
                 else
                 {
                     //Debug.Log("Right touch");
-                    AddForce(-1000 * invertScalar);
+                    AddForce(-1200 * invertScalar);
                 }
                 tapSound.Play();
             }
@@ -176,7 +174,7 @@ public class Pole : MonoBehaviour
 
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="force">The amount of the force that is being applied. Negative is counter clockwise, Positive is clockwise</param>
     /// <param name="vPos">At what height on the pole is it being applied to</param>
@@ -186,7 +184,7 @@ public class Pole : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="position">The position of the collision</param>
     /// <param name="mass">The mass of the colliding object</param>
@@ -194,7 +192,7 @@ public class Pole : MonoBehaviour
     /// <param name="attach">Does the colliding object stick to the pole?</param>
     public void Collide(Vector2 position, float mass, Vector2 velocity, bool attach = false)
     {
-        // Assuming that if the x velocity is position, then the pole should be pushed clockwise and vice versa 
+        // Assuming that if the x velocity is position, then the pole should be pushed clockwise and vice versa
         int direction = velocity.x < 0 ? -1 : 1;
 
         // Only care about the force that is perpendicular to the pole.
@@ -218,9 +216,10 @@ public class Pole : MonoBehaviour
     /// <param name="vPos">How high up the pole the mass is </param>
     /// <param name="offSet">The distance offset, perpendicular to the pole, that the mass is applied</param>
     /// <param name="side">The direction of the offset. Negative is left side, positive is right side</param>
-    public void AddMass(float m, float vPos = 0.5f, float offSet = 0.0f, int side = 1)
+    public void AddMass(float m, float vPos = 0.5f, int side = 1)
     {
         mass += m;
+        PlayStickSound();
     }
 
     public void PlayHitSound()
@@ -229,6 +228,6 @@ public class Pole : MonoBehaviour
     }
     public void PlayStickSound()
     {
-        stickPole.Play();
+      stickPole.Play();
     }
 }

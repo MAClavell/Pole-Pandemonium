@@ -32,10 +32,13 @@ public class GameManager : Singleton<GameManager>
 
     private double totalTime;
 
+    private AudioSource gameOverSound;
+
     // Start is called before the first frame update
     void Awake()
     {
         CurrentState = GameState.MainMenu;
+        gameOverSound = GameObject.Find("gameOverSound").GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -92,6 +95,7 @@ public class GameManager : Singleton<GameManager>
         menuManager.SetEndTimerText(totalTime);
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.End });
         CurrentState = GameState.GameOver;
+        gameOverSound.Play();
     }
 
     /// <summary>
@@ -108,6 +112,7 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// [UI EVENT CALLBACK]
     /// Un-pause the game
+    /// </summary>
     /// </summary>
     public void UnPause()
     {
