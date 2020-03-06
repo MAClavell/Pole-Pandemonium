@@ -78,7 +78,7 @@ public class Pole : MonoBehaviour
 
             if (touch.HasValue)
             {
-                Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
+                Vector3 position = Camera.main.ScreenToWorldPoint(touch.Value.position);
 #endif
                 float invertScalar = Config.Instance.Invert ? -1 : 1;
                 float angle = 0;
@@ -129,9 +129,6 @@ public class Pole : MonoBehaviour
             }
         }
 
-        //Drag any stick enemies
-        DragStickEnemies(touches);
-
         //Apply physics
         RotatePole();
         totalForce = 0.0f;
@@ -160,20 +157,6 @@ public class Pole : MonoBehaviour
 
         rotationalVelocity += rotationalAcceleration * Time.deltaTime;
     }
-
-    private void DragStickEnemies(Touch[] touches)
-    {
-        //if (Input.touchCount > 0)
-        //{
-        //    foreach (Touch t in touches)
-        //    {
-        //        if(t.phase == TouchPhase.Moved || t.phase == TouchPhase.Moved)
-        //        {
-        //        }
-        //    }
-        //}
-    }
-
 
     /// <summary>
     ///
