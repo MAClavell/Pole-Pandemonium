@@ -16,7 +16,7 @@ TagManager:
   - 
   - Player
   - Enemy
-  - 
+  - EnemyLimb
   - 
   - 
   - 
@@ -41,4 +41,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Enemy
+    uniqueID: 3783542483
+    locked: 0
+  - name: Pole
+    uniqueID: 1066929503
     locked: 0

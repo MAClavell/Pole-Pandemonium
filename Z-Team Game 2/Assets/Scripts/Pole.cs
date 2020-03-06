@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Pole : MonoBehaviour
 {
@@ -50,6 +51,7 @@ public class Pole : MonoBehaviour
         if (!GameManager.Instance.IsPlaying)
             return;
 
+        Touch[] touches = null;
         //Detect tap input
         //Sorry for the odd preprocessors, blame unity for not allowing touch simulation in the editor
 #if UNITY_EDITOR
@@ -58,10 +60,21 @@ public class Pole : MonoBehaviour
             {
                 Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 #else
+        touches = Input.touches;
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            Touch? touch = null;
+            foreach (Touch t in touches)
+            {
+                //Check for a valid touch
+                if(t.phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject(t.fingerId))
+                {
+                    touch = t;
+                    break;
+                }
+            }
+
+            if (touch.HasValue)
             {
                 Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
 #endif
@@ -114,6 +127,9 @@ public class Pole : MonoBehaviour
             }
         }
 
+        //Drag any stick enemies
+        DragStickEnemies(touches);
+
         //Apply physics
         RotatePole();
         totalForce = 0.0f;
@@ -142,6 +158,20 @@ public class Pole : MonoBehaviour
 
         rotationalVelocity += rotationalAcceleration * Time.deltaTime;
     }
+
+    private void DragStickEnemies(Touch[] touches)
+    {
+        //if (Input.touchCount > 0)
+        //{
+        //    foreach (Touch t in touches)
+        //    {
+        //        if(t.phase == TouchPhase.Moved || t.phase == TouchPhase.Moved)
+        //        {
+        //        }
+        //    }
+        //}
+    }
+
 
     /// <summary>
     ///

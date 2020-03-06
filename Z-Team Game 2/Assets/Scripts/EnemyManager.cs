@@ -34,7 +34,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         time = 0.0f;
-        spawnTime = 1.0f;
+        spawnTime = 1.5f;
     }
 
     // Update is called once per frame
@@ -54,7 +54,7 @@ public class EnemyManager : MonoBehaviour
         {
             foreach (var deadEnemy in GameObject.FindGameObjectsWithTag("Enemy"))
             {
-                Destroy(deadEnemy);
+                Destroy(deadEnemy.transform.parent.gameObject);
             }
         }
     }
@@ -64,23 +64,23 @@ public class EnemyManager : MonoBehaviour
         int side = Random.Range(0, 2);
         int enterSound = Random.Range(0, 3);
 
-        float xBound = (Camera.main.orthographicSize * 2) + 2;
+        float xBound = (Camera.main.orthographicSize) * ((float)Screen.width / Screen.height) + 2;
 
         GameObject prefab = bounceEnemyPrefab;
-        if (Random.Range(0, 10) == 0)
+        if (Random.Range(0, 6) == 0)
             prefab = stickEnemyPrefab;
 
         if (side == 0)
         {
             GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(-xBound, 0.0f, 0.0f), Quaternion.identity);
             enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
-            enemySpawn.GetComponent<Enemy>().Side = 0;
+            enemySpawn.GetComponentInChildren<Enemy>().Side = 0;
         }
         else
         {
             GameObject enemySpawn = GameObject.Instantiate(prefab, new Vector3(xBound, 0.0f, 0.0f), Quaternion.identity);
             enemySpawn.transform.Rotate(Vector3.forward, Random.Range(-90, 90));
-            enemySpawn.GetComponent<Enemy>().Side = 1;
+            enemySpawn.GetComponentInChildren<Enemy>().Side = 1;
         }
 
         audioManager[enterSound].Play();

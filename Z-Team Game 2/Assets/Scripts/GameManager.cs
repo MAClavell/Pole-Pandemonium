@@ -20,6 +20,11 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public bool IsPlaying { get => CurrentState == GameState.Playing; }
 
+    /// <summary>
+    /// Get the pole object
+    /// </summary>
+    public Pole Pole { get => pole; }
+
     [SerializeField]
     private Pole pole;
     [SerializeField]
@@ -100,6 +105,7 @@ public class GameManager : Singleton<GameManager>
     public void Pause()
     {
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game, MenuCanvas.Pause });
+        Physics.autoSimulation = false;
         CurrentState = GameState.Paused;
     }
 
@@ -110,6 +116,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void UnPause()
     {
+        Physics.autoSimulation = true;
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
     }

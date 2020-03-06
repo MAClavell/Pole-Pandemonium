@@ -4,18 +4,21 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    private const int X_VELOCITY_MIN = 10;
-    private const int X_VELOCITY_MAX = 25;
+    private const int X_VELOCITY_MIN = 900;
+    private const int X_VELOCITY_MAX = 1050;
     private const int Y_VELOCITY_MIN = 7;
     private const int Y_VELOCITY_MAX = 17;
 
     public int Side { get; set; }
-    protected Vector3 velocity;
+    protected Vector2 velocity;
+    protected Rigidbody2D rb;
     protected float force;
     protected float mass;
+    protected bool move;
 
     protected virtual void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Start is called before the first frame update
@@ -27,18 +30,18 @@ public abstract class Enemy : MonoBehaviour
         {
             case 0:
                 //Velocity to the right
-                velocity = new Vector3(Random.Range(X_VELOCITY_MIN, X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX), 0.0f);
-                force = -300.0f * velocity.x;
+                velocity = new Vector2(Random.Range(X_VELOCITY_MIN, X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX));
+                force = -6.0f * velocity.x;
                 mass = .1f;
                 break;
             case 1:
                 //Velocity to the left
-                velocity = new Vector3(Random.Range(-X_VELOCITY_MIN, -X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX),0.0f);
-                force = -300.0f * velocity.x;
+                velocity = new Vector2(Random.Range(-X_VELOCITY_MIN, -X_VELOCITY_MAX), Random.Range(Y_VELOCITY_MIN, Y_VELOCITY_MAX));
+                force = -6.0f * velocity.x;
                 mass = .1f;
                 break;
         }
-
+        move = true;
     }
 
     // Update is called once per frame
@@ -47,11 +50,12 @@ public abstract class Enemy : MonoBehaviour
         if (!GameManager.Instance.IsPlaying)
             return;
 
-        transform.position += velocity * Time.fixedDeltaTime;
+        if(move)
+            rb.velocity = new Vector2(velocity.x * Time.fixedDeltaTime, (rb.velocity.y * Time.fixedDeltaTime) + velocity.y);
 
-        if (transform.position.x > 12.0f || transform.position.x < -12.0f|| transform.position.y < -3.0f)
+        if (transform.position.y < -3.0f)
         {
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 
