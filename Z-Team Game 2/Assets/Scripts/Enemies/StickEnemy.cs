@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class StickEnemy : Enemy, IBeginDragHandler, IDragHandler
+public class StickEnemy : Enemy
 {
     private const float MAX_DRAG_SQUARED = 30;
 
@@ -14,6 +14,7 @@ public class StickEnemy : Enemy, IBeginDragHandler, IDragHandler
     [SerializeField]
     private Rigidbody2D rightHand;
 
+    private Rigidbody2D dragLimb;
     private Rigidbody2D hand;
     private Vector2 offset;
     private bool canDrag;
@@ -22,6 +23,7 @@ public class StickEnemy : Enemy, IBeginDragHandler, IDragHandler
     {
         base.Awake();
         canDrag = false;
+        dragLimb = null;
     }
 
     // Start is called before the first frame update
@@ -78,24 +80,27 @@ public class StickEnemy : Enemy, IBeginDragHandler, IDragHandler
     /// Calculate the offset for dragging sticky enemies off the pole
     /// </summary>
     /// <param name="eventData"></param>
-    public virtual void OnBeginDrag(PointerEventData eventData)
+    public void OnBeginDrag(Transform limb, Vector3 mouseScreenPos)
     {
-        if(canDrag)
-            offset = transform.position - Camera.main.ScreenToWorldPoint(eventData.position);
+        if(canDrag && dragLimb == null)
+        {
+            dragLimb = limb.GetComponent<Rigidbody2D>();
+            offset = limb.position - Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        }
     }
 
     /// <summary>
     /// Drag the sticky enemy off of the pole
     /// </summary>
     /// <param name="eventData"></param>
-    public void OnDrag(PointerEventData eventData)
+    public void OnDrag(Vector3 mouseScreenPos)
     {
-        if (!canDrag)
+        if (!canDrag || dragLimb == null)
             return;
 
         //Set position of limb
-        Vector2 point = Camera.main.ScreenToWorldPoint(eventData.position);
-        eventData.pointerDrag.GetComponent<Rigidbody2D>().position = point + offset;
+        Vector2 point = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        dragLimb.position = point + offset;
 
         //Remove limb if dragged far enough
         Vector2 diff = (Vector2)hinge.transform.position - point;
@@ -105,5 +110,16 @@ public class StickEnemy : Enemy, IBeginDragHandler, IDragHandler
             RemoveEnemy();
             rb.AddForce(-diff.normalized * sqrMag * 100);
         }
+    }
+
+    /// <summary>
+    /// Player stops dragging the enemy
+    /// </summary>
+    public void OnEndDrag()
+    {
+        if (!canDrag)
+            return;
+
+        dragLimb = null;
     }
 }

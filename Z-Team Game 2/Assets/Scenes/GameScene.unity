@@ -4301,9 +4301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae97ce513bc76a542a12e3822816b2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceEnemyPrefab: {fileID: 1534337429071594566, guid: d1230315ae0124c4bba2a9b916b595f8,
+  bounceEnemyPrefab: {fileID: 7105450458823432934, guid: aba4672c82faf1543936b4cb99e9cb14,
     type: 3}
-  stickEnemyPrefab: {fileID: 2634507167809809133, guid: f4175ab84a213ef479a0f9851431901f,
+  stickEnemyPrefab: {fileID: 6198158841557092577, guid: 02dcff903d628d14199ac29f97699150,
     type: 3}
 --- !u!114 &1205197032
 MonoBehaviour:
