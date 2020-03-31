@@ -8,7 +8,7 @@ public class Pole : MonoBehaviour
     public float Rotation { get; private set; }
 
     private const float RESISTANCE = 1.0f;
-    private const float STARTING_FORCE = 100.0f;
+    private const float STARTING_FORCE = 120.0f;
 
     private SpriteRenderer spriteRenderer;
     private float height;

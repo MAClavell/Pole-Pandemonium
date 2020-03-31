@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    private const int X_VELOCITY_MIN = 900;
-    private const int X_VELOCITY_MAX = 1050;
+    private const int X_VELOCITY_MIN = 750;
+    private const int X_VELOCITY_MAX = 800;
     private const int Y_VELOCITY_MIN = 7;
     private const int Y_VELOCITY_MAX = 17;
 
