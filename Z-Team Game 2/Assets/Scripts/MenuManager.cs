@@ -6,7 +6,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4 }
+public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Leaderboard=5 }
 
 public class MenuManager : MonoBehaviour
 {
@@ -30,12 +30,13 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        menuCanvases = new GameObject[5];
+        menuCanvases = new GameObject[6];
         menuCanvases[0] = GameObject.Find("MainCanvas");
         menuCanvases[1] = GameObject.Find("SettingsCanvas");
         menuCanvases[2] = GameObject.Find("GameCanvas");
         menuCanvases[3] = GameObject.Find("PauseCanvas");
         menuCanvases[4] = GameObject.Find("EndCanvas");
+        menuCanvases[5] = GameObject.Find("LeaderboardCanvas");
 
         currCanvases = null;
         prevCanvases = null;
@@ -49,7 +50,7 @@ public class MenuManager : MonoBehaviour
     public void SetActiveCanvases(MenuCanvas[] canvases)
     {
         prevCanvases = currCanvases;
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < menuCanvases.Length; i++)
         {
             if (canvases.Contains((MenuCanvas)i))
             {
