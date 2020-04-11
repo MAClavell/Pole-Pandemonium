@@ -14,6 +14,8 @@ public class MenuManager : MonoBehaviour
     private TextMeshProUGUI timerText;
     [SerializeField]
     private TextMeshProUGUI endTimerText;
+    [SerializeField]
+    private TextMeshProUGUI highScoreText;
 
     [SerializeField]
     private Toggle controlToggle;
@@ -27,6 +29,8 @@ public class MenuManager : MonoBehaviour
     private MenuCanvas[] currCanvases;
     private MenuCanvas[] prevCanvases;
 
+    private Leaderboard leaderBoard;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +41,8 @@ public class MenuManager : MonoBehaviour
         menuCanvases[3] = GameObject.Find("PauseCanvas");
         menuCanvases[4] = GameObject.Find("EndCanvas");
         menuCanvases[5] = GameObject.Find("LeaderboardCanvas");
+
+        leaderBoard = menuCanvases[5].GetComponent<Leaderboard>();
 
         currCanvases = null;
         prevCanvases = null;
@@ -77,6 +83,17 @@ public class MenuManager : MonoBehaviour
     public void SetEndTimerText(double time)
     {
         endTimerText.text = $"<mspace=0.6em>{TimeSpan.FromSeconds(time).ToString("mm'.'ss'.'ff")}</mspace>";
+
+        //Set highscore text
+        if(leaderBoard.IsNewHighScore)
+        {
+            highScoreText.text = "New highscore!";
+            leaderBoard.UpdateHighScore();
+        }
+        else
+        {
+            highScoreText.text = $"Highscore - <mspace=0.6em>{TimeSpan.FromSeconds(leaderBoard.HighScore).ToString("mm'.'ss'.'ff")}</mspace>";
+        }
     }
 
     /// <summary>

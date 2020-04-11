@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private MenuManager menuManager;
 
-    private double totalTime;
+    public double GameTime { get; private set; }
 
     private AudioSource gameOverSound;
 
@@ -58,8 +58,8 @@ public class GameManager : Singleton<GameManager>
                 pole.OnUpdate();
 
                 //Update UI timer
-                totalTime += Time.deltaTime;
-                menuManager.SetTimerText(totalTime);
+                GameTime += Time.deltaTime;
+                menuManager.SetTimerText(GameTime);
 
                 if (Mathf.Abs(pole.Rotation) > LOSING_ROTATION)
                     EndGame();
@@ -82,7 +82,7 @@ public class GameManager : Singleton<GameManager>
     public void NewGame()
     {
         pole.Init();
-        totalTime = 0;
+        GameTime = 0;
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
     }
@@ -92,7 +92,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void EndGame()
     {
-        menuManager.SetEndTimerText(totalTime);
+        menuManager.SetEndTimerText(GameTime);
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.End });
         CurrentState = GameState.GameOver;
         gameOverSound.Play();
