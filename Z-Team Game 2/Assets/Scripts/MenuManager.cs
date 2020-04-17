@@ -6,7 +6,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Leaderboard=5 }
+public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Leaderboard=5, Cosmetics }
 
 public class MenuManager : MonoBehaviour
 {
@@ -29,7 +29,7 @@ public class MenuManager : MonoBehaviour
     private MenuCanvas[] currCanvases;
     private MenuCanvas[] prevCanvases;
 
-    private Leaderboard leaderBoard;
+    private LeaderboardUI leaderBoard;
 
     // Start is called before the first frame update
     void Start()
@@ -41,8 +41,9 @@ public class MenuManager : MonoBehaviour
         menuCanvases[3] = GameObject.Find("PauseCanvas");
         menuCanvases[4] = GameObject.Find("EndCanvas");
         menuCanvases[5] = GameObject.Find("LeaderboardCanvas");
+        menuCanvases[5] = GameObject.Find("CosmeticsCanvas");
 
-        leaderBoard = menuCanvases[5].GetComponent<Leaderboard>();
+        leaderBoard = menuCanvases[5].GetComponent<LeaderboardUI>();
 
         currCanvases = null;
         prevCanvases = null;
@@ -130,7 +131,7 @@ public class MenuManager : MonoBehaviour
     /// <param name="tog">Toggle object</param>
     public void OnControlToggleChanged(Toggle tog)
     {
-        Config.Instance.SetControlScheme(tog.isOn);
+        Config.SetControlScheme(tog.isOn);
     }
 
     /// <summary>
@@ -140,6 +141,6 @@ public class MenuManager : MonoBehaviour
     /// <param name="tog">Toggle object</param>
     public void OnInvertToggleChanged(Toggle tog)
     {
-        Config.Instance.SetInvertedControls(tog.isOn);
+        Config.SetInvertedControls(tog.isOn);
     }
 }

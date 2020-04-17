@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class Leaderboard : MonoBehaviour
+public class LeaderboardUI : MonoBehaviour
 {
     private const string LEADERBOARD_PATH = "/Leaderboard.pole";
 

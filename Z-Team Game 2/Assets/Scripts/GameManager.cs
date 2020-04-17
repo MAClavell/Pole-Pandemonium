@@ -37,6 +37,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Awake()
     {
+        Config.Init();
         CurrentState = GameState.MainMenu;
         gameOverSound = GameObject.Find("gameOverSound").GetComponent<AudioSource>();
     }

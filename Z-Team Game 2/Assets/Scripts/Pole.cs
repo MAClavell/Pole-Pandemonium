@@ -80,11 +80,11 @@ public class Pole : MonoBehaviour
             {
                 Vector3 position = Camera.main.ScreenToWorldPoint(touch.Value.position);
 #endif
-                float invertScalar = Config.Instance.Invert ? -1 : 1;
+                float invertScalar = Config.Invert ? -1 : 1;
                 float angle = 0;
 
                 //Pole angle based controls
-                if (Config.Instance.Scheme == ControlScheme.Angle)
+                if (Config.Scheme == ControlScheme.Angle)
                 {
                     //Calculate the angle between the click position and the top of the pole
                     Vector2 top = new Vector2(0, 1);
