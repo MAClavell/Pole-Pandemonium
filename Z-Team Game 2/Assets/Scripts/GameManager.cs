@@ -29,6 +29,8 @@ public class GameManager : Singleton<GameManager>
     private Pole pole;
     [SerializeField]
     private MenuManager menuManager;
+    [SerializeField]
+    private EnemyManager enemyManager;
 
     private double totalTime;
 
@@ -82,9 +84,11 @@ public class GameManager : Singleton<GameManager>
     public void NewGame()
     {
         pole.Init();
+        enemyManager.SetDifficulty();
         totalTime = 0;
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
+        
     }
 
     /// <summary>

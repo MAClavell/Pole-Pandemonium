@@ -5175,6 +5175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pole: {fileID: 1894352076}
   menuManager: {fileID: 1518039204}
+  enemyManager: {fileID: 1205197031}
 --- !u!114 &1205197031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5385,7 +5386,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Easy
+  m_text: Medium
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d00ffabe7bc9d4d4aa7fbef4fa99736d, type: 2}
   m_sharedMaterial: {fileID: 4780318187525678900, guid: d00ffabe7bc9d4d4aa7fbef4fa99736d,
@@ -5455,7 +5456,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1283599687}
-    characterCount: 4
+    characterCount: 6
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -5701,7 +5702,7 @@ GameObject:
   - component: {fileID: 1406987258}
   m_Layer: 5
   m_Name: Dropdown
-  m_TagString: Untagged
+  m_TagString: DifficultySelect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5774,7 +5775,7 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 1136224080}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 1
   m_Options:
     m_Options:
     - m_Text: Easy
