@@ -84,7 +84,7 @@ public class Pole : MonoBehaviour
                 float angle = 0;
 
                 //Pole angle based controls
-                if (Config.Scheme == ControlScheme.Angle)
+                if (Config.ControlScheme == ControlScheme.Angle)
                 {
                     //Calculate the angle between the click position and the top of the pole
                     Vector2 top = new Vector2(0, 1);

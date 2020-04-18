@@ -131,7 +131,7 @@ public class MenuManager : MonoBehaviour
     /// <param name="tog">Toggle object</param>
     public void OnControlToggleChanged(Toggle tog)
     {
-        Config.SetControlScheme(tog.isOn);
+        Config.ControlScheme = tog.isOn ? ControlScheme.Angle : ControlScheme.Screen;
     }
 
     /// <summary>
@@ -141,6 +141,6 @@ public class MenuManager : MonoBehaviour
     /// <param name="tog">Toggle object</param>
     public void OnInvertToggleChanged(Toggle tog)
     {
-        Config.SetInvertedControls(tog.isOn);
+        Config.Invert = tog.isOn;
     }
 }

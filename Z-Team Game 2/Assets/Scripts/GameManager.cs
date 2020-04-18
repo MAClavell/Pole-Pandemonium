@@ -29,6 +29,8 @@ public class GameManager : Singleton<GameManager>
     private Pole pole;
     [SerializeField]
     private MenuManager menuManager;
+    [SerializeField]
+    SkinScriptableObject skins;
 
     public double GameTime { get; private set; }
 

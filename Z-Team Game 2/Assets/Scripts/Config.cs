@@ -5,7 +5,7 @@ using System.IO;
 
 public enum ControlScheme { Angle, Screen }
 
-public enum Skin { Default=0, Demon }
+public enum SkinType { Default=0, Demon }
 
 public class Config
 {
@@ -17,18 +17,80 @@ public class Config
     {
         public ControlScheme scheme = ControlScheme.Angle;
         public bool invert = false;
-        public Skin poleSkin = Skin.Default;
-        public Skin enemySkin = Skin.Default;
-        public Skin backgroundSkin = Skin.Default;
+        public SkinType poleSkin = SkinType.Default;
+        public SkinType enemySkin = SkinType.Default;
+        public SkinType backgroundSkin = SkinType.Default;
     }
 
+    /// <summary>
+    /// Saved control scheme
+    /// </summary>
+    public static ControlScheme ControlScheme 
+    {
+        get => configFile.scheme; 
+        set
+        {
+            configFile.scheme = value;
+            SaveConfig();
+        }
+    }
 
-    public static ControlScheme Scheme { get => configFile.scheme; }
-    public static bool Invert { get => configFile.invert;}
-    public static Skin PoleSkin { get => configFile.poleSkin; }
-    public static Skin EnemySkin { get => configFile.enemySkin; }
-    public static Skin BackgroundSkin { get => configFile.backgroundSkin; }
-    public static short MaxSkins { get => 2; }
+    /// <summary>
+    /// Saved invert status
+    /// </summary>
+    public static bool Invert 
+    {
+        get => configFile.invert;
+        set
+        {
+            configFile.invert = value;
+            SaveConfig();
+        }
+    }
+
+    /// <summary>
+    /// Saved pole skin
+    /// </summary>
+    public static SkinType PoleSkin 
+    { 
+        get => configFile.poleSkin;
+        set
+        {
+            configFile.backgroundSkin = value;
+            SaveConfig();
+        }
+    }
+    
+    /// <summary>
+    /// Saved enemy skin
+    /// </summary>
+    public static SkinType EnemySkin 
+    { 
+        get => configFile.enemySkin;
+        set
+        {
+            configFile.poleSkin = value;
+            SaveConfig();
+        }
+    }
+
+    /// <summary>
+    /// Saved background skin
+    /// </summary>
+    public static SkinType BackgroundSkin 
+    { 
+        get => configFile.backgroundSkin;
+        set
+        {
+            configFile.enemySkin = value;
+            SaveConfig();
+        }
+    }
+
+    /// <summary>
+    /// The max amount of skin types
+    /// </summary>
+    public static int MaxSkins { get => System.Enum.GetValues(typeof(SkinType)).Length; }
 
     private static SerializableConfig configFile;
     private static string CONFIG_PATH = "/Config.pole";
@@ -64,25 +126,5 @@ public class Config
             string json = JsonUtility.ToJson(configFile);
             sw.Write(JsonUtility.ToJson(configFile));
         }
-    }
-
-    /// <summary>
-    /// Set the control scheme based on boolean value
-    /// </summary>
-    /// <param name="val">True=screen, false=angle</param>
-    public static void SetControlScheme(bool val)
-    {
-        configFile.scheme = val ? ControlScheme.Screen : ControlScheme.Angle;
-        SaveConfig();
-    }
-
-    /// <summary>
-    /// Set the invert control option based on a boolean value
-    /// </summary>
-    /// <param name="val">True=on, false=off</param>
-    public static void SetInvertedControls(bool val)
-    {
-        configFile.invert = val;
-        SaveConfig();
     }
 }

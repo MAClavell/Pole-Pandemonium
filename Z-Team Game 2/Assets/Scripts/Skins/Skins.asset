@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee97881a4d4e37c429c2e6b8e74420fd, type: 3}
+  m_Name: Skins
+  m_EditorClassIdentifier: 
+  skins:
+  - skinType: 0
+    backgroundSprite: {fileID: 3286163911610860551, guid: 329c90154d910484ab2dfec4adfb3a18,
+      type: 3}
+    backgroundColor: {r: 1, g: 1, b: 1, a: 0}
+    poleSprite: {fileID: 3286163911610860551, guid: d212264575135bc4688e7083eed40d21,
+      type: 3}
+    poleColor: {r: 1, g: 1, b: 1, a: 0}
+    bounceEnemyHeadSprite: {fileID: 3286163911610860551, guid: f6e6976e6b6028d4d95484b90e22f4dd,
+      type: 3}
+    bounceEnemyHeadColor: {r: 0.3803922, g: 0.13725491, b: 0.9921569, a: 0}
+    bounceEnemyTorsoSprite: {fileID: 3286163911610860551, guid: 5d8d519df1dbf734b96501fda142aad7,
+      type: 3}
+    bounceEnemyTorsoColor: {r: 0, g: 0, b: 0, a: 0}
+    bounceEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    bounceEnemyArmColor: {r: 0.3803922, g: 0.13725491, b: 0.9921569, a: 0}
+    bounceEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    bounceEnemyLegColor: {r: 0.3803922, g: 0.13725491, b: 0.9921569, a: 0}
+    stickEnemyHeadSprite: {fileID: 3286163911610860551, guid: f6e6976e6b6028d4d95484b90e22f4dd,
+      type: 3}
+    stickEnemyHeadColor: {r: 0.882353, g: 0.35686275, b: 0.14901961, a: 0}
+    stickEnemyTorsoSprite: {fileID: 3286163911610860551, guid: 5d8d519df1dbf734b96501fda142aad7,
+      type: 3}
+    stickEnemyTorsoColor: {r: 0, g: 0, b: 0, a: 0}
+    stickEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    stickEnemyArmColor: {r: 1, g: 0.3137255, b: 0.043137256, a: 0}
+    stickEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    stickEnemyLegColor: {r: 1, g: 0.3137255, b: 0.043137256, a: 0}
+  - skinType: 1
+    backgroundSprite: {fileID: 3286163911610860551, guid: 329c90154d910484ab2dfec4adfb3a18,
+      type: 3}
+    backgroundColor: {r: 1, g: 1, b: 1, a: 0}
+    poleSprite: {fileID: 3286163911610860551, guid: f97b0abd38cccac4292bf1a076662c77,
+      type: 3}
+    poleColor: {r: 1, g: 1, b: 1, a: 0}
+    bounceEnemyHeadSprite: {fileID: 3286163911610860551, guid: e4735c70aa215fd44b1678ccd115db77,
+      type: 3}
+    bounceEnemyHeadColor: {r: 1, g: 1, b: 1, a: 0}
+    bounceEnemyTorsoSprite: {fileID: 3286163911610860551, guid: 5d8d519df1dbf734b96501fda142aad7,
+      type: 3}
+    bounceEnemyTorsoColor: {r: 0, g: 0, b: 0, a: 0}
+    bounceEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    bounceEnemyArmColor: {r: 0.3803922, g: 0.13725491, b: 0.9921569, a: 0}
+    bounceEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    bounceEnemyLegColor: {r: 0.3803922, g: 0.13725491, b: 0.9921569, a: 0}
+    stickEnemyHeadSprite: {fileID: 3286163911610860551, guid: a5b5ea87e1f0f2147b63ead0bf5301b3,
+      type: 3}
+    stickEnemyHeadColor: {r: 1, g: 1, b: 1, a: 0}
+    stickEnemyTorsoSprite: {fileID: 3286163911610860551, guid: 5d8d519df1dbf734b96501fda142aad7,
+      type: 3}
+    stickEnemyTorsoColor: {r: 0, g: 0, b: 0, a: 0}
+    stickEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    stickEnemyArmColor: {r: 1, g: 0.3137255, b: 0.043137256, a: 0}
+    stickEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    stickEnemyLegColor: {r: 1, g: 0.3137255, b: 0.043137256, a: 0}
