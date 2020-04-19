@@ -6,7 +6,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Leaderboard=5, Cosmetics }
+public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Leaderboard=5, Cosmetics=6 }
 
 public class MenuManager : MonoBehaviour
 {
@@ -30,20 +30,22 @@ public class MenuManager : MonoBehaviour
     private MenuCanvas[] prevCanvases;
 
     private LeaderboardUI leaderBoard;
+    private CosmeticsUI cosmetics;
 
     // Start is called before the first frame update
     void Start()
     {
-        menuCanvases = new GameObject[6];
+        menuCanvases = new GameObject[7];
         menuCanvases[0] = GameObject.Find("MainCanvas");
         menuCanvases[1] = GameObject.Find("SettingsCanvas");
         menuCanvases[2] = GameObject.Find("GameCanvas");
         menuCanvases[3] = GameObject.Find("PauseCanvas");
         menuCanvases[4] = GameObject.Find("EndCanvas");
         menuCanvases[5] = GameObject.Find("LeaderboardCanvas");
-        menuCanvases[5] = GameObject.Find("CosmeticsCanvas");
+        menuCanvases[6] = GameObject.Find("CosmeticsCanvas");
 
         leaderBoard = menuCanvases[5].GetComponent<LeaderboardUI>();
+        cosmetics = menuCanvases[6].GetComponent<CosmeticsUI>();
 
         currCanvases = null;
         prevCanvases = null;
@@ -86,15 +88,26 @@ public class MenuManager : MonoBehaviour
         endTimerText.text = $"<mspace=0.6em>{TimeSpan.FromSeconds(time).ToString("mm'.'ss'.'ff")}</mspace>";
 
         //Set highscore text
-        if(leaderBoard.IsNewHighScore)
+        if(leaderBoard.IsNewHighScore())
         {
             highScoreText.text = "New highscore!";
             leaderBoard.UpdateHighScore();
         }
         else
         {
-            highScoreText.text = $"Highscore - <mspace=0.6em>{TimeSpan.FromSeconds(leaderBoard.HighScore).ToString("mm'.'ss'.'ff")}</mspace>";
+            highScoreText.text = $"Highscore - <mspace=0.6em>{TimeSpan.FromSeconds(leaderBoard.GetHighScore()).ToString("mm'.'ss'.'ff")}</mspace>";
         }
+    }
+
+    public void ShowCosmetics()
+    {
+        SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Cosmetics });
+        cosmetics.Activate();
+    }
+
+    public void HideCosmetics()
+    {
+        SetActiveCanvases(prevCanvases);
     }
 
     /// <summary>

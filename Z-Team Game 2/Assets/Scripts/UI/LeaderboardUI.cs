@@ -10,6 +10,17 @@ public class LeaderboardUI : MonoBehaviour
     private const string LEADERBOARD_PATH = "/Leaderboard.pole";
 
     /// <summary>
+    /// Class for containing highscore data for each difficulty
+    /// </summary>
+    [System.Serializable]
+    private class HighScoreEntries
+    {
+        public LeaderboardEntry easy;
+        public LeaderboardEntry medium;
+        public LeaderboardEntry hard;
+    }
+
+    /// <summary>
     /// Class for containing leaderboard entry data
     /// </summary>
     [System.Serializable]
@@ -22,16 +33,7 @@ public class LeaderboardUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Get the player's current high score
-    /// </summary>
-    public double HighScore { get { return highScore.Time; } }
-    private LeaderboardEntry highScore;
-
-    /// <summary>
-    /// If our current game time is the newest highscore
-    /// </summary>
-    public bool IsNewHighScore { get { return highScore.Time < GameManager.Instance.GameTime; } }
+    private HighScoreEntries highScores;
    
     /// <summary>
     /// Constructor
@@ -49,7 +51,7 @@ public class LeaderboardUI : MonoBehaviour
         BinaryFormatter bf = new BinaryFormatter();
         using (StreamWriter sw = new StreamWriter(Application.persistentDataPath + LEADERBOARD_PATH, false))
         {
-            bf.Serialize(sw.BaseStream, highScore);
+            bf.Serialize(sw.BaseStream, highScores);
         }
     }
 
@@ -62,7 +64,10 @@ public class LeaderboardUI : MonoBehaviour
         if (!File.Exists(Application.persistentDataPath + LEADERBOARD_PATH) ||
             string.IsNullOrWhiteSpace(Application.persistentDataPath + LEADERBOARD_PATH))
         {
-            highScore = new LeaderboardEntry(0);
+            highScores = new HighScoreEntries();
+            highScores.easy = new LeaderboardEntry(0);
+            highScores.medium = new LeaderboardEntry(0);
+            highScores.hard = new LeaderboardEntry(0);
             return;
         }
 
@@ -70,7 +75,7 @@ public class LeaderboardUI : MonoBehaviour
         BinaryFormatter bf = new BinaryFormatter();
         using (StreamReader sw = new StreamReader(Application.persistentDataPath + LEADERBOARD_PATH))
         {
-            highScore = (LeaderboardEntry)bf.Deserialize(sw.BaseStream);
+            highScores = (HighScoreEntries)bf.Deserialize(sw.BaseStream);
         }
     }
 
@@ -79,8 +84,21 @@ public class LeaderboardUI : MonoBehaviour
     /// </summary>
     public void UpdateHighScore()
     {
-        highScore = new LeaderboardEntry(GameManager.Instance.GameTime);
+        highScores.medium = new LeaderboardEntry(GameManager.Instance.GameTime);
         SaveScore();
+    }
+
+    public double GetHighScore()
+    {
+        return highScores.medium.Time;
+    }
+
+    /// <summary>
+    /// If our current game time is the newest highscore
+    /// </summary>
+    public bool IsNewHighScore()
+    {
+        return highScores.medium.Time < GameManager.Instance.GameTime;
     }
 
     public void OnGlobalFriendSelectionChanged(Button prev, Button curr)

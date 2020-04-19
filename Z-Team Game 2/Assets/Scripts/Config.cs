@@ -17,9 +17,9 @@ public class Config
     {
         public ControlScheme scheme = ControlScheme.Angle;
         public bool invert = false;
+        public SkinType backgroundSkin = SkinType.Default;
         public SkinType poleSkin = SkinType.Default;
         public SkinType enemySkin = SkinType.Default;
-        public SkinType backgroundSkin = SkinType.Default;
     }
 
     /// <summary>
@@ -31,7 +31,8 @@ public class Config
         set
         {
             configFile.scheme = value;
-            SaveConfig();
+            if(!loading)
+                SaveConfig();
         }
     }
 
@@ -44,7 +45,28 @@ public class Config
         set
         {
             configFile.invert = value;
-            SaveConfig();
+            if(!loading)
+                SaveConfig();
+        }
+    }
+
+    /// <summary>
+    /// Saved background skin
+    /// </summary>
+    public static SkinType BackgroundSkin
+    {
+        get => configFile.backgroundSkin;
+        set
+        {
+            configFile.backgroundSkin = value;
+            if (!loading)
+                SaveConfig();
+
+            //Set the actual backgrounds's sprite
+            var gm = GameManager.Instance;
+            var skin = gm.Skins.GetSkin(value);
+            gm.Background.sprite = skin.backgroundSprite;
+            gm.Background.color = skin.backgroundColor;
         }
     }
 
@@ -56,8 +78,15 @@ public class Config
         get => configFile.poleSkin;
         set
         {
-            configFile.backgroundSkin = value;
-            SaveConfig();
+            configFile.poleSkin = value;
+            if(!loading)
+                SaveConfig();
+
+            //Set the actual pole's sprite
+            var gm = GameManager.Instance;
+            var skin = gm.Skins.GetSkin(value);
+            gm.Pole.SpriteRenderer.sprite = skin.poleSprite;
+            gm.Pole.SpriteRenderer.color = skin.poleColor;
         }
     }
     
@@ -69,21 +98,54 @@ public class Config
         get => configFile.enemySkin;
         set
         {
-            configFile.poleSkin = value;
-            SaveConfig();
-        }
-    }
-
-    /// <summary>
-    /// Saved background skin
-    /// </summary>
-    public static SkinType BackgroundSkin 
-    { 
-        get => configFile.backgroundSkin;
-        set
-        {
             configFile.enemySkin = value;
-            SaveConfig();
+            if(!loading)
+                SaveConfig();
+
+            var gm = GameManager.Instance;
+            var skin = gm.Skins.GetSkin(value);
+
+            //Set the actual bounce enemy's sprites
+            var bounce = gm.EnemyManager.BounceEnemyPrefab.transform;
+            var bounceTorso = bounce.GetChild(0).GetComponent<SpriteRenderer>();
+            bounceTorso.sprite = skin.bounceEnemyTorsoSprite;
+            bounceTorso.color = skin.bounceEnemyTorsoColor;
+            var bounceHead = bounce.GetChild(1).GetComponent<SpriteRenderer>();
+            bounceHead.sprite = skin.bounceEnemyHeadSprite;
+            bounceHead.color = skin.bounceEnemyHeadColor;
+            var bounceLArm = bounce.GetChild(2).GetComponent<SpriteRenderer>();
+            bounceLArm.sprite = skin.bounceEnemyArmSprite;
+            bounceLArm.color = skin.bounceEnemyArmColor;
+            var bounceRArm = bounce.GetChild(3).GetComponent<SpriteRenderer>();
+            bounceRArm.sprite = skin.bounceEnemyArmSprite;
+            bounceRArm.color = skin.bounceEnemyArmColor;
+            var bounceLLeg = bounce.GetChild(4).GetComponent<SpriteRenderer>();
+            bounceLLeg.sprite = skin.bounceEnemyLegSprite;
+            bounceLLeg.color = skin.bounceEnemyLegColor;
+            var bounceRLeg = bounce.GetChild(5).GetComponent<SpriteRenderer>();
+            bounceRLeg.sprite = skin.bounceEnemyLegSprite;
+            bounceRLeg.color = skin.bounceEnemyLegColor;
+
+            //Set the actual stick enemy's sprites
+            var stick = gm.EnemyManager.StickEnemyPrefab.transform;
+            var stickTorso = stick.GetChild(0).GetComponent<SpriteRenderer>();
+            stickTorso.sprite = skin.stickEnemyTorsoSprite;
+            stickTorso.color = skin.stickEnemyTorsoColor;
+            var stickHead = stick.GetChild(1).GetComponent<SpriteRenderer>();
+            stickHead.sprite = skin.stickEnemyHeadSprite;
+            stickHead.color = skin.stickEnemyHeadColor;
+            var stickLArm = stick.GetChild(2).GetComponent<SpriteRenderer>();
+            stickLArm.sprite = skin.stickEnemyArmSprite;
+            stickLArm.color = skin.stickEnemyArmColor;
+            var stickRArm = stick.GetChild(3).GetComponent<SpriteRenderer>();
+            stickRArm.sprite = skin.stickEnemyArmSprite;
+            stickRArm.color = skin.stickEnemyArmColor;
+            var stickLLeg = stick.GetChild(4).GetComponent<SpriteRenderer>();
+            stickLLeg.sprite = skin.stickEnemyLegSprite;
+            stickLLeg.color = skin.stickEnemyLegColor;
+            var stickRLeg = stick.GetChild(5).GetComponent<SpriteRenderer>();
+            stickRLeg.sprite = skin.stickEnemyLegSprite;
+            stickRLeg.color = skin.stickEnemyLegColor;
         }
     }
 
@@ -93,6 +155,7 @@ public class Config
     public static int MaxSkins { get => System.Enum.GetValues(typeof(SkinType)).Length; }
 
     private static SerializableConfig configFile;
+    private static bool loading = true;
     private static string CONFIG_PATH = "/Config.pole";
 
     /// <summary>
@@ -101,6 +164,8 @@ public class Config
     /// </summary>
     public static void Init()
     {
+        loading = true;
+
         //Only load if the config file exists
         if (!File.Exists(Application.persistentDataPath + CONFIG_PATH) ||
             string.IsNullOrWhiteSpace(Application.persistentDataPath + CONFIG_PATH))
@@ -114,7 +179,13 @@ public class Config
         using (StreamReader sr = new StreamReader(Application.persistentDataPath + CONFIG_PATH))
         {
             configFile = JsonUtility.FromJson<SerializableConfig>(sr.ReadToEnd());
+
+            //Set initial values for skins
+            BackgroundSkin = BackgroundSkin;
+            PoleSkin = PoleSkin;
+            EnemySkin = EnemySkin;
         }
+        loading = false;
     }
     /// <summary>
     /// Save the current game time as the new highscore
@@ -123,7 +194,6 @@ public class Config
     {
         using (StreamWriter sw = new StreamWriter(Application.persistentDataPath + CONFIG_PATH, false))
         {
-            string json = JsonUtility.ToJson(configFile);
             sw.Write(JsonUtility.ToJson(configFile));
         }
     }

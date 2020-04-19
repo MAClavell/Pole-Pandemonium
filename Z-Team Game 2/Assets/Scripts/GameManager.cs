@@ -25,6 +25,20 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public Pole Pole { get => pole; }
 
+    /// <summary>
+    /// Get the background sprite object
+    /// </summary>
+    public SpriteRenderer Background { get => background; }
+
+    /// <summary>
+    /// Get the scriptable object containing all the skins
+    /// </summary>
+    public SkinScriptableObject Skins { get => skins; }
+
+    public EnemyManager EnemyManager { get; private set; }
+
+    [SerializeField]
+    private SpriteRenderer background;
     [SerializeField]
     private Pole pole;
     [SerializeField]
@@ -39,14 +53,15 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Awake()
     {
-        Config.Init();
         CurrentState = GameState.MainMenu;
         gameOverSound = GameObject.Find("gameOverSound").GetComponent<AudioSource>();
+        EnemyManager = GetComponent<EnemyManager>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        Config.Init();
     }
 
     // Update is called once per frame

@@ -9,34 +9,44 @@ public class CosmeticsUI : MonoBehaviour
 {
     [SerializeField]
     SVGImage backgroundObj;
-
     [SerializeField]
     SVGImage poleObj;
-
     [SerializeField]
-    SVGImage[] hitEnemyObjs;
-
+    SVGImage[] bounceEnemyObjs;
     [SerializeField]
     SVGImage[] stickEnemyObjs;
+
+    [SerializeField]
+    Button backgroundEquipButton;
+
+    [SerializeField]
+    Button poleEquipButton;
+
+    [SerializeField]
+    Button enemyEquipButton;
 
     SkinType currentBackgroundSkin;
     SkinType currentPoleSkin;
     SkinType currentEnemySkin;
 
     // Start is called before the first frame update
-    void Start()
+    public void Activate()
     {
         //Set defaults after config file is loaded
         SetBackgroundSkinPreview(Config.BackgroundSkin);
         SetPoleSkinPreview(Config.PoleSkin);
         SetEnemySkinPreview(Config.EnemySkin);
+
+        SetEquipButtonInteractable(backgroundEquipButton, false);
+        SetEquipButtonInteractable(poleEquipButton, false);
+        SetEquipButtonInteractable(enemyEquipButton, false);
     }
 
     /// <summary>
     /// [UI EVENT CALLBACK]
     /// Cycle a skin
     /// </summary>
-    void OnCycleButtonClicked()
+    public void OnCycleButtonClicked()
     {
         GameObject button = EventSystem.current.currentSelectedGameObject;
 
@@ -55,12 +65,12 @@ public class CosmeticsUI : MonoBehaviour
         }
         else if (button.transform.parent.name == "PoleSelection")
         {
-            currentSkinNum = (int)currentBackgroundSkin;
+            currentSkinNum = (int)currentPoleSkin;
             skinType = 1;
         }
         else if (button.transform.parent.name == "EnemySelection")
         {
-            currentSkinNum = (int)currentBackgroundSkin;
+            currentSkinNum = (int)currentEnemySkin;
             skinType = 2;
         }
 
@@ -73,12 +83,33 @@ public class CosmeticsUI : MonoBehaviour
 
         //Set preview displays
         SkinType newSkin = (SkinType)newVal;
-        switch(skinType)
+        SkinType equippedSkin = SkinType.Default;
+        Button equipButton = null;
+        switch (skinType)
         {
-            case 0: SetBackgroundSkinPreview(newSkin); break;
-            case 1: SetPoleSkinPreview(newSkin); break;
-            case 2: SetEnemySkinPreview(newSkin); break;
+            case 0: 
+                SetBackgroundSkinPreview(newSkin);
+                equippedSkin = Config.BackgroundSkin;
+                equipButton = backgroundEquipButton;
+                break;
+            case 1: 
+                SetPoleSkinPreview(newSkin);
+                equippedSkin = Config.PoleSkin;
+                equipButton = poleEquipButton;
+                break;
+            case 2: 
+                SetEnemySkinPreview(newSkin);
+                equippedSkin = Config.EnemySkin;
+                equipButton = enemyEquipButton;
+                break;
         }
+
+        //Set equip button
+        if(newSkin == equippedSkin)
+        {
+            SetEquipButtonInteractable(equipButton, false);
+        }
+        else SetEquipButtonInteractable(equipButton, true);
     }
 
     /// <summary>
@@ -88,6 +119,9 @@ public class CosmeticsUI : MonoBehaviour
     private void SetBackgroundSkinPreview(SkinType newSkin)
     {
         currentBackgroundSkin = newSkin;
+        var skinObj = GameManager.Instance.Skins.GetSkin(newSkin);
+        backgroundObj.sprite = skinObj.backgroundSprite;
+        backgroundObj.color = skinObj.backgroundColor;
     }
 
     /// <summary>
@@ -97,6 +131,9 @@ public class CosmeticsUI : MonoBehaviour
     private void SetPoleSkinPreview(SkinType newSkin)
     {
         currentPoleSkin = newSkin;
+        var skinObj = GameManager.Instance.Skins.GetSkin(newSkin);
+        poleObj.sprite = skinObj.poleSprite;
+        poleObj.color = skinObj.poleColor;
     }
 
     /// <summary>
@@ -106,29 +143,59 @@ public class CosmeticsUI : MonoBehaviour
     private void SetEnemySkinPreview(SkinType newSkin)
     {
         currentEnemySkin = newSkin;
+        var skinObj = GameManager.Instance.Skins.GetSkin(newSkin);
+
+        //Set bounce enemy
+        bounceEnemyObjs[0].sprite = skinObj.bounceEnemyTorsoSprite;
+        bounceEnemyObjs[0].color = skinObj.bounceEnemyTorsoColor;
+        bounceEnemyObjs[1].sprite = skinObj.bounceEnemyHeadSprite;
+        bounceEnemyObjs[1].color = skinObj.bounceEnemyHeadColor;
+        bounceEnemyObjs[2].sprite = skinObj.bounceEnemyArmSprite;
+        bounceEnemyObjs[2].color = skinObj.bounceEnemyArmColor;
+        bounceEnemyObjs[3].sprite = skinObj.bounceEnemyArmSprite;
+        bounceEnemyObjs[3].color = skinObj.bounceEnemyArmColor;
+        bounceEnemyObjs[4].sprite = skinObj.bounceEnemyLegSprite;
+        bounceEnemyObjs[4].color = skinObj.bounceEnemyLegColor;
+        bounceEnemyObjs[5].sprite = skinObj.bounceEnemyLegSprite;
+        bounceEnemyObjs[5].color = skinObj.bounceEnemyLegColor;
+
+        //Set stick enemy
+        stickEnemyObjs[0].sprite = skinObj.stickEnemyTorsoSprite;
+        stickEnemyObjs[0].color = skinObj.stickEnemyTorsoColor;
+        stickEnemyObjs[1].sprite = skinObj.stickEnemyHeadSprite;
+        stickEnemyObjs[1].color = skinObj.stickEnemyHeadColor;
+        stickEnemyObjs[2].sprite = skinObj.stickEnemyArmSprite;
+        stickEnemyObjs[2].color = skinObj.stickEnemyArmColor;
+        stickEnemyObjs[3].sprite = skinObj.stickEnemyArmSprite;
+        stickEnemyObjs[3].color = skinObj.stickEnemyArmColor;
+        stickEnemyObjs[4].sprite = skinObj.stickEnemyLegSprite;
+        stickEnemyObjs[4].color = skinObj.stickEnemyLegColor;
+        stickEnemyObjs[5].sprite = skinObj.stickEnemyLegSprite;
+        stickEnemyObjs[5].color = skinObj.stickEnemyLegColor;
     }
 
     /// <summary>
     /// [UI EVENT CALLBACK]
     /// Equip a skin
     /// </summary>
-    void OnEquipButtonClicked()
+    public void OnEquipButtonClicked()
     {
         GameObject button = EventSystem.current.currentSelectedGameObject;
         if (button.transform.parent.name == "BackgroundSelection")
         {
             Config.BackgroundSkin = currentBackgroundSkin;
+            SetEquipButtonInteractable(backgroundEquipButton, false);
         }
         else if (button.transform.parent.name == "PoleSelection")
         {
             Config.PoleSkin = currentPoleSkin;
+            SetEquipButtonInteractable(poleEquipButton, false);
         }
         else if (button.transform.parent.name == "EnemySelection")
         {
             Config.EnemySkin = currentEnemySkin;
+            SetEquipButtonInteractable(enemyEquipButton, false);
         }
-
-        SetEquipButtonInteractable(button.transform.parent.Find("EquipButton").GetComponent<Button>(), false);
     }
 
     /// <summary>
@@ -136,7 +203,7 @@ public class CosmeticsUI : MonoBehaviour
     /// </summary>
     /// <param name="b">The button</param>
     /// <param name="interactable">Interactable or not</param>
-    void SetEquipButtonInteractable(Button b, bool interactable)
+    private void SetEquipButtonInteractable(Button b, bool interactable)
     {
         b.interactable = interactable;
         if(interactable)

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public GameObject BounceEnemyPrefab { get => bounceEnemyPrefab; }
+    public GameObject StickEnemyPrefab { get => stickEnemyPrefab; }
+
     [SerializeField]
     private GameObject bounceEnemyPrefab;
     [SerializeField]
