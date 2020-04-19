@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Diagnostics;
 
 public enum ControlScheme { Angle, Screen }
 
@@ -15,6 +16,7 @@ public class Config
     [System.Serializable]
     private class SerializableConfig
     {
+        public string versionNumber = "";
         public ControlScheme scheme = ControlScheme.Angle;
         public bool invert = false;
         public SkinType backgroundSkin = SkinType.Default;
@@ -149,14 +151,15 @@ public class Config
         }
     }
 
-    /// <summary>
-    /// The max amount of skin types
-    /// </summary>
-    public static int MaxSkins { get => System.Enum.GetValues(typeof(SkinType)).Length; }
+	/// <summary>
+	/// The max amount of skin types
+	/// </summary>
+	public static int MaxSkins { get; } = System.Enum.GetValues(typeof(SkinType)).Length;
 
+    private const string CONFIG_PATH = "/Config.pole";
+    private const string VERSION_NUMBER = "1.0";
     private static SerializableConfig configFile;
     private static bool loading = true;
-    private static string CONFIG_PATH = "/Config.pole";
 
     /// <summary>
     /// Init the config file
@@ -192,6 +195,12 @@ public class Config
     /// </summary>
     private static void SaveConfig()
     {
+        //Ensure the version numbers are consistent
+        if (configFile.versionNumber != VERSION_NUMBER)
+        {
+            configFile.versionNumber = VERSION_NUMBER;
+        }
+
         using (StreamWriter sw = new StreamWriter(Application.persistentDataPath + CONFIG_PATH, false))
         {
             sw.Write(JsonUtility.ToJson(configFile));
