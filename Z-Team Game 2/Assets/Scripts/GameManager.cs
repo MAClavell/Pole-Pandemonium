@@ -101,8 +101,11 @@ public class GameManager : Singleton<GameManager>
     {
         pole.Init();
         GameTime = 0;
+        enemyManager.SetDifficulty();
+        totalTime = 0;
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
+        
     }
 
     /// <summary>

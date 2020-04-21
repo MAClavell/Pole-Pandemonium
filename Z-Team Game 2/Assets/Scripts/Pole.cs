@@ -6,10 +6,18 @@ using UnityEngine.EventSystems;
 public class Pole : MonoBehaviour
 {
     public float Rotation { get; private set; }
+    public bool hapticFeedback { get; private set; } = true;
+    public bool visualFeedback { get; private set; } = true;
     public SpriteRenderer SpriteRenderer { get => spriteRenderer; }
 
     private const float RESISTANCE = 1.0f;
     private const float STARTING_FORCE = 120.0f;
+
+
+    // Circle click feedback related variables
+    public Transform circleParent;
+    private GameObject circleObj;
+    private List<TouchCircle> circles = new List<TouchCircle>();
 
     private SpriteRenderer spriteRenderer;
     private float height;
@@ -22,15 +30,33 @@ public class Pole : MonoBehaviour
     private AudioSource stickPole;
     private AudioSource swipedOff;
 
+#if UNITY_ANDROID
+    private int hapticFeedbackKey;
+    private AndroidJavaObject currentActivity;
+#endif
+
     void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         height = spriteRenderer.sprite.rect.height;
+        circleObj = Resources.Load<GameObject>("Prefabs/Circle");
 
         tapSound = GameObject.Find("tapSound").GetComponent<AudioSource>();
         hitPole = GameObject.Find("enemyHitPole").GetComponent<AudioSource>();
         stickPole = GameObject.Find("enemyStickPole").GetComponent<AudioSource>();
         swipedOff = GameObject.Find("enemySwipedOff").GetComponent<AudioSource>();
+
+#if UNITY_ANDROID
+        AndroidJavaClass hfc = new AndroidJavaClass("android.view.HapticFeedbackConstants");
+
+        hapticFeedbackKey = hfc.GetStatic<int>("VIRTUAL_KEY");
+
+        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+
+        currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+        currentActivity.Call("setHapticFeedbackEnabled", true);
+#endif
     }
 
     /// <summary>
@@ -101,6 +127,14 @@ public class Pole : MonoBehaviour
                     Vector2 angleVec = transform.TransformPoint(top);
                     angle = Vector2.Angle(angleVec, position) * Mathf.Sign(position.x * angleVec.y - position.y * angleVec.x);
 
+                    if (hapticFeedback)
+                    {
+                        // Vibrate();
+                    }
+                    if (visualFeedback)
+                    {
+                        CreateTouchCircle(position);
+                    }
 #if UNITY_EDITOR
                     Debug.DrawLine(Vector3.zero, angleVec * 20, Color.red, 0.5f);
 #endif
@@ -133,6 +167,45 @@ public class Pole : MonoBehaviour
         //Apply physics
         RotatePole();
         totalForce = 0.0f;
+
+        if (visualFeedback)
+        {
+            UpdateCircles();
+        }
+    }
+
+    private bool Vibrate()
+    {
+#if UNITY_ANDROID
+        bool result = currentActivity.Call<bool>("performHapticFeedback", hapticFeedbackKey);
+
+        return result;
+#else
+        return false;
+#endif
+    }
+
+    private void CreateTouchCircle(Vector2 position)
+    {
+        GameObject obj = Instantiate(circleObj, circleParent);
+        TouchCircle newCircle = obj.GetComponent<TouchCircle>();
+        newCircle.Init(position);
+        circles.Add(newCircle);
+    }
+
+    private void UpdateCircles()
+    {
+        if (circles.Count <= 0) return; 
+
+        for (int i = circles.Count - 1; i >= 0; i--)
+        {
+            if (circles[i].OnUpdate())
+            {
+                Destroy(circles[i].gameObject);
+
+                circles.RemoveAt(i);
+            }
+        }
     }
 
     /// <summary>

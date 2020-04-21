@@ -18,6 +18,9 @@ public class EnemyManager : MonoBehaviour
     private AudioSource enemyEnter2;
     private AudioSource enemyEnter3;
     AudioSource[] audioManager;
+    float difficultyModifier;
+    float difficultyChange; //used when difficulty is changed mid game
+    TMPro.TMP_Dropdown difficultySelect;
 
     private void Awake()
     {
@@ -28,6 +31,8 @@ public class EnemyManager : MonoBehaviour
         audioManager[0] = enemyEnter1;
         audioManager[1] = enemyEnter2;
         audioManager[2] = enemyEnter3;
+        difficultySelect = GameObject.FindGameObjectWithTag("DifficultySelect").GetComponent<TMPro.TMP_Dropdown>();
+        difficultyChange = 1.0f;
     }
 
 
@@ -36,6 +41,10 @@ public class EnemyManager : MonoBehaviour
     {
         time = 0.0f;
         spawnTime = 1.5f;
+        difficultyModifier = 1.0f;
+        difficultySelect.onValueChanged.AddListener(delegate {
+            ChangeDifficulty(difficultySelect.value);
+        });
     }
 
     // Update is called once per frame
@@ -44,10 +53,10 @@ public class EnemyManager : MonoBehaviour
         if (transform.GetComponent<GameManager>().CurrentState == GameState.Playing)
         {
             time += Time.deltaTime;
-            if (time >= spawnTime)
+            if (time >= spawnTime * difficultyModifier)
             {
                 SpawnEnemy();
-                time -= spawnTime;
+                time -= spawnTime * difficultyModifier;
             }
         }
 
@@ -85,6 +94,35 @@ public class EnemyManager : MonoBehaviour
         }
 
         audioManager[enterSound].Play();
+    }
+
+    public void ChangeDifficulty(int difficulty)
+    {
+        if (difficulty == 0)
+        {
+            //Easy
+             difficultyChange = 1.25f;
+            Debug.Log("EASY");
+        }
+        else if (difficulty == 1)
+        {
+            //Medium
+            difficultyChange = 1.0f;
+            Debug.Log("MEDIUM");
+        }
+        else if (difficulty == 2)
+        {
+            //Hard
+            difficultyChange = 0.5f;
+            Debug.Log("HARD");
+        }
+
+
+    }
+
+    public void SetDifficulty()
+    {
+        difficultyModifier = difficultyChange;
     }
 
 }
