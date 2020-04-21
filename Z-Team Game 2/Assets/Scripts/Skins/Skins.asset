@@ -59,19 +59,81 @@ MonoBehaviour:
     bounceEnemyTorsoColor: {r: 0, g: 0, b: 0, a: 1}
     bounceEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
       type: 3}
-    bounceEnemyArmColor: {r: 0.3803922, g: 0.13725491, b: 0.9921569, a: 1}
+    bounceEnemyArmColor: {r: 1, g: 0, b: 0, a: 1}
     bounceEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
       type: 3}
-    bounceEnemyLegColor: {r: 0.3803922, g: 0.13725491, b: 0.9921569, a: 1}
+    bounceEnemyLegColor: {r: 1, g: 0, b: 0, a: 1}
     stickEnemyHeadSprite: {fileID: 3286163911610860551, guid: a5b5ea87e1f0f2147b63ead0bf5301b3,
       type: 3}
     stickEnemyHeadColor: {r: 1, g: 1, b: 1, a: 1}
     stickEnemyTorsoSprite: {fileID: 3286163911610860551, guid: 5d8d519df1dbf734b96501fda142aad7,
       type: 3}
+    stickEnemyTorsoColor: {r: 1, g: 0, b: 0, a: 1}
+    stickEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    stickEnemyArmColor: {r: 0, g: 0, b: 0, a: 1}
+    stickEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    stickEnemyLegColor: {r: 0, g: 0, b: 0, a: 1}
+  - skinType: 2
+    backgroundSprite: {fileID: 3286163911610860551, guid: 329c90154d910484ab2dfec4adfb3a18,
+      type: 3}
+    backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    poleSprite: {fileID: 3286163911610860551, guid: 3b0be25a244fbeb41a4385e8060237c8,
+      type: 3}
+    poleColor: {r: 1, g: 1, b: 1, a: 1}
+    bounceEnemyHeadSprite: {fileID: 3286163911610860551, guid: 5e0c27ce5cadeaf4394e7d29d83b4a37,
+      type: 3}
+    bounceEnemyHeadColor: {r: 1, g: 1, b: 1, a: 1}
+    bounceEnemyTorsoSprite: {fileID: 3286163911610860551, guid: 72c0e1c943647c045982f87feff2c8c2,
+      type: 3}
+    bounceEnemyTorsoColor: {r: 1, g: 1, b: 1, a: 1}
+    bounceEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    bounceEnemyArmColor: {r: 1, g: 1, b: 1, a: 1}
+    bounceEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    bounceEnemyLegColor: {r: 1, g: 1, b: 1, a: 1}
+    stickEnemyHeadSprite: {fileID: 3286163911610860551, guid: 86895c94edd253648bb5983c6885d86d,
+      type: 3}
+    stickEnemyHeadColor: {r: 1, g: 1, b: 1, a: 1}
+    stickEnemyTorsoSprite: {fileID: 3286163911610860551, guid: 5d8d519df1dbf734b96501fda142aad7,
+      type: 3}
+    stickEnemyTorsoColor: {r: 1, g: 1, b: 1, a: 1}
+    stickEnemyArmSprite: {fileID: 3286163911610860551, guid: 8e7e1e3b8e83a3f4a89c760901821714,
+      type: 3}
+    stickEnemyArmColor: {r: 1, g: 1, b: 1, a: 1}
+    stickEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    stickEnemyLegColor: {r: 1, g: 1, b: 1, a: 1}
+  - skinType: 3
+    backgroundSprite: {fileID: 3286163911610860551, guid: 329c90154d910484ab2dfec4adfb3a18,
+      type: 3}
+    backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    poleSprite: {fileID: 3286163911610860551, guid: 0476c60fc5880c7468c9dc4dd7d86d79,
+      type: 3}
+    poleColor: {r: 1, g: 1, b: 1, a: 1}
+    bounceEnemyHeadSprite: {fileID: 3286163911610860551, guid: d900f5251dc930b4e8c976abdc9d311c,
+      type: 3}
+    bounceEnemyHeadColor: {r: 1, g: 1, b: 1, a: 1}
+    bounceEnemyTorsoSprite: {fileID: 3286163911610860551, guid: dd5a9db0bd4d3bc49abc5e0a71d2b7e1,
+      type: 3}
+    bounceEnemyTorsoColor: {r: 1, g: 1, b: 1, a: 1}
+    bounceEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    bounceEnemyArmColor: {r: 0, g: 0, b: 0, a: 1}
+    bounceEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+      type: 3}
+    bounceEnemyLegColor: {r: 0, g: 0, b: 0, a: 1}
+    stickEnemyHeadSprite: {fileID: 3286163911610860551, guid: 94601a7e78bdf9649bebd694c633e51f,
+      type: 3}
+    stickEnemyHeadColor: {r: 1, g: 1, b: 1, a: 1}
+    stickEnemyTorsoSprite: {fileID: 3286163911610860551, guid: d63b27db1f80368419bc0eda81ba8614,
+      type: 3}
     stickEnemyTorsoColor: {r: 0, g: 0, b: 0, a: 1}
     stickEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
       type: 3}
-    stickEnemyArmColor: {r: 1, g: 0.3137255, b: 0.043137256, a: 1}
+    stickEnemyArmColor: {r: 1, g: 1, b: 1, a: 1}
     stickEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
       type: 3}
-    stickEnemyLegColor: {r: 1, g: 0.3137255, b: 0.043137256, a: 1}
+    stickEnemyLegColor: {r: 1, g: 1, b: 1, a: 1}

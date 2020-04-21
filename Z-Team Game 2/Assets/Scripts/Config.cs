@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 public enum ControlScheme { Angle, Screen }
 
-public enum SkinType { Default=0, Demon }
+public enum SkinType { Default=0, Demon, Rainbow, Panda }
 
 public class Config
 {
