@@ -130,7 +130,7 @@ MonoBehaviour:
     stickEnemyHeadColor: {r: 1, g: 1, b: 1, a: 1}
     stickEnemyTorsoSprite: {fileID: 3286163911610860551, guid: d63b27db1f80368419bc0eda81ba8614,
       type: 3}
-    stickEnemyTorsoColor: {r: 0, g: 0, b: 0, a: 1}
+    stickEnemyTorsoColor: {r: 1, g: 1, b: 1, a: 1}
     stickEnemyArmSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
       type: 3}
     stickEnemyArmColor: {r: 1, g: 1, b: 1, a: 1}
