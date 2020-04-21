@@ -103,7 +103,7 @@ MonoBehaviour:
     stickEnemyArmSprite: {fileID: 3286163911610860551, guid: 8e7e1e3b8e83a3f4a89c760901821714,
       type: 3}
     stickEnemyArmColor: {r: 1, g: 1, b: 1, a: 1}
-    stickEnemyLegSprite: {fileID: 3286163911610860551, guid: efd2c5f7f696f0147a93b53710302526,
+    stickEnemyLegSprite: {fileID: 3286163911610860551, guid: 8e7e1e3b8e83a3f4a89c760901821714,
       type: 3}
     stickEnemyLegColor: {r: 1, g: 1, b: 1, a: 1}
   - skinType: 3
