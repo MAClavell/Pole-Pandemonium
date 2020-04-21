@@ -8,9 +8,9 @@ public class Pole : MonoBehaviour
     public float Rotation { get; private set; }
     public bool hapticFeedback { get; private set; } = true;
     public bool visualFeedback { get; private set; } = true;
-    public SpriteRenderer SpriteRenderer { get => spriteRenderer; }
+	public SpriteRenderer SpriteRenderer { get; private set; }
 
-    private const float RESISTANCE = 1.0f;
+	private const float RESISTANCE = 1.0f;
     private const float STARTING_FORCE = 120.0f;
 
 
@@ -18,8 +18,6 @@ public class Pole : MonoBehaviour
     public Transform circleParent;
     private GameObject circleObj;
     private List<TouchCircle> circles = new List<TouchCircle>();
-
-    private SpriteRenderer spriteRenderer;
     private float height;
     private float totalForce;
     private float rotationalVelocity;
@@ -30,15 +28,14 @@ public class Pole : MonoBehaviour
     private AudioSource stickPole;
     private AudioSource swipedOff;
 
-#if UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID
     private int hapticFeedbackKey;
     private AndroidJavaObject currentActivity;
 #endif
 
     void Awake()
     {
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        height = spriteRenderer.sprite.rect.height;
+        SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         circleObj = Resources.Load<GameObject>("Prefabs/Circle");
 
         tapSound = GameObject.Find("tapSound").GetComponent<AudioSource>();
@@ -46,7 +43,7 @@ public class Pole : MonoBehaviour
         stickPole = GameObject.Find("enemyStickPole").GetComponent<AudioSource>();
         swipedOff = GameObject.Find("enemySwipedOff").GetComponent<AudioSource>();
 
-#if UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID
         AndroidJavaClass hfc = new AndroidJavaClass("android.view.HapticFeedbackConstants");
 
         hapticFeedbackKey = hfc.GetStatic<int>("VIRTUAL_KEY");
@@ -57,6 +54,11 @@ public class Pole : MonoBehaviour
 
         currentActivity.Call("setHapticFeedbackEnabled", true);
 #endif
+    }
+
+    private void Start()
+    {
+        height = SpriteRenderer.sprite.rect.height;
     }
 
     /// <summary>
@@ -176,7 +178,7 @@ public class Pole : MonoBehaviour
 
     private bool Vibrate()
     {
-#if UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID
         bool result = currentActivity.Call<bool>("performHapticFeedback", hapticFeedbackKey);
 
         return result;
