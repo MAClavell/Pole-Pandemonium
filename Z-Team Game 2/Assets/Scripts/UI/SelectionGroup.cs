@@ -12,8 +12,8 @@ public class SelectionGroup : MonoBehaviour
 
     public Button Selected { get; private set; }
 
+    public int defaultElement;
     [SerializeField] Button[] elements;
-    [SerializeField] int defaultElement;
     [SerializeField] public OnSelectionChanged onSelectionChanged;
 
     int currentIndex;
@@ -35,7 +35,23 @@ public class SelectionGroup : MonoBehaviour
             defaultElement = 0;
 
         currentIndex = defaultElement;
-        Select(currentIndex);
+        SelectInternal(currentIndex);
+    }
+
+    /// <summary>
+    /// Internal method for selecting indices
+    /// </summary>
+    /// <param name="index">Index of the element to select</param>
+    /// <returns>The previous element selected</returns>
+    private int SelectInternal(int index)
+    {
+        int prev = currentIndex;
+        currentIndex = index;
+
+        Selected = elements[currentIndex];
+        elements[prev].interactable = true;
+        Selected.interactable = false;
+        return prev;
     }
 
     /// <summary>
@@ -44,13 +60,16 @@ public class SelectionGroup : MonoBehaviour
     /// <param name="index">Index of the element to select</param>
     public void Select(int index)
     {
-        int prev = currentIndex;
-        currentIndex = index;
-        
-        Selected = elements[currentIndex];
-        elements[prev].interactable = true;
-        Selected.interactable = false;
-
+        int prev = SelectInternal(index);
         onSelectionChanged.Invoke(elements[prev], Selected);
+    }
+
+    /// <summary>
+    /// Change the selected element without invoking the selection event
+    /// </summary>
+    /// <param name="index">Index of the element to select</param>
+    public void SelectNoInvoke(int index)
+    {
+        SelectInternal(index);
     }
 }

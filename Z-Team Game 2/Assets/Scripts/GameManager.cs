@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum GameState { MainMenu, Playing, Paused, GameOver }
 
@@ -56,12 +57,13 @@ public class GameManager : Singleton<GameManager>
         CurrentState = GameState.MainMenu;
         gameOverSound = GameObject.Find("gameOverSound").GetComponent<AudioSource>();
         EnemyManager = GetComponent<EnemyManager>();
+        Config.LoadConfigFile();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        Config.Init();
+        Config.SetInitialValues();
     }
 
     // Update is called once per frame
@@ -101,10 +103,8 @@ public class GameManager : Singleton<GameManager>
     {
         pole.Init();
         GameTime = 0;
-        EnemyManager.SetDifficulty();
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
-        
     }
 
     /// <summary>
@@ -133,12 +133,25 @@ public class GameManager : Singleton<GameManager>
     /// [UI EVENT CALLBACK]
     /// Un-pause the game
     /// </summary>
-    /// </summary>
     public void UnPause()
     {
         Physics.autoSimulation = true;
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
+    }
+
+    /// <summary>
+    /// [UI EVENT CALLBACK]
+    /// Set the difficulty of the next game
+    /// </summary>
+    public void SetDifficulty(Button prev, Button curr)
+    {
+        if(curr.name == "Easy")
+            Config.Difficulty = Difficulty.Easy;
+        else if (curr.name == "Medium")
+            Config.Difficulty = Difficulty.Medium;
+        else if (curr.name == "Hard")
+            Config.Difficulty = Difficulty.Hard;
     }
 
 }

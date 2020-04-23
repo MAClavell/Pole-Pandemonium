@@ -19,8 +19,6 @@ public class EnemyManager : MonoBehaviour
     private AudioSource enemyEnter3;
     AudioSource[] audioManager;
     float difficultyModifier;
-    float difficultyChange; //used when difficulty is changed mid game
-    TMPro.TMP_Dropdown difficultySelect;
 
     private void Awake()
     {
@@ -31,8 +29,6 @@ public class EnemyManager : MonoBehaviour
         audioManager[0] = enemyEnter1;
         audioManager[1] = enemyEnter2;
         audioManager[2] = enemyEnter3;
-        difficultySelect = GameObject.FindGameObjectWithTag("DifficultySelect").GetComponent<TMPro.TMP_Dropdown>();
-        difficultyChange = 1.0f;
     }
 
 
@@ -41,10 +37,6 @@ public class EnemyManager : MonoBehaviour
     {
         time = 0.0f;
         spawnTime = 1.5f;
-        difficultyModifier = 1.0f;
-        difficultySelect.onValueChanged.AddListener(delegate {
-            ChangeDifficulty(difficultySelect.value);
-        });
     }
 
     // Update is called once per frame
@@ -96,33 +88,16 @@ public class EnemyManager : MonoBehaviour
         audioManager[enterSound].Play();
     }
 
-    public void ChangeDifficulty(int difficulty)
+    public void SetDifficulty(Difficulty difficulty)
     {
-        if (difficulty == 0)
-        {
-            //Easy
-             difficultyChange = 1.25f;
-            Debug.Log("EASY");
-        }
-        else if (difficulty == 1)
-        {
-            //Medium
-            difficultyChange = 1.0f;
-            Debug.Log("MEDIUM");
-        }
-        else if (difficulty == 2)
-        {
-            //Hard
-            difficultyChange = 0.5f;
-            Debug.Log("HARD");
-        }
-
-
+        //Easy
+        if (difficulty == Difficulty.Easy)
+            difficultyModifier = 1.25f;
+        //Medium
+        else if (difficulty == Difficulty.Medium)
+            difficultyModifier = 1.0f;
+        //Hard
+        else if (difficulty == Difficulty.Hard)
+            difficultyModifier = 0.5f;
     }
-
-    public void SetDifficulty()
-    {
-        difficultyModifier = difficultyChange;
-    }
-
 }

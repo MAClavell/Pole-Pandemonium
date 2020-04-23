@@ -6,6 +6,8 @@ using System.Diagnostics;
 
 public enum ControlScheme { Angle, Screen }
 
+public enum Difficulty { Easy=0, Medium, Hard}
+
 public enum SkinType { Default=0, Demon }
 
 public class Config
@@ -22,6 +24,7 @@ public class Config
         public SkinType backgroundSkin = SkinType.Default;
         public SkinType poleSkin = SkinType.Default;
         public SkinType enemySkin = SkinType.Default;
+        public Difficulty difficulty = Difficulty.Medium;
     }
 
     /// <summary>
@@ -156,19 +159,30 @@ public class Config
 	/// </summary>
 	public static int MaxSkins { get; } = System.Enum.GetValues(typeof(SkinType)).Length;
 
+    public static Difficulty Difficulty 
+    {
+        get => configFile.difficulty;
+        set
+        {
+            configFile.difficulty = value;
+            if (!loading)
+                SaveConfig();
+
+            GameManager.Instance.EnemyManager.SetDifficulty(value);
+        }
+    }
+
     private const string CONFIG_PATH = "/Config.pole";
     private const string VERSION_NUMBER = "1.0";
     private static SerializableConfig configFile;
     private static bool loading = true;
 
     /// <summary>
-    /// Init the config file
+    /// Load the config file from disc
     /// ONLY RUN ONCE AT STARTUP
     /// </summary>
-    public static void Init()
+    public static void LoadConfigFile()
     {
-        loading = true;
-
         //Only load if the config file exists
         if (!File.Exists(Application.persistentDataPath + CONFIG_PATH) ||
             string.IsNullOrWhiteSpace(Application.persistentDataPath + CONFIG_PATH))
@@ -182,12 +196,19 @@ public class Config
         using (StreamReader sr = new StreamReader(Application.persistentDataPath + CONFIG_PATH))
         {
             configFile = JsonUtility.FromJson<SerializableConfig>(sr.ReadToEnd());
-
-            //Set initial values for skins
-            BackgroundSkin = BackgroundSkin;
-            PoleSkin = PoleSkin;
-            EnemySkin = EnemySkin;
         }
+    }
+    /// <summary>
+    /// Set the initial values of the config
+    /// ONLY RUN ONCE AT STARTUP
+    /// </summary>
+    public static void SetInitialValues()
+    {
+        loading = true;
+        BackgroundSkin = BackgroundSkin;
+        PoleSkin = PoleSkin;
+        EnemySkin = EnemySkin;
+        Difficulty = Difficulty;
         loading = false;
     }
     /// <summary>

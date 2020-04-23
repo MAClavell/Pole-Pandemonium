@@ -45,7 +45,7 @@ MonoBehaviour:
       type: 3}
     stickEnemyLegColor: {r: 1, g: 0.3137255, b: 0.043137256, a: 1}
   - skinType: 1
-    backgroundSprite: {fileID: 3286163911610860551, guid: 329c90154d910484ab2dfec4adfb3a18,
+    backgroundSprite: {fileID: 3286163911610860551, guid: 53fd94098cf945e4a9c131132c7d5374,
       type: 3}
     backgroundColor: {r: 1, g: 1, b: 1, a: 1}
     poleSprite: {fileID: 3286163911610860551, guid: f97b0abd38cccac4292bf1a076662c77,
