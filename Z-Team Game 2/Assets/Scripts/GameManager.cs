@@ -104,6 +104,13 @@ public class GameManager : Singleton<GameManager>
         EnemyManager.SetDifficulty();
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
+        Time.timeScale = 1.0f;
+
+        //Used to find if there are any enemies on the screen. Before this was here, if the playr restarted and there was still enemies on screen, they would persist to the next round
+        foreach (var item in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            Destroy(item);
+        }
         
     }
 
@@ -127,6 +134,7 @@ public class GameManager : Singleton<GameManager>
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game, MenuCanvas.Pause });
         Physics.autoSimulation = false;
         CurrentState = GameState.Paused;
+        Time.timeScale = 0.0f;
     }
 
     /// <summary>
@@ -139,6 +147,8 @@ public class GameManager : Singleton<GameManager>
         Physics.autoSimulation = true;
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
+        Time.timeScale = 1.0f;
+        
     }
 
 }
