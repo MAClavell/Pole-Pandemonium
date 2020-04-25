@@ -11538,6 +11538,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1633035017}
   - component: {fileID: 1633035016}
+  - component: {fileID: 1633035018}
   m_Layer: 0
   m_Name: bgMusic
   m_TagString: Untagged
@@ -11656,6 +11657,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1633035018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633035015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6eb1d58366ea744bf79a602f506dad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGM: {fileID: 1633035016}
+  easy: {fileID: 8300000, guid: 3b61727f06dd0624aafd42cc023d35d1, type: 3}
+  medium: {fileID: 8300000, guid: 405e2f74a2e79894bab4dcab88893ab2, type: 3}
+  hard: {fileID: 8300000, guid: 67746452893db1d43929c0a3a75777e4, type: 3}
 --- !u!1 &1640088430
 GameObject:
   m_ObjectHideFlags: 0
