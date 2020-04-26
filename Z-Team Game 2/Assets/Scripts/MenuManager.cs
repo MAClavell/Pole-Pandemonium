@@ -29,23 +29,20 @@ public class MenuManager : MonoBehaviour
     private MenuCanvas[] currCanvases;
     private MenuCanvas[] prevCanvases;
 
-    private LeaderboardUI leaderBoard;
     private CosmeticsUI cosmetics;
 
     // Start is called before the first frame update
     void Start()
     {
-        menuCanvases = new GameObject[7];
+        menuCanvases = new GameObject[6];
         menuCanvases[0] = GameObject.Find("MainCanvas");
         menuCanvases[1] = GameObject.Find("SettingsCanvas");
         menuCanvases[2] = GameObject.Find("GameCanvas");
         menuCanvases[3] = GameObject.Find("PauseCanvas");
         menuCanvases[4] = GameObject.Find("EndCanvas");
-        menuCanvases[5] = GameObject.Find("LeaderboardCanvas");
-        menuCanvases[6] = GameObject.Find("CosmeticsCanvas");
+        menuCanvases[5] = GameObject.Find("CosmeticsCanvas");
 
-        leaderBoard = menuCanvases[5].GetComponent<LeaderboardUI>();
-        cosmetics = menuCanvases[6].GetComponent<CosmeticsUI>();
+        cosmetics = menuCanvases[5].GetComponent<CosmeticsUI>();
 
         currCanvases = null;
         prevCanvases = null;
@@ -88,14 +85,14 @@ public class MenuManager : MonoBehaviour
         endTimerText.text = $"<mspace=0.6em>{TimeSpan.FromSeconds(time).ToString("mm'.'ss'.'ff")}</mspace>";
 
         //Set highscore text
-        if(leaderBoard.IsNewHighScore())
+        if(Leaderboard.IsNewHighScore())
         {
             highScoreText.text = "New highscore!";
-            leaderBoard.UpdateHighScore();
+            Leaderboard.UpdateHighScore();
         }
         else
         {
-            highScoreText.text = $"Highscore - <mspace=0.6em>{TimeSpan.FromSeconds(leaderBoard.GetHighScore()).ToString("mm'.'ss'.'ff")}</mspace>";
+            highScoreText.text = $"Highscore - <mspace=0.6em>{TimeSpan.FromSeconds(Leaderboard.GetHighScore()).ToString("mm'.'ss'.'ff")}</mspace>";
         }
     }
 

@@ -58,6 +58,7 @@ public class GameManager : Singleton<GameManager>
         gameOverSound = GameObject.Find("gameOverSound").GetComponent<AudioSource>();
         EnemyManager = GetComponent<EnemyManager>();
         Config.LoadConfigFile();
+        Leaderboard.Init();
     }
 
     // Start is called before the first frame update

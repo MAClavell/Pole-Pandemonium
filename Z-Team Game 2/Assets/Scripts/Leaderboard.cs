@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class LeaderboardUI : MonoBehaviour
+public class Leaderboard
 {
     private const string LEADERBOARD_PATH = "/Leaderboard.pole";
 
@@ -33,12 +33,12 @@ public class LeaderboardUI : MonoBehaviour
         }
     }
 
-    private HighScoreEntries highScores;
+    private static HighScoreEntries highScores;
    
     /// <summary>
-    /// Constructor
+    /// Init the class
     /// </summary>
-    private void Awake()
+    public static void Init()
     {
         LoadScore();
     }
@@ -46,7 +46,7 @@ public class LeaderboardUI : MonoBehaviour
     /// <summary>
     /// Save the current game time as the new highscore
     /// </summary>
-    private void SaveScore()
+    private static void SaveScore()
     {
         BinaryFormatter bf = new BinaryFormatter();
         using (StreamWriter sw = new StreamWriter(Application.persistentDataPath + LEADERBOARD_PATH, false))
@@ -58,7 +58,7 @@ public class LeaderboardUI : MonoBehaviour
     /// <summary>
     /// Load the player's highest score
     /// </summary>
-    private void LoadScore()
+    private static void LoadScore()
     {
         //New highscore
         if (!File.Exists(Application.persistentDataPath + LEADERBOARD_PATH) ||
@@ -82,13 +82,13 @@ public class LeaderboardUI : MonoBehaviour
     /// <summary>
     /// Update the high score with the current game time
     /// </summary>
-    public void UpdateHighScore()
+    public static void UpdateHighScore()
     {
         highScores.medium = new LeaderboardEntry(GameManager.Instance.GameTime);
         SaveScore();
     }
 
-    public double GetHighScore()
+    public static double GetHighScore()
     {
         return highScores.medium.Time;
     }
@@ -96,18 +96,8 @@ public class LeaderboardUI : MonoBehaviour
     /// <summary>
     /// If our current game time is the newest highscore
     /// </summary>
-    public bool IsNewHighScore()
+    public static bool IsNewHighScore()
     {
         return highScores.medium.Time < GameManager.Instance.GameTime;
-    }
-
-    public void OnGlobalFriendSelectionChanged(Button prev, Button curr)
-    {
-
-    }
-
-    public void OnDifficultySelectionChanged(Button prev, Button curr)
-    {
-
     }
 }
