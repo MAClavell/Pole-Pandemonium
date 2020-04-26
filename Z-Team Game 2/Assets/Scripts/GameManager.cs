@@ -31,6 +31,16 @@ public class GameManager : Singleton<GameManager>
     public SpriteRenderer Background { get => background; }
 
     /// <summary>
+    /// Get the movingSprites game object
+    /// </summary>
+    public GameObject MovingSprites { get => movingSprites; }
+
+    /// <summary>
+    /// Get the foreground sprite object
+    /// </summary>
+    public SpriteRenderer Foreground { get => foreground; }
+
+    /// <summary>
     /// Get the scriptable object containing all the skins
     /// </summary>
     public SkinScriptableObject Skins { get => skins; }
@@ -39,6 +49,10 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField]
     private SpriteRenderer background;
+    [SerializeField]
+    private SpriteRenderer foreground;
+    [SerializeField]
+    private GameObject movingSprites;
     [SerializeField]
     private Pole pole;
     [SerializeField]
@@ -50,12 +64,15 @@ public class GameManager : Singleton<GameManager>
 
     private AudioSource gameOverSound;
 
+    private Transform movingSpritesParent;
+
     // Start is called before the first frame update
     void Awake()
     {
         CurrentState = GameState.MainMenu;
         gameOverSound = GameObject.Find("gameOverSound").GetComponent<AudioSource>();
         EnemyManager = GetComponent<EnemyManager>();
+        movingSpritesParent = GameObject.Find("MovingSprites").transform;
     }
 
     // Start is called before the first frame update
@@ -135,6 +152,26 @@ public class GameManager : Singleton<GameManager>
         Physics.autoSimulation = false;
         CurrentState = GameState.Paused;
         Time.timeScale = 0.0f;
+    }
+
+    /// <summary>
+    /// Sets the current moving sprites game object and instantiates it in the scene
+    /// </summary>
+    public void SetMovingSprites(GameObject movingSprites)
+    {
+        // Remove the current moving game object
+        int currentChildCount = movingSpritesParent.childCount;
+
+        foreach (Transform child in movingSpritesParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        if (!movingSprites) return;
+
+        GameObject newObj = Instantiate(movingSprites, movingSpritesParent, true);
+
+        newObj.SetActive(true);
     }
 
     /// <summary>

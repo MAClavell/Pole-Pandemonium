@@ -68,6 +68,8 @@ public class Config
             var gm = GameManager.Instance;
             var skin = gm.Skins.GetSkin(value);
             gm.Background.sprite = skin.backgroundSprite;
+            gm.Foreground.sprite = skin.foregroundSprite ? skin.foregroundSprite : null;
+            gm.SetMovingSprites(skin.movingObjectPrefab ? skin.movingObjectPrefab : null);
             gm.Background.color = skin.backgroundColor;
         }
     }

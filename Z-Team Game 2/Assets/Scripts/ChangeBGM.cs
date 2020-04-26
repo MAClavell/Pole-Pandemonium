@@ -11,8 +11,7 @@ public class ChangeBGM : MonoBehaviour
     public AudioClip medium;
     public AudioClip hard;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         difficultySelect = GameObject.FindGameObjectWithTag("DifficultySelect").GetComponent<TMPro.TMP_Dropdown>();
     }

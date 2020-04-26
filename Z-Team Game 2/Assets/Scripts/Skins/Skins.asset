@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skins:
   - skinType: 0
-    backgroundSprite: {fileID: 3286163911610860551, guid: 329c90154d910484ab2dfec4adfb3a18,
+    backgroundSprite: {fileID: 3286163911610860551, guid: 8d16d488ca06df4409c0960b95e5e4f0,
+      type: 3}
+    foregroundSprite: {fileID: 3286163911610860551, guid: ea567125b629713458bfb516ff463ba8,
+      type: 3}
+    movingObjectPrefab: {fileID: 1711894319814804074, guid: 8fc80917e732c334a866a12d98116639,
       type: 3}
     backgroundColor: {r: 1, g: 1, b: 1, a: 1}
     poleSprite: {fileID: 3286163911610860551, guid: d212264575135bc4688e7083eed40d21,
@@ -45,7 +49,11 @@ MonoBehaviour:
       type: 3}
     stickEnemyLegColor: {r: 1, g: 0.3137255, b: 0.043137256, a: 1}
   - skinType: 1
-    backgroundSprite: {fileID: 3286163911610860551, guid: 329c90154d910484ab2dfec4adfb3a18,
+    backgroundSprite: {fileID: 3286163911610860551, guid: b2f40dd87c4d8844fa8bb1cfaf69c40a,
+      type: 3}
+    foregroundSprite: {fileID: 3286163911610860551, guid: 096581f11f2346c408339abc1567e320,
+      type: 3}
+    movingObjectPrefab: {fileID: 8945626662554245316, guid: 3bce3c04ef67a9441a11a66c886e7c6b,
       type: 3}
     backgroundColor: {r: 1, g: 1, b: 1, a: 1}
     poleSprite: {fileID: 3286163911610860551, guid: f97b0abd38cccac4292bf1a076662c77,
@@ -76,7 +84,11 @@ MonoBehaviour:
       type: 3}
     stickEnemyLegColor: {r: 0, g: 0, b: 0, a: 1}
   - skinType: 2
-    backgroundSprite: {fileID: 3286163911610860551, guid: 329c90154d910484ab2dfec4adfb3a18,
+    backgroundSprite: {fileID: 3286163911610860551, guid: 6fcca32725b2b1148a21bc1ee895df13,
+      type: 3}
+    foregroundSprite: {fileID: 3286163911610860551, guid: f968232ee5400204f8d1ea65a19c0b6a,
+      type: 3}
+    movingObjectPrefab: {fileID: 8288801405875422462, guid: 9d80e003846cd224d807baa3f5b35a95,
       type: 3}
     backgroundColor: {r: 1, g: 1, b: 1, a: 1}
     poleSprite: {fileID: 3286163911610860551, guid: 3b0be25a244fbeb41a4385e8060237c8,
@@ -107,7 +119,11 @@ MonoBehaviour:
       type: 3}
     stickEnemyLegColor: {r: 1, g: 1, b: 1, a: 1}
   - skinType: 3
-    backgroundSprite: {fileID: 3286163911610860551, guid: 329c90154d910484ab2dfec4adfb3a18,
+    backgroundSprite: {fileID: 3286163911610860551, guid: 8d16d488ca06df4409c0960b95e5e4f0,
+      type: 3}
+    foregroundSprite: {fileID: 3286163911610860551, guid: ea567125b629713458bfb516ff463ba8,
+      type: 3}
+    movingObjectPrefab: {fileID: 1711894319814804074, guid: 8fc80917e732c334a866a12d98116639,
       type: 3}
     backgroundColor: {r: 1, g: 1, b: 1, a: 1}
     poleSprite: {fileID: 3286163911610860551, guid: 0476c60fc5880c7468c9dc4dd7d86d79,
