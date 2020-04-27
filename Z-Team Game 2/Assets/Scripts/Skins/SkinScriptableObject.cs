@@ -13,6 +13,8 @@ public class SkinScriptableObject : ScriptableObject
 
         [Header("Background")]
         public Sprite backgroundSprite;
+        public Sprite foregroundSprite;
+        public GameObject movingObjectPrefab;
         public Color backgroundColor;
 
         [Header("Pole")]

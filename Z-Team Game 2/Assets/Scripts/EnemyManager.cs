@@ -52,13 +52,13 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
-        if (transform.GetComponent<GameManager>().CurrentState == GameState.GameOver)
-        {
-            foreach (var deadEnemy in GameObject.FindGameObjectsWithTag("Enemy"))
-            {
-                Destroy(deadEnemy.transform.parent.gameObject);
-            }
-        }
+        //if (transform.GetComponent<GameManager>().CurrentState == GameState.GameOver)
+        //{
+        //    foreach (var deadEnemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        //    {
+        //        Destroy(deadEnemy.transform.parent.gameObject);
+        //    }
+        //}
     }
 
     private void SpawnEnemy()

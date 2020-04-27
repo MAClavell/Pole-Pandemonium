@@ -10,6 +10,8 @@ public class CosmeticsUI : MonoBehaviour, IMenuUIBase
     [SerializeField]
     SVGImage backgroundObj;
     [SerializeField]
+    SVGImage foregroundObj;
+    [SerializeField]
     SVGImage poleObj;
     [SerializeField]
     SVGImage[] bounceEnemyObjs;
@@ -138,6 +140,7 @@ public class CosmeticsUI : MonoBehaviour, IMenuUIBase
         currentBackgroundSkin = newSkin;
         var skinObj = GameManager.Instance.Skins.GetSkin(newSkin);
         backgroundObj.sprite = skinObj.backgroundSprite;
+        foregroundObj.sprite = skinObj.foregroundSprite;
         backgroundObj.color = skinObj.backgroundColor;
     }
 

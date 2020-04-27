@@ -32,6 +32,16 @@ public class GameManager : Singleton<GameManager>
     public SpriteRenderer Background { get => background; }
 
     /// <summary>
+    /// Get the movingSprites game object
+    /// </summary>
+    public GameObject MovingSprites { get => movingSprites; }
+
+    /// <summary>
+    /// Get the foreground sprite object
+    /// </summary>
+    public SpriteRenderer Foreground { get => foreground; }
+
+    /// <summary>
     /// Get the scriptable object containing all the skins
     /// </summary>
     public SkinScriptableObject Skins { get => skins; }
@@ -40,6 +50,10 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField]
     private SpriteRenderer background;
+    [SerializeField]
+    private SpriteRenderer foreground;
+    [SerializeField]
+    private GameObject movingSprites;
     [SerializeField]
     private Pole pole;
     [SerializeField]
@@ -51,6 +65,8 @@ public class GameManager : Singleton<GameManager>
 
     private AudioSource gameOverSound;
 
+    private Transform movingSpritesParent;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -59,6 +75,7 @@ public class GameManager : Singleton<GameManager>
         EnemyManager = GetComponent<EnemyManager>();
         Config.Load();
         Leaderboard.Init();
+        movingSpritesParent = GameObject.Find("MovingSprites").transform;
     }
 
     // Start is called before the first frame update
@@ -110,6 +127,14 @@ public class GameManager : Singleton<GameManager>
         GameTime = 0;
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
+        Time.timeScale = 1.0f;
+
+        //Used to find if there are any enemies on the screen. Before this was here, if the playr restarted and there was still enemies on screen, they would persist to the next round
+        foreach (var item in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            Destroy(item);
+        }
+        
     }
 
     /// <summary>
@@ -132,6 +157,27 @@ public class GameManager : Singleton<GameManager>
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game, MenuCanvas.Pause });
         Physics.autoSimulation = false;
         CurrentState = GameState.Paused;
+        Time.timeScale = 0.0f;
+    }
+
+    /// <summary>
+    /// Sets the current moving sprites game object and instantiates it in the scene
+    /// </summary>
+    public void SetMovingSprites(GameObject movingSprites)
+    {
+        // Remove the current moving game object
+        int currentChildCount = movingSpritesParent.childCount;
+
+        foreach (Transform child in movingSpritesParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        if (!movingSprites) return;
+
+        GameObject newObj = Instantiate(movingSprites, movingSpritesParent, true);
+
+        newObj.SetActive(true);
     }
 
     /// <summary>
@@ -143,6 +189,8 @@ public class GameManager : Singleton<GameManager>
         Physics.autoSimulation = true;
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game });
         CurrentState = GameState.Playing;
+        Time.timeScale = 1.0f;
+        
     }
 
     /// <summary>

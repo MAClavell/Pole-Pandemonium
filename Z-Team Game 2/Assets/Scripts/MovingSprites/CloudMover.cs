@@ -10,9 +10,9 @@ public class CloudMover : MonoBehaviour
     const float MIN_SPEED = 0.5f;
     const float MAX_SPEED = 1.5f;
 
-    public List<Cloud> clouds;
+    public List<MovingSprite> sprites;
 
-    private int currentCloud = 0;
+    private int currentSprite = 0;
 
     private float leftBound;
     private float rightBound;
@@ -24,7 +24,7 @@ public class CloudMover : MonoBehaviour
     private float maxY;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         float worldScreenHeight = Camera.main.orthographicSize * 2;
         float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
@@ -35,9 +35,9 @@ public class CloudMover : MonoBehaviour
         minY = worldScreenHeight * 0.6f;
         maxY = worldScreenHeight * 1.0f;
 
-        foreach (Cloud cloud in clouds)
+        foreach (MovingSprite sprite in sprites)
         {
-            cloud.Init();
+            sprite.Init();
         }
     }
 
@@ -45,20 +45,20 @@ public class CloudMover : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.CurrentState == GameState.Playing &&
-            clouds.Count > 0)
+            sprites.Count > 0)
         {
             spawnTimer += Time.deltaTime;
 
-            MoveClouds();
+            MoveSprites();
 
             if (spawnTimer > spawnDelay)
             {
                 spawnTimer = 0;
                 spawnDelay = Random.Range(MIN_DELAY, MAX_DELAY);
 
-                currentCloud = (currentCloud + 1) % clouds.Count;
+                currentSprite = (currentSprite + 1) % sprites.Count;
 
-                if (clouds[currentCloud].active)
+                if (sprites[currentSprite].active)
                 {
                     return;
                 }
@@ -67,7 +67,7 @@ public class CloudMover : MonoBehaviour
                     float speed = Random.Range(MIN_SPEED, MAX_SPEED);
                     float yPos = Random.Range(minY, maxY);
 
-                    clouds[currentCloud].Spawn(speed, leftBound, yPos, MAX_SPEED, MIN_SPEED);
+                    sprites[currentSprite].Spawn(speed, leftBound, yPos, MAX_SPEED, MIN_SPEED);
                 }
             }
         }
@@ -75,19 +75,19 @@ public class CloudMover : MonoBehaviour
 
     public void ResetClouds()
     {
-        foreach (Cloud cloud in clouds)
+        foreach (MovingSprite sprite in sprites)
         {
-            cloud.Deactivate();
+            sprite.Deactivate();
         }
     }
 
-    void MoveClouds()
+    private void MoveSprites()
     {
-        foreach (Cloud cloud in clouds)
+        foreach (MovingSprite sprite in sprites)
         {
-            if (cloud.active)
+            if (sprite.active)
             {
-                cloud.Move(rightBound);
+                sprite.Move(rightBound);
             }
         }
     }
