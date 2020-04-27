@@ -31,11 +31,7 @@ public class MovingSprite : MonoBehaviour
     public void Move(float rightBound)
     {
         transform.Translate(speed * direction.normalized * Time.deltaTime);
-        Debug.Log(transform.position.y);
-        Debug.Log(targetPos.y);
-        if (hasTarget &&
-
-            transform.position.y < targetPos.y)
+        if (hasTarget && transform.position.y < targetPos.y)
         {
             Deactivate();
         }

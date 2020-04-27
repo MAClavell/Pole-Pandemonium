@@ -190,6 +190,8 @@ public class Config
             configFile.muteMusic = value;
             if (!loading)
                 SaveConfig();
+
+            GameManager.Instance.SetMuteMusic(value);
         }
     }
 
@@ -204,6 +206,8 @@ public class Config
             configFile.muteSoundEffects = value;
             if (!loading)
                 SaveConfig();
+
+            GameManager.Instance.SetMuteSoundEffects(value);
         }
     }
 
@@ -258,6 +262,8 @@ public class Config
         PoleSkin = PoleSkin;
         EnemySkin = EnemySkin;
         Difficulty = Difficulty;
+        MuteMusic = MuteMusic;
+        MuteSoundEffects = MuteSoundEffects;
         loading = false;
     }
     /// <summary>

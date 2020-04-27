@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public enum GameState { Loading, MainMenu, Playing, Paused, GameOver }
@@ -48,18 +49,17 @@ public class GameManager : Singleton<GameManager>
 
     public EnemyManager EnemyManager { get; private set; }
 
-    [SerializeField]
-    private SpriteRenderer background;
-    [SerializeField]
-    private SpriteRenderer foreground;
-    [SerializeField]
-    private GameObject movingSprites;
-    [SerializeField]
-    private Pole pole;
-    [SerializeField]
-    private MenuManager menuManager;
-    [SerializeField]
-    SkinScriptableObject skins;
+    [SerializeField] private SpriteRenderer background;
+    [SerializeField] private SpriteRenderer foreground;
+    [SerializeField] private GameObject movingSprites;
+    [SerializeField] private Pole pole;
+    [SerializeField] private MenuManager menuManager;
+    [SerializeField] private SkinScriptableObject skins;
+    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private AudioSource BGM;
+    [SerializeField] private AudioClip easy;
+    [SerializeField] private AudioClip medium;
+    [SerializeField] private AudioClip hard;
 
     public double GameTime { get; private set; }
 
@@ -199,12 +199,45 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void SetDifficulty(Button prev, Button curr)
     {
+        //Easy
         if(curr.name == "Easy")
+        {
             Config.Difficulty = Difficulty.Easy;
+            BGM.Stop();
+            BGM.clip = easy;
+            BGM.Play();
+        }
+        //Medium
         else if (curr.name == "Medium")
+        {
             Config.Difficulty = Difficulty.Medium;
+            BGM.Stop();
+            BGM.clip = medium;
+            BGM.Play();
+        }
+        //Hard
         else if (curr.name == "Hard")
+        {
             Config.Difficulty = Difficulty.Hard;
+            BGM.Stop();
+            BGM.clip = hard;
+            BGM.Play();
+        }
     }
 
+    public void SetMuteMusic(bool muted)
+    {
+        if(muted)
+            audioMixer.SetFloat("MusicVolume", -80);
+        else
+            audioMixer.SetFloat("MusicVolume", 0);
+    }
+
+    public void SetMuteSoundEffects(bool muted)
+    {
+        if(muted)
+            audioMixer.SetFloat("SoundEffectVolume", -80);
+        else
+            audioMixer.SetFloat("SoundEffectVolume", 0);
+    }
 }

@@ -74,8 +74,6 @@ public class StarMover : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Here");
-
                     float speed = Random.Range(MIN_SPEED, MAX_SPEED);
                     Vector2 startPos = new Vector2(Random.Range(minStartX, maxStartX), startY);
                     Vector2 endPos = new Vector2(Random.Range(minTargetX, maxTargetX), targetY);

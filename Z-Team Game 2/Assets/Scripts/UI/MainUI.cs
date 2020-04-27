@@ -13,7 +13,7 @@ public class MainUI : MonoBehaviour, IMenuUIBase
     public void Activate(bool previouslyActive)
     {
         difficultySelection.defaultElement = (int)Config.Difficulty;
-        difficultySelection.SelectNoInvoke(difficultySelection.defaultElement);
+        difficultySelection.Select(difficultySelection.defaultElement);
     }
 
     /// <summary>
