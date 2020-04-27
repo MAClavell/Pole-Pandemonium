@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainUI : MonoBehaviour, IMenuUIBase
+public class EndUI : MonoBehaviour, IMenuUIBase
 {
     [SerializeField]
     SelectionGroup difficultySelection;
@@ -10,6 +10,7 @@ public class MainUI : MonoBehaviour, IMenuUIBase
     /// <summary>
     /// Activate the UI
     /// </summary>
+    /// <param name="previouslyActive">Whether the UI is currently active</param>
     public void Activate(bool previouslyActive)
     {
         difficultySelection.defaultElement = (int)Config.Difficulty;
@@ -28,6 +29,5 @@ public class MainUI : MonoBehaviour, IMenuUIBase
     /// <summary>
     /// Get the gameobject attached to this UI
     /// </summary>
-    /// <param name="previouslyActive">Whether the UI is currently active</param>
     public GameObject GameObject { get => gameObject; }
 }

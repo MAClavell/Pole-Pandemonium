@@ -25,6 +25,8 @@ public class Config
         public SkinType poleSkin = SkinType.Default;
         public SkinType enemySkin = SkinType.Default;
         public Difficulty difficulty = Difficulty.Medium;
+        public bool muteMusic = false;
+        public bool muteSoundEffects = false;
     }
 
     /// <summary>
@@ -159,6 +161,9 @@ public class Config
 	/// </summary>
 	public static int MaxSkins { get; } = System.Enum.GetValues(typeof(SkinType)).Length;
 
+    /// <summary>
+    /// The current difficulty of the game
+    /// </summary>
     public static Difficulty Difficulty 
     {
         get => configFile.difficulty;
@@ -172,16 +177,58 @@ public class Config
         }
     }
 
+    /// <summary>
+    /// Whether music is muted
+    /// </summary>
+    public static bool MuteMusic
+    {
+        get => configFile.muteMusic;
+        set
+        {
+            configFile.muteMusic = value;
+            if (!loading)
+                SaveConfig();
+        }
+    }
+
+    /// <summary>
+    /// Whether sound effects are muted
+    /// </summary>
+    public static bool MuteSoundEffects
+    {
+        get => configFile.muteSoundEffects;
+        set
+        {
+            configFile.muteSoundEffects = value;
+            if (!loading)
+                SaveConfig();
+        }
+    }
+
     private const string CONFIG_PATH = "/Config.pole";
     private const string VERSION_NUMBER = "1.0";
     private static SerializableConfig configFile;
     private static bool loading = true;
 
+    public static void Load()
+    {
+        //If there is an error loading, delete the file and load defaults
+        try
+        {
+            LoadConfigFile();
+        }
+        catch when (File.Exists(Application.persistentDataPath + CONFIG_PATH))
+        {
+            File.Delete(Application.persistentDataPath + CONFIG_PATH);
+            LoadConfigFile();
+        }
+    }
+
     /// <summary>
     /// Load the config file from disc
     /// ONLY RUN ONCE AT STARTUP
     /// </summary>
-    public static void LoadConfigFile()
+    private static void LoadConfigFile()
     {
         //Only load if the config file exists
         if (!File.Exists(Application.persistentDataPath + CONFIG_PATH) ||

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum GameState { MainMenu, Playing, Paused, GameOver }
+public enum GameState { Loading, MainMenu, Playing, Paused, GameOver }
 
 public class GameManager : Singleton<GameManager>
 {
@@ -57,7 +57,7 @@ public class GameManager : Singleton<GameManager>
         CurrentState = GameState.MainMenu;
         gameOverSound = GameObject.Find("gameOverSound").GetComponent<AudioSource>();
         EnemyManager = GetComponent<EnemyManager>();
-        Config.LoadConfigFile();
+        Config.Load();
         Leaderboard.Init();
     }
 
@@ -72,6 +72,10 @@ public class GameManager : Singleton<GameManager>
     {
         switch (CurrentState)
         {
+            case GameState.Loading:
+                CurrentState = GameState.MainMenu;
+                break;
+
             case GameState.MainMenu:
                 break;
 

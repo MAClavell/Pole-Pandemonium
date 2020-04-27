@@ -40,7 +40,16 @@ public class Leaderboard
     /// </summary>
     public static void Init()
     {
-        LoadScore();
+        //If there is an error loading, delete the file and load defaults
+        try
+        {
+            LoadScore();
+        }
+        catch when (File.Exists(Application.persistentDataPath + LEADERBOARD_PATH))
+        {
+            File.Delete(Application.persistentDataPath + LEADERBOARD_PATH);
+            LoadScore();
+        }
     }
 
     /// <summary>
@@ -84,13 +93,41 @@ public class Leaderboard
     /// </summary>
     public static void UpdateHighScore()
     {
-        highScores.medium = new LeaderboardEntry(GameManager.Instance.GameTime);
+        switch (Config.Difficulty)
+        {
+            case Difficulty.Easy:
+                highScores.easy = new LeaderboardEntry(GameManager.Instance.GameTime);
+                break;
+
+            case Difficulty.Medium:
+                highScores.medium = new LeaderboardEntry(GameManager.Instance.GameTime);
+                break;
+
+            case Difficulty.Hard:
+                highScores.hard = new LeaderboardEntry(GameManager.Instance.GameTime);
+                break;
+        }
         SaveScore();
     }
 
-    public static double GetHighScore()
+    /// <summary>
+    /// Get the current highscore
+    /// </summary>
+    /// <returns></returns>
+    public static double GetCurrentHighScore()
     {
-        return highScores.medium.Time;
+        switch (Config.Difficulty)
+        {
+            case Difficulty.Easy:
+                return highScores.easy.Time;
+
+            case Difficulty.Medium:
+                return highScores.medium.Time;
+
+            case Difficulty.Hard:
+                return highScores.hard.Time;
+        }
+        return 0;
     }
 
     /// <summary>
@@ -98,6 +135,17 @@ public class Leaderboard
     /// </summary>
     public static bool IsNewHighScore()
     {
-        return highScores.medium.Time < GameManager.Instance.GameTime;
+        switch (Config.Difficulty)
+        {
+            case Difficulty.Easy:
+                return highScores.easy.Time < GameManager.Instance.GameTime;
+
+            case Difficulty.Medium:
+                return highScores.medium.Time < GameManager.Instance.GameTime;
+
+            case Difficulty.Hard:
+                return highScores.hard.Time < GameManager.Instance.GameTime;
+        }
+        return false;
     }
 }

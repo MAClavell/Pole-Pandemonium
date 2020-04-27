@@ -6,7 +6,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Leaderboard=5, Cosmetics=6 }
+public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Cosmetics=5 }
 
 public class MenuManager : MonoBehaviour
 {
@@ -25,24 +25,20 @@ public class MenuManager : MonoBehaviour
     private Toggle invertToggle;
     public Toggle InvertToggle { get; }
 
-    private GameObject[] menuCanvases;
+    private IMenuUIBase[] menuCanvases;
     private MenuCanvas[] currCanvases;
     private MenuCanvas[] prevCanvases;
-
-    private CosmeticsUI cosmetics;
 
     // Start is called before the first frame update
     void Start()
     {
-        menuCanvases = new GameObject[6];
-        menuCanvases[0] = GameObject.Find("MainCanvas");
-        menuCanvases[1] = GameObject.Find("SettingsCanvas");
-        menuCanvases[2] = GameObject.Find("GameCanvas");
-        menuCanvases[3] = GameObject.Find("PauseCanvas");
-        menuCanvases[4] = GameObject.Find("EndCanvas");
-        menuCanvases[5] = GameObject.Find("CosmeticsCanvas");
-
-        cosmetics = menuCanvases[5].GetComponent<CosmeticsUI>();
+        menuCanvases = new IMenuUIBase[System.Enum.GetValues(typeof(MenuCanvas)).Length];
+        menuCanvases[(int)MenuCanvas.Main] = GameObject.Find("MainCanvas").GetComponent<IMenuUIBase>();
+        menuCanvases[(int)MenuCanvas.Settings] = GameObject.Find("SettingsCanvas").GetComponent<IMenuUIBase>();
+        menuCanvases[(int)MenuCanvas.Game] = GameObject.Find("GameCanvas").GetComponent<IMenuUIBase>();
+        menuCanvases[(int)MenuCanvas.Pause] = GameObject.Find("PauseCanvas").GetComponent<IMenuUIBase>();
+        menuCanvases[(int)MenuCanvas.End] = GameObject.Find("EndCanvas").GetComponent<IMenuUIBase>();
+        menuCanvases[(int)MenuCanvas.Cosmetics] = GameObject.Find("CosmeticsCanvas").GetComponent<IMenuUIBase>();
 
         currCanvases = null;
         prevCanvases = null;
@@ -60,9 +56,16 @@ public class MenuManager : MonoBehaviour
         {
             if (canvases.Contains((MenuCanvas)i))
             {
-                menuCanvases[i].SetActive(true);
+                bool previouslyActive = menuCanvases[i].GameObject.activeInHierarchy;
+                menuCanvases[i].GameObject.SetActive(true);
+                menuCanvases[i].Activate(previouslyActive);
             }
-            else menuCanvases[i].SetActive(false);
+            else
+            {
+                bool previouslyActive = menuCanvases[i].GameObject.activeInHierarchy;
+                menuCanvases[i].GameObject.SetActive(false);
+                menuCanvases[i].Deactivate(previouslyActive);
+            }
         }
         currCanvases = canvases;
     }
@@ -92,17 +95,20 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            highScoreText.text = $"Highscore - <mspace=0.6em>{TimeSpan.FromSeconds(Leaderboard.GetHighScore()).ToString("mm'.'ss'.'ff")}</mspace>";
+            highScoreText.text = $"Highscore - <mspace=0.6em>{TimeSpan.FromSeconds(Leaderboard.GetCurrentHighScore()).ToString("mm'.'ss'.'ff")}</mspace>";
         }
     }
 
     public void ShowCosmetics()
     {
         SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Cosmetics });
-        cosmetics.Activate();
     }
 
-    public void HideCosmetics()
+    /// <summary>
+    /// [UI EVENT CALLBACK]
+    /// Hide the current canvases and show the previous canvases
+    /// </summary>
+    public void ShowPreviousCanvases()
     {
         SetActiveCanvases(prevCanvases);
     }
@@ -123,34 +129,5 @@ public class MenuManager : MonoBehaviour
     public void ShowSettingsAndGame()
     {
         SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game, MenuCanvas.Settings });
-    }
-
-    /// <summary>
-    /// [UI EVENT CALLBACK]
-    /// Hide the settings canvas and show the previous canvases
-    /// </summary>
-    public void HideSettings()
-    {
-        SetActiveCanvases(prevCanvases);
-    }
-
-    /// <summary>
-    /// [UI EVENT CALLBACK]
-    /// The toggle for the control scheme changed
-    /// </summary>
-    /// <param name="tog">Toggle object</param>
-    public void OnControlToggleChanged(Toggle tog)
-    {
-        Config.ControlScheme = tog.isOn ? ControlScheme.Angle : ControlScheme.Screen;
-    }
-
-    /// <summary>
-    /// [UI EVENT CALLBACK]
-    /// The toggle for the inverted controls changed
-    /// </summary>
-    /// <param name="tog">Toggle object</param>
-    public void OnInvertToggleChanged(Toggle tog)
-    {
-        Config.Invert = tog.isOn;
     }
 }

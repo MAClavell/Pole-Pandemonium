@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class CosmeticsUI : MonoBehaviour
+public class CosmeticsUI : MonoBehaviour, IMenuUIBase
 {
     [SerializeField]
     SVGImage backgroundObj;
@@ -29,8 +29,11 @@ public class CosmeticsUI : MonoBehaviour
     SkinType currentPoleSkin;
     SkinType currentEnemySkin;
 
-    // Start is called before the first frame update
-    public void Activate()
+    /// <summary>
+    /// Activate the UI
+    /// </summary>
+    /// <param name="previouslyActive">Whether the UI is currently active</param>
+    public void Activate(bool previouslyActive)
     {
         //Set defaults after config file is loaded
         SetBackgroundSkinPreview(Config.BackgroundSkin);
@@ -41,6 +44,20 @@ public class CosmeticsUI : MonoBehaviour
         SetEquipButtonInteractable(poleEquipButton, false);
         SetEquipButtonInteractable(enemyEquipButton, false);
     }
+
+    /// <summary>
+    /// Deactivate the UI
+    /// </summary>
+    /// <param name="previouslyActive">Whether the UI is currently active</param>
+    public void Deactivate(bool previouslyActive)
+    {
+
+    }
+
+    /// <summary>
+    /// Get the gameobject attached to this UI
+    /// </summary>
+    public GameObject GameObject { get => gameObject; }
 
     /// <summary>
     /// [UI EVENT CALLBACK]
@@ -58,17 +75,17 @@ public class CosmeticsUI : MonoBehaviour
 
         int currentSkinNum = 0;
         int skinType = 0; //1=background, 2=pole, 3=enemy
-        if(button.transform.parent.name == "BackgroundSelection")
+        if(button.transform.parent.parent.name == "BackgroundSelection")
         {
             currentSkinNum = (int)currentBackgroundSkin;
             skinType = 0;
         }
-        else if (button.transform.parent.name == "PoleSelection")
+        else if (button.transform.parent.parent.name == "PoleSelection")
         {
             currentSkinNum = (int)currentPoleSkin;
             skinType = 1;
         }
-        else if (button.transform.parent.name == "EnemySelection")
+        else if (button.transform.parent.parent.name == "EnemySelection")
         {
             currentSkinNum = (int)currentEnemySkin;
             skinType = 2;
@@ -181,17 +198,17 @@ public class CosmeticsUI : MonoBehaviour
     public void OnEquipButtonClicked()
     {
         GameObject button = EventSystem.current.currentSelectedGameObject;
-        if (button.transform.parent.name == "BackgroundSelection")
+        if (button.transform.parent.parent.name == "BackgroundSelection")
         {
             Config.BackgroundSkin = currentBackgroundSkin;
             SetEquipButtonInteractable(backgroundEquipButton, false);
         }
-        else if (button.transform.parent.name == "PoleSelection")
+        else if (button.transform.parent.parent.name == "PoleSelection")
         {
             Config.PoleSkin = currentPoleSkin;
             SetEquipButtonInteractable(poleEquipButton, false);
         }
-        else if (button.transform.parent.name == "EnemySelection")
+        else if (button.transform.parent.parent.name == "EnemySelection")
         {
             Config.EnemySkin = currentEnemySkin;
             SetEquipButtonInteractable(enemyEquipButton, false);
