@@ -23,6 +23,9 @@ public class Pole : MonoBehaviour
     private float rotationalVelocity;
     private float mass;
 
+    // Time Variable
+    public float gravTime;
+
     private AudioSource tapSound;
     private AudioSource hitPole;
     private AudioSource stickPole;
@@ -72,6 +75,7 @@ public class Pole : MonoBehaviour
         Rotation = 0;
         rotationalVelocity = 0;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+        gravTime = GameManager.GRAVITY;
 
         // Add an initial force to make the pole fall for testing purposes
         AddForce((Random.value < .5 ? 1 : -1) * STARTING_FORCE);
@@ -227,8 +231,9 @@ public class Pole : MonoBehaviour
     /// </summary>
     private void CalculateRotationalVelocity()
     {
-        float gravAcceleration = Mathf.Sign(transform.eulerAngles.z) * GameManager.GRAVITY * RESISTANCE * (Mathf.Sin(Mathf.Abs(transform.eulerAngles.z) * Mathf.Deg2Rad));
-
+        gravTime += Time.deltaTime/2;
+        float gravAcceleration = Mathf.Sign(transform.eulerAngles.z) * gravTime * RESISTANCE * (Mathf.Sin(Mathf.Abs(transform.eulerAngles.z) * Mathf.Deg2Rad));
+        
         float rotationalAcceleration = gravAcceleration + totalForce / mass;
 
         rotationalVelocity += rotationalAcceleration * Time.deltaTime;
