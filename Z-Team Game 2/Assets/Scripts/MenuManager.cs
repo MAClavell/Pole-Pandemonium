@@ -17,17 +17,15 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI highScoreText;
 
-    [SerializeField]
-    private Toggle controlToggle;
-    public Toggle ControlToggle { get; }
-
-    [SerializeField]
-    private Toggle invertToggle;
-    public Toggle InvertToggle { get; }
-
+    /// <summary>
+    /// The current set of active canvases
+    /// </summary>
+    public MenuCanvas[] CurrCanvases { get; private set; }
+    /// <summary>
+    /// The previous set of active canvases
+    /// </summary>
+    public MenuCanvas[] PrevCanvases { get; private set; }
     private IMenuUIBase[] menuCanvases;
-    private MenuCanvas[] currCanvases;
-    private MenuCanvas[] prevCanvases;
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +38,8 @@ public class MenuManager : MonoBehaviour
         menuCanvases[(int)MenuCanvas.End] = GameObject.Find("EndCanvas").GetComponent<IMenuUIBase>();
         menuCanvases[(int)MenuCanvas.Cosmetics] = GameObject.Find("CosmeticsCanvas").GetComponent<IMenuUIBase>();
 
-        currCanvases = null;
-        prevCanvases = null;
+        CurrCanvases = null;
+        PrevCanvases = null;
         SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Main});
     }
 
@@ -51,23 +49,21 @@ public class MenuManager : MonoBehaviour
     /// <param name="canvases">The canvases to trigger</param>
     public void SetActiveCanvases(MenuCanvas[] canvases)
     {
-        prevCanvases = currCanvases;
+        PrevCanvases = CurrCanvases;
+        CurrCanvases = canvases;
         for(int i = 0; i < menuCanvases.Length; i++)
         {
             if (canvases.Contains((MenuCanvas)i))
             {
-                bool previouslyActive = menuCanvases[i].GameObject.activeInHierarchy;
-                menuCanvases[i].GameObject.SetActive(true);
-                menuCanvases[i].Activate(previouslyActive);
+                if(!menuCanvases[i].Active)
+                    menuCanvases[i].Activate();
             }
             else
             {
-                bool previouslyActive = menuCanvases[i].GameObject.activeInHierarchy;
-                menuCanvases[i].GameObject.SetActive(false);
-                menuCanvases[i].Deactivate(previouslyActive);
+                if(menuCanvases[i].Active)
+                    menuCanvases[i].Deactivate();
             }
         }
-        currCanvases = canvases;
     }
 
     /// <summary>
@@ -110,7 +106,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void ShowPreviousCanvases()
     {
-        SetActiveCanvases(prevCanvases);
+        SetActiveCanvases(PrevCanvases);
     }
 
     /// <summary>
@@ -128,6 +124,6 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void ShowSettingsAndGame()
     {
-        SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game, MenuCanvas.Settings });
+        SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Settings, MenuCanvas.Game });
     }
 }

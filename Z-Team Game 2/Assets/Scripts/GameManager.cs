@@ -47,6 +47,8 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public SkinScriptableObject Skins { get => skins; }
 
+    public MenuManager MenuManager { get => menuManager; }
+
     public EnemyManager EnemyManager { get; private set; }
 
     [SerializeField] private SpriteRenderer background;
@@ -155,7 +157,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void Pause()
     {
-        menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Game, MenuCanvas.Pause });
+        menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Pause, MenuCanvas.Game });
         Physics.autoSimulation = false;
         CurrentState = GameState.Paused;
         Time.timeScale = 0.0f;

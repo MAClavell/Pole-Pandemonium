@@ -13,14 +13,19 @@ public interface IMenuUIBase
     GameObject GameObject { get; }
 
     /// <summary>
+    /// Get whether this UI is active or not
+    /// </summary>
+    bool Active { get; }
+
+    /// <summary>
     /// Activate the UI
     /// </summary>
     /// <param name="previouslyActive">Whether the UI is currently active</param>
-    void Activate(bool previouslyActive);
+    void Activate();
 
     /// <summary>
     /// Deactivate the UI
     /// </summary>
     /// <param name="previouslyActive">Whether the UI is currently active</param>
-    void Deactivate(bool previouslyActive);
+    void Deactivate();
 }

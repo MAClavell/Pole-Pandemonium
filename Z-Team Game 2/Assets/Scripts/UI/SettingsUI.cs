@@ -10,13 +10,21 @@ public class SettingsUI : MonoBehaviour, IMenuUIBase
     [SerializeField] Toggle muteMusicToggle;
     [SerializeField] Toggle muteSoundEffectsToggle;
 
+    private bool active;
+
+    void Awake()
+    {
+        active = true;
+    }
 
     /// <summary>
     /// Activate the UI
     /// </summary>
     /// <param name="previouslyActive">Whether the UI is currently active</param>
-    public void Activate(bool previouslyActive)
+    public void Activate()
     {
+        active = true;
+        gameObject.SetActive(true);
         controlToggle.isOn = Config.ControlScheme == ControlScheme.Screen ? true : false;
         invertToggle.isOn = Config.Invert;
         muteMusicToggle.isOn = Config.MuteMusic;
@@ -27,8 +35,10 @@ public class SettingsUI : MonoBehaviour, IMenuUIBase
     /// Deactivate the UI
     /// </summary>
     /// <param name="previouslyActive">Whether the UI is currently active</param>
-    public void Deactivate(bool previouslyActive)
+    public void Deactivate()
     {
+        active = false;
+        gameObject.SetActive(false);
 
     }
 
@@ -76,4 +86,6 @@ public class SettingsUI : MonoBehaviour, IMenuUIBase
     {
         Config.MuteSoundEffects = tog.isOn;
     }
+
+    public bool Active { get => active; }
 }

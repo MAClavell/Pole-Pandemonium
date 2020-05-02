@@ -8,35 +8,44 @@ using TMPro;
 public class CosmeticsUI : MonoBehaviour, IMenuUIBase
 {
     [SerializeField]
-    SVGImage backgroundObj;
+    private SVGImage backgroundObj;
     [SerializeField]
-    SVGImage foregroundObj;
+    private SVGImage foregroundObj;
     [SerializeField]
-    SVGImage poleObj;
+    private SVGImage poleObj;
     [SerializeField]
-    SVGImage[] bounceEnemyObjs;
+    private SVGImage[] bounceEnemyObjs;
     [SerializeField]
-    SVGImage[] stickEnemyObjs;
+    private SVGImage[] stickEnemyObjs;
 
     [SerializeField]
-    Button backgroundEquipButton;
+    private Button backgroundEquipButton;
 
     [SerializeField]
-    Button poleEquipButton;
+    private Button poleEquipButton;
 
     [SerializeField]
-    Button enemyEquipButton;
+    private Button enemyEquipButton;
 
-    SkinType currentBackgroundSkin;
-    SkinType currentPoleSkin;
-    SkinType currentEnemySkin;
+    private SkinType currentBackgroundSkin;
+    private SkinType currentPoleSkin;
+    private SkinType currentEnemySkin;
+    private bool active;
+
+    void Awake()
+    {
+        active = true;
+    }
 
     /// <summary>
     /// Activate the UI
     /// </summary>
     /// <param name="previouslyActive">Whether the UI is currently active</param>
-    public void Activate(bool previouslyActive)
+    public void Activate()
     {
+        active = true;
+        gameObject.SetActive(true);
+
         //Set defaults after config file is loaded
         SetBackgroundSkinPreview(Config.BackgroundSkin);
         SetPoleSkinPreview(Config.PoleSkin);
@@ -51,8 +60,10 @@ public class CosmeticsUI : MonoBehaviour, IMenuUIBase
     /// Deactivate the UI
     /// </summary>
     /// <param name="previouslyActive">Whether the UI is currently active</param>
-    public void Deactivate(bool previouslyActive)
+    public void Deactivate()
     {
+        active = false;
+        gameObject.SetActive(false);
 
     }
 
@@ -60,6 +71,8 @@ public class CosmeticsUI : MonoBehaviour, IMenuUIBase
     /// Get the gameobject attached to this UI
     /// </summary>
     public GameObject GameObject { get => gameObject; }
+
+    public bool Active { get => active; }
 
     /// <summary>
     /// [UI EVENT CALLBACK]
