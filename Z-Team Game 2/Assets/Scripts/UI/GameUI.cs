@@ -5,9 +5,11 @@ using UnityEngine;
 public class GameUI : MonoBehaviour, IMenuUIBase
 {
     private const float TWEEN_TIME = 0.3f;
+
     private RectTransform timerPanel;
     private RectTransform pausePanel;
     private GameObject blocker;
+
     private bool active;
 
     void Awake()
@@ -28,8 +30,8 @@ public class GameUI : MonoBehaviour, IMenuUIBase
         gameObject.SetActive(true);
         blocker.SetActive(true);
 
-        LeanTween.moveX(timerPanel, 0, TWEEN_TIME).setEaseInQuad().setIgnoreTimeScale(true);
-        LeanTween.moveX(pausePanel, 5, TWEEN_TIME).setEaseInQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(timerPanel, 0, TWEEN_TIME).setEaseOutQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(pausePanel, 5, TWEEN_TIME).setEaseOutQuad().setIgnoreTimeScale(true);
 
         LeanTween.value(gameObject, 0, 1, TWEEN_TIME + 0.05f).setIgnoreTimeScale(true).setOnComplete(() =>
         {
@@ -40,7 +42,6 @@ public class GameUI : MonoBehaviour, IMenuUIBase
     /// <summary>
     /// Deactivate the UI
     /// </summary>
-    /// <param name="previouslyActive">Whether the UI is currently active</param>
     public void Deactivate()
     {
         CancelTweens();

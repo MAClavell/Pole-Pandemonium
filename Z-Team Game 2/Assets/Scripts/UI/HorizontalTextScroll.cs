@@ -34,14 +34,14 @@ public class HorizontalTextScroll : MonoBehaviour
     {
         //Scroll the text objects and wrap them when offscreen
 
-        textPos.x += -scrollSpeed * Time.deltaTime;
+        textPos.x += -scrollSpeed * Time.unscaledDeltaTime;
         if (textPos.x + textWidth < -rectWidth / 2)
         {
             textPos.x = text2.localPosition.x + textWidth;
         }
         text.localPosition = textPos;
 
-        text2Pos.x += -scrollSpeed * Time.deltaTime;
+        text2Pos.x += -scrollSpeed * Time.unscaledDeltaTime;
         if (text2Pos.x + textWidth < -rectWidth / 2)
         {
             text2Pos.x = text.localPosition.x + textWidth;

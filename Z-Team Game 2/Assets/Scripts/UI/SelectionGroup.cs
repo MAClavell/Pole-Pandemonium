@@ -19,7 +19,7 @@ public class SelectionGroup : MonoBehaviour
     int currentIndex;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (elements.Length <= 0)
             return;

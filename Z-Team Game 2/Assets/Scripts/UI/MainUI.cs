@@ -9,18 +9,29 @@ public class MainUI : MonoBehaviour, IMenuUIBase
     SelectionGroup difficultySelection;
 
     private const float TWEEN_TIME = 0.3f;
+
     private RectTransform titlePanel;
     private RectTransform outlinePanel;
     private GameObject blocker;
-    private bool active;
 
+    private bool active;
 
     void Awake()
     {
-        titlePanel = transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
-        outlinePanel = transform.GetChild(1).GetChild(1).GetComponent<RectTransform>();
+        outlinePanel = transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
+        titlePanel = transform.GetChild(1).GetChild(1).GetComponent<RectTransform>();
         blocker = transform.GetChild(2).gameObject;
         active = true;
+    }
+
+    public void Start()
+    {
+        //Select the saved difficulty on load
+        if (difficultySelection.Selected.name != Config.Difficulty.ToString())
+        {
+            difficultySelection.defaultElement = (int)Config.Difficulty;
+            difficultySelection.Select(difficultySelection.defaultElement);
+        }
     }
 
     /// <summary>
@@ -31,13 +42,10 @@ public class MainUI : MonoBehaviour, IMenuUIBase
         CancelTweens();
         active = true;
         gameObject.SetActive(true);
-        difficultySelection.defaultElement = (int)Config.Difficulty;
-        difficultySelection.Select(difficultySelection.defaultElement);
-
         blocker.SetActive(true);
 
-        LeanTween.moveX(outlinePanel, 0, TWEEN_TIME).setEaseInQuad().setIgnoreTimeScale(true);
-        LeanTween.moveX(titlePanel, 0, TWEEN_TIME).setEaseInQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(outlinePanel, 0, TWEEN_TIME).setEaseOutQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(titlePanel, 0, TWEEN_TIME).setEaseOutQuad().setIgnoreTimeScale(true);
 
         LeanTween.value(gameObject, 0f, 1f, TWEEN_TIME + 0.05f).setIgnoreTimeScale(true).setOnComplete(() =>
         {
@@ -48,7 +56,6 @@ public class MainUI : MonoBehaviour, IMenuUIBase
     /// <summary>
     /// Deactivate the UI
     /// </summary>
-    /// <param name="previouslyActive">Whether the UI is currently active</param>
     public void Deactivate()
     {
         CancelTweens();
@@ -65,8 +72,8 @@ public class MainUI : MonoBehaviour, IMenuUIBase
         //Menu -> Settings/Cosmetics
         else
         {
-            LeanTween.moveX(outlinePanel, -outlinePanel.rect.width, TWEEN_TIME).setEaseInQuad().setIgnoreTimeScale(true);
-            LeanTween.moveX(titlePanel, -titlePanel.rect.width, TWEEN_TIME).setEaseInQuad().setIgnoreTimeScale(true);
+            LeanTween.moveX(outlinePanel, -outlinePanel.rect.width, TWEEN_TIME).setEaseInOutQuad().setIgnoreTimeScale(true);
+            LeanTween.moveX(titlePanel, -titlePanel.rect.width, TWEEN_TIME).setEaseInOutQuad().setIgnoreTimeScale(true);
         }
 
         LeanTween.value(gameObject, 0, 1, TWEEN_TIME + 0.05f).setIgnoreTimeScale(true).setOnComplete(() => 

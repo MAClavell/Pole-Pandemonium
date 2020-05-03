@@ -10,12 +10,19 @@ public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Cosmetics=5
 
 public class MenuManager : MonoBehaviour
 {
+    public static readonly Color DEFAULT_FILTER_IN_COLOR = new Color(0, 0, 0, 0.3f);
+    public static readonly Color DEFAULT_FILTER_OUT_COLOR = new Color(0, 0, 0, 0);
+
     [SerializeField]
     private TextMeshProUGUI timerText;
     [SerializeField]
     private TextMeshProUGUI endTimerText;
     [SerializeField]
     private TextMeshProUGUI highScoreText;
+    [SerializeField]
+    private RectTransform filter;
+    [SerializeField]
+    private RectTransform fadeIn;
 
     /// <summary>
     /// The current set of active canvases
@@ -41,6 +48,8 @@ public class MenuManager : MonoBehaviour
         CurrCanvases = null;
         PrevCanvases = null;
         SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Main});
+        fadeIn.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+        TweenColor(fadeIn, DEFAULT_FILTER_OUT_COLOR, 0.75f).setOnComplete(() => Destroy(fadeIn.gameObject));
     }
 
     /// <summary>
@@ -95,6 +104,32 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set the filter object to a certain color
+    /// </summary>
+    /// <param name="newColor">Color to set</param>
+    /// <param name="time">How long the transition should take</param>
+    public void SetFilterColor(Color newColor, float time)
+    {
+        TweenColor(filter, newColor, time);
+    }
+
+    /// <summary>
+    /// Tween the color of a rectransform image's color
+    /// </summary>
+    /// <param name="image">Rectransform to tween</param>
+    /// <param name="newColor">New final color</param>
+    /// <param name="time">How long the tween should take</param>
+    private LTDescr TweenColor(RectTransform image, Color newColor, float time)
+    {
+        LeanTween.cancel(image);
+        return LeanTween.color(image, newColor, time).setIgnoreTimeScale(true);
+    }
+
+    /// <summary>
+    /// [UI EVENT CALLBACK]
+    /// Hide the current canvases and show cosmetics canvas
+    /// </summary>
     public void ShowCosmetics()
     {
         SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Cosmetics });

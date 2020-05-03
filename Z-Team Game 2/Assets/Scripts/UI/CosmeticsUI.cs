@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class CosmeticsUI : MonoBehaviour, IMenuUIBase
 {
+    private const float TWEEN_TIME = 0.3f;
+
     [SerializeField]
     private SVGImage backgroundObj;
     [SerializeField]
@@ -30,21 +33,43 @@ public class CosmeticsUI : MonoBehaviour, IMenuUIBase
     private SkinType currentBackgroundSkin;
     private SkinType currentPoleSkin;
     private SkinType currentEnemySkin;
+
+    private RectTransform titlePanel;
+    private RectTransform outlinePanel;
+    private RectTransform backgroundPanel;
+    private RectTransform polePanel;
+    private RectTransform enemyPanel;
+    private RectTransform canvasRect;
+    private RectTransform selectionSafeArea;
+    private GameObject blocker;
     private bool active;
 
     void Awake()
     {
         active = true;
+        outlinePanel = transform.GetChild(2).GetChild(0).GetComponent<RectTransform>();
+        titlePanel = transform.GetChild(2).GetChild(1).GetComponent<RectTransform>();
+        backgroundPanel = transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
+        polePanel = transform.GetChild(1).GetChild(1).GetComponent<RectTransform>();
+        enemyPanel = transform.GetChild(1).GetChild(2).GetComponent<RectTransform>();
+        canvasRect = GetComponent<RectTransform>();
+        selectionSafeArea = transform.GetChild(1).GetComponent<RectTransform>();
+        blocker = transform.GetChild(3).gameObject;
     }
 
     /// <summary>
     /// Activate the UI
     /// </summary>
-    /// <param name="previouslyActive">Whether the UI is currently active</param>
     public void Activate()
     {
+        CancelTweens();
         active = true;
         gameObject.SetActive(true);
+        blocker.SetActive(true);
+        backgroundObj.gameObject.SetActive(true);
+        poleObj.gameObject.SetActive(true);
+        bounceEnemyObjs[0].gameObject.SetActive(true);
+        stickEnemyObjs[0].gameObject.SetActive(true);
 
         //Set defaults after config file is loaded
         SetBackgroundSkinPreview(Config.BackgroundSkin);
@@ -54,17 +79,64 @@ public class CosmeticsUI : MonoBehaviour, IMenuUIBase
         SetEquipButtonInteractable(backgroundEquipButton, false);
         SetEquipButtonInteractable(poleEquipButton, false);
         SetEquipButtonInteractable(enemyEquipButton, false);
+
+        LeanTween.moveX(outlinePanel, 0, TWEEN_TIME).setEaseInOutQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(titlePanel, 0, TWEEN_TIME).setEaseInOutQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(backgroundPanel, 50, TWEEN_TIME).setEaseOutQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(polePanel, 50, TWEEN_TIME).setEaseOutQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(enemyPanel, 50, TWEEN_TIME).setEaseOutQuad().setIgnoreTimeScale(true);
+
+        //Only tween out filter panel if we are coming from the main menu
+        if (GameManager.Instance.MenuManager.PrevCanvases.Contains(MenuCanvas.Main))
+            GameManager.Instance.MenuManager.SetFilterColor(MenuManager.DEFAULT_FILTER_IN_COLOR, TWEEN_TIME);
+
+        LeanTween.value(gameObject, 0f, 1f, TWEEN_TIME + 0.05f).setIgnoreTimeScale(true).setOnComplete(() =>
+        {
+            blocker.SetActive(false);
+        });
     }
 
     /// <summary>
     /// Deactivate the UI
     /// </summary>
-    /// <param name="previouslyActive">Whether the UI is currently active</param>
     public void Deactivate()
     {
+        CancelTweens();
         active = false;
-        gameObject.SetActive(false);
+        blocker.SetActive(true);
+        backgroundObj.gameObject.SetActive(false);
+        poleObj.gameObject.SetActive(false);
+        bounceEnemyObjs[0].gameObject.SetActive(false);
+        stickEnemyObjs[0].gameObject.SetActive(false);
 
+        LeanTween.moveX(outlinePanel, outlinePanel.rect.width, TWEEN_TIME).setEaseInOutQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(titlePanel, titlePanel.rect.width, TWEEN_TIME).setEaseInOutQuad().setIgnoreTimeScale(true);
+
+        float safeAreaDiff = canvasRect.rect.xMin - selectionSafeArea.rect.xMin;
+        LeanTween.moveX(backgroundPanel, -220 + safeAreaDiff, TWEEN_TIME).setEaseInQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(polePanel, -220 + safeAreaDiff, TWEEN_TIME).setEaseInQuad().setIgnoreTimeScale(true);
+        LeanTween.moveX(enemyPanel, -220 + safeAreaDiff, TWEEN_TIME).setEaseInQuad().setIgnoreTimeScale(true);
+
+        //Only tween out filter panel if we are going back to the main menu
+        if (GameManager.Instance.MenuManager.CurrCanvases.Contains(MenuCanvas.Main))
+            GameManager.Instance.MenuManager.SetFilterColor(MenuManager.DEFAULT_FILTER_OUT_COLOR, TWEEN_TIME);
+
+        LeanTween.value(gameObject, 0, 1, TWEEN_TIME + 0.05f).setIgnoreTimeScale(true).setOnComplete(() =>
+        {
+            blocker.SetActive(false);
+            gameObject.SetActive(false);
+        });
+
+    }
+    
+    private void CancelTweens()
+    {
+        LeanTween.cancel(enemyPanel);
+        LeanTween.cancel(polePanel);
+        LeanTween.cancel(backgroundPanel);
+        LeanTween.cancel(outlinePanel);
+        LeanTween.cancel(titlePanel);
+        LeanTween.cancel(gameObject);
     }
 
     /// <summary>
