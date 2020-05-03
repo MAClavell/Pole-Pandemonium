@@ -161,4 +161,9 @@ public class MenuManager : MonoBehaviour
     {
         SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Settings, MenuCanvas.Game });
     }
+
+    public void SetGravityScaleUI(float gravityScale)
+    {
+        ((GameUI)menuCanvases[(int)MenuCanvas.Game]).UpdateGravityText(gravityScale);
+    }
 }

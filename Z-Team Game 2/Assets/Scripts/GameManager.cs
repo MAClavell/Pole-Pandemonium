@@ -113,7 +113,6 @@ public class GameManager : Singleton<GameManager>
                 break;
             
             case GameState.GameOver:
-                pole.gravTime = GRAVITY;
                 break;
             
             default:

@@ -12,7 +12,8 @@ public class Pole : MonoBehaviour
 
 	private const float RESISTANCE = 1.0f;
     private const float STARTING_FORCE = 120.0f;
-
+    private const float GRAVITY_INCREMENT_TIME_INTERVAL = 30.0f;
+    private const float GRAVITY_INCREMENT_AMOUNT = 0.1f;
 
     // Circle click feedback related variables
     public Transform circleParent;
@@ -23,8 +24,9 @@ public class Pole : MonoBehaviour
     private float rotationalVelocity;
     private float mass;
 
-    // Time Variable
-    public float gravTime;
+    // Gravity scaling
+    private float gravTimer;
+    private float gravScale;
 
     private AudioSource tapSound;
     private AudioSource hitPole;
@@ -75,7 +77,9 @@ public class Pole : MonoBehaviour
         Rotation = 0;
         rotationalVelocity = 0;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
-        gravTime = GameManager.GRAVITY;
+        gravScale = 1;
+        gravTimer = 0;
+        GameManager.Instance.MenuManager.SetGravityScaleUI(gravScale);
 
         // Add an initial force to make the pole fall for testing purposes
         AddForce((Random.value < .5 ? 1 : -1) * STARTING_FORCE);
@@ -133,14 +137,6 @@ public class Pole : MonoBehaviour
                     Vector2 angleVec = transform.TransformPoint(top);
                     angle = Vector2.Angle(angleVec, position) * Mathf.Sign(position.x * angleVec.y - position.y * angleVec.x);
 
-                    if (hapticFeedback)
-                    {
-                        // Vibrate();
-                    }
-                    if (visualFeedback)
-                    {
-                        CreateTouchCircle(position);
-                    }
 #if UNITY_EDITOR
                     Debug.DrawLine(Vector3.zero, angleVec * 20, Color.red, 0.5f);
 #endif
@@ -151,6 +147,15 @@ public class Pole : MonoBehaviour
                     if (position.x > 0)
                         angle = 1;
                     else angle = -1;
+                }
+
+                if (hapticFeedback)
+                {
+                    // Vibrate();
+                }
+                if (visualFeedback)
+                {
+                    CreateTouchCircle(position);
                 }
 
                 //Touch was to the left of the pole
@@ -173,6 +178,15 @@ public class Pole : MonoBehaviour
         //Apply physics
         RotatePole();
         totalForce = 0.0f;
+
+        //Update gravity
+        gravTimer += Time.deltaTime;
+        if(gravTimer > GRAVITY_INCREMENT_TIME_INTERVAL)
+        {
+            gravTimer -= GRAVITY_INCREMENT_TIME_INTERVAL;
+            gravScale += GRAVITY_INCREMENT_AMOUNT;
+            GameManager.Instance.MenuManager.SetGravityScaleUI(gravScale);
+        }
 
         if (visualFeedback)
         {
@@ -231,8 +245,7 @@ public class Pole : MonoBehaviour
     /// </summary>
     private void CalculateRotationalVelocity()
     {
-        gravTime += Time.deltaTime/2;
-        float gravAcceleration = Mathf.Sign(transform.eulerAngles.z) * gravTime * RESISTANCE * (Mathf.Sin(Mathf.Abs(transform.eulerAngles.z) * Mathf.Deg2Rad));
+        float gravAcceleration = Mathf.Sign(transform.eulerAngles.z) * (GameManager.GRAVITY * gravScale) * RESISTANCE * (Mathf.Sin(Mathf.Abs(transform.eulerAngles.z) * Mathf.Deg2Rad));
         
         float rotationalAcceleration = gravAcceleration + totalForce / mass;
 
