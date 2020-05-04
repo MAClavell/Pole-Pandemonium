@@ -25,7 +25,7 @@ public class FitToScreen : MonoBehaviour
         float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
 
         transform.localScale = new Vector3(
-            worldScreenWidth / sr.sprite.bounds.size.x,
+            worldScreenWidth / sr.sprite.bounds.size.x * 1f,
             worldScreenHeight / sr.sprite.bounds.size.y, 1);
     }
 }
