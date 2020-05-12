@@ -72,11 +72,14 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Awake()
     {
+#if !UNITY_EDITOR && UNITY_ANDROID
+        var local = GooglePlayGamesController.Instance;
+#endif
+
         CurrentState = GameState.MainMenu;
         gameOverSound = GameObject.Find("gameOverSound").GetComponent<AudioSource>();
         EnemyManager = GetComponent<EnemyManager>();
         Config.Load();
-        Leaderboard.Init();
         movingSpritesParent = GameObject.Find("MovingSprites").transform;
     }
 

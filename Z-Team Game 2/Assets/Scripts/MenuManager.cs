@@ -100,7 +100,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            highScoreText.text = $"Highscore - <mspace=0.6em>{TimeSpan.FromSeconds(Leaderboard.GetCurrentHighScore()).ToString("mm'.'ss'.'ff")}</mspace>";
+            highScoreText.text = $"Highscore - <mspace=0.6em>{TimeSpan.FromMilliseconds(Leaderboard.GetCurrentHighScore()).ToString("mm'.'ss'.'ff")}</mspace>";
         }
     }
 

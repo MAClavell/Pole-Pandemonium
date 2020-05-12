@@ -1,0 +1,105 @@
+Assets/AssemblyInfo.cs
+Assets/Settings.StyleCop
+Assets/ExternalDependencyManager/Editor/README.md
+Assets/ExternalDependencyManager/Editor/GoogleRegistries.xml
+Assets/ExternalDependencyManager/Editor/Google.VersionHandler.dll.mdb
+Assets/ExternalDependencyManager/Editor/Google.VersionHandlerImpl_v1.2.153.dll.mdb
+Assets/ExternalDependencyManager/Editor/Google.IOSResolver_v1.2.153.dll
+Assets/ExternalDependencyManager/Editor/Google.PackageManagerResolver_v1.2.153.dll
+Assets/ExternalDependencyManager/Editor/Google.IOSResolver_v1.2.153.dll.mdb
+Assets/ExternalDependencyManager/Editor/Google.VersionHandler.dll
+Assets/ExternalDependencyManager/Editor/external-dependency-manager_version-1.2.153_manifest.txt
+Assets/ExternalDependencyManager/Editor/Google.JarResolver_v1.2.153.dll
+Assets/ExternalDependencyManager/Editor/CHANGELOG.md
+Assets/ExternalDependencyManager/Editor/Google.JarResolver_v1.2.153.dll.mdb
+Assets/ExternalDependencyManager/Editor/LICENSE
+Assets/ExternalDependencyManager/Editor/Google.PackageManagerResolver_v1.2.153.dll.mdb
+Assets/ExternalDependencyManager/Editor/Google.VersionHandlerImpl_v1.2.153.dll
+Assets/Third Party/GooglePlayGames/OurUtils/NearbyHelperObject.cs
+Assets/Third Party/GooglePlayGames/OurUtils/PlayGamesHelperObject.cs
+Assets/Third Party/GooglePlayGames/OurUtils/Misc.cs
+Assets/Third Party/GooglePlayGames/OurUtils/PlatformUtils.cs
+Assets/Third Party/GooglePlayGames/OurUtils/Logger.cs
+Assets/Third Party/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/maven-metadata.xml
+Assets/Third Party/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/maven-metadata.xml.sha1
+Assets/Third Party/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.09/gpgs-plugin-support-0.10.09.pom
+Assets/Third Party/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.09/gpgs-plugin-support-0.10.09.srcaar.md5
+Assets/Third Party/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.09/gpgs-plugin-support-0.10.09.srcaar
+Assets/Third Party/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.09/gpgs-plugin-support-0.10.09.pom.sha1
+Assets/Third Party/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.09/gpgs-plugin-support-0.10.09.srcaar.sha1
+Assets/Third Party/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.09/gpgs-plugin-support-0.10.09.pom.md5
+Assets/Third Party/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/maven-metadata.xml.md5
+Assets/Third Party/GooglePlayGames/Editor/template-AndroidManifest.txt
+Assets/Third Party/GooglePlayGames/Editor/GPGSUtil.cs
+Assets/Third Party/GooglePlayGames/Editor/GPGSStrings.cs
+Assets/Third Party/GooglePlayGames/Editor/GooglePlayGamesPluginDependencies.xml
+Assets/Third Party/GooglePlayGames/Editor/GPGSPostBuild.cs
+Assets/Third Party/GooglePlayGames/Editor/GPGSDocsUI.cs
+Assets/Third Party/GooglePlayGames/Editor/template-GameInfo.txt
+Assets/Third Party/GooglePlayGames/Editor/GPGSProjectSettings.cs
+Assets/Third Party/GooglePlayGames/Editor/GPGSUpgrader.cs
+Assets/Third Party/GooglePlayGames/Editor/NearbyConnectionUI.cs
+Assets/Third Party/GooglePlayGames/Editor/GPGSAndroidSetupUI.cs
+Assets/Third Party/GooglePlayGames/Editor/template-Constants.txt
+Assets/Third Party/GooglePlayGames/GameInfo.cs
+Assets/Third Party/GooglePlayGames/Platforms/PlayGamesClientFactory.cs
+Assets/Third Party/GooglePlayGames/Platforms/TokenClient.cs
+Assets/Third Party/GooglePlayGames/Platforms/NearbyConnectionClientFactory.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidTokenClient.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidNearbyConnectionClient.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidClient.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidJavaConverter.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidSnapshotMetadata.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidTurnBasedMultiplayerClient.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidSavedGameClient.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidVideoClient.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidHelperFragment.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidRealTimeMultiplayerClient.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidEventsClient.cs
+Assets/Third Party/GooglePlayGames/Platforms/Android/AndroidTaskUtils.cs
+Assets/Third Party/GooglePlayGames/ISocialPlatform/PlayGamesPlatform.cs
+Assets/Third Party/GooglePlayGames/ISocialPlatform/PlayGamesAchievement.cs
+Assets/Third Party/GooglePlayGames/ISocialPlatform/PlayGamesLeaderboard.cs
+Assets/Third Party/GooglePlayGames/ISocialPlatform/PlayGamesLocalUser.cs
+Assets/Third Party/GooglePlayGames/ISocialPlatform/PlayGamesUserProfile.cs
+Assets/Third Party/GooglePlayGames/ISocialPlatform/PlayGamesScore.cs
+Assets/Third Party/GooglePlayGames/BasicApi/ScorePageToken.cs
+Assets/Third Party/GooglePlayGames/BasicApi/LeaderboardScoreData.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Nearby/AdvertisingResult.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Nearby/ConnectionResponse.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Nearby/ConnectionRequest.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Nearby/EndpointDetails.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Nearby/NearbyConnectionConfiguration.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Nearby/INearbyConnectionClient.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Nearby/DummyNearbyConnectionClient.cs
+Assets/Third Party/GooglePlayGames/BasicApi/CommonStatusCodes.cs
+Assets/Third Party/GooglePlayGames/BasicApi/CommonTypes.cs
+Assets/Third Party/GooglePlayGames/BasicApi/PlayGamesClientConfiguration.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Multiplayer/RealTimeMultiplayerListener.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Multiplayer/MatchOutcome.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Multiplayer/Player.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Multiplayer/ITurnBasedMultiplayerClient.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Multiplayer/Participant.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Multiplayer/IRealTimeMultiplayerClient.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Multiplayer/Invitation.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Multiplayer/TurnBasedMatch.cs
+Assets/Third Party/GooglePlayGames/BasicApi/SavedGame/ISavedGameClient.cs
+Assets/Third Party/GooglePlayGames/BasicApi/SavedGame/SavedGameMetadataUpdate.cs
+Assets/Third Party/GooglePlayGames/BasicApi/SavedGame/ISavedGameMetadata.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Achievement.cs
+Assets/Third Party/GooglePlayGames/BasicApi/SignInStatus.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Video/VideoCaptureState.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Video/IVideoClient.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Video/CaptureOverlayStateListener.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Video/VideoCapabilities.cs
+Assets/Third Party/GooglePlayGames/BasicApi/SignInHelper.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Events/Event.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Events/IEvent.cs
+Assets/Third Party/GooglePlayGames/BasicApi/Events/IEventsClient.cs
+Assets/Third Party/GooglePlayGames/BasicApi/PlayerStats.cs
+Assets/Third Party/GooglePlayGames/BasicApi/DummyClient.cs
+Assets/Third Party/GooglePlayGames/BasicApi/SignInInteractivity.cs
+Assets/Third Party/GooglePlayGames/BasicApi/IPlayGamesClient.cs
+Assets/Third Party/GooglePlayGames/PluginVersion.cs
+Assets/Third Party/GooglePlayGames/Plugins/Android/GooglePlayGamesManifest.plugin/project.properties
+Assets/PlayServicesResolver/Editor/play-services-resolver_v1.2.137.0.txt

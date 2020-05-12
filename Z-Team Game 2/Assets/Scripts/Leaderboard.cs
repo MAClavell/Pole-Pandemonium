@@ -4,87 +4,38 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 public class Leaderboard
 {
-    private const string LEADERBOARD_PATH = "/Leaderboard.pole";
+    private static string EASY_LEADERBOARD_ID = "CgkIwq22wv0HEAIQAw";
+    private static string MEDIUM_LEADERBOARD_ID = "CgkIwq22wv0HEAIQAg";
+    private static string HARD_LEADERBOARD_ID = "CgkIwq22wv0HEAIQBA";
 
-    /// <summary>
-    /// Class for containing highscore data for each difficulty
-    /// </summary>
-    [System.Serializable]
-    private class HighScoreEntries
-    {
-        public LeaderboardEntry easy;
-        public LeaderboardEntry medium;
-        public LeaderboardEntry hard;
-    }
+    private static long easyHighScore = 0;
+    private static long mediumHighScore = 0;
+    private static long hardHighScore = 0;
 
-    /// <summary>
-    /// Class for containing leaderboard entry data
-    /// </summary>
-    [System.Serializable]
-    private class LeaderboardEntry
-    {
-        public double Time { get; private set; }
-        public LeaderboardEntry(double time)
-        {
-            Time = time;
-        }
-    }
-
-    private static HighScoreEntries highScores;
-   
     /// <summary>
     /// Init the class
     /// </summary>
     public static void Init()
     {
-        //If there is an error loading, delete the file and load defaults
-        try
+        //Load highscores
+        if (Social.localUser.authenticated)
         {
-            LoadScore();
-        }
-        catch when (File.Exists(Application.persistentDataPath + LEADERBOARD_PATH))
-        {
-            File.Delete(Application.persistentDataPath + LEADERBOARD_PATH);
-            LoadScore();
-        }
-    }
+            PlayGamesPlatform.Instance.LoadScores("", LeaderboardStart.PlayerCentered, 
+                1, LeaderboardCollection.Social, 
+                LeaderboardTimeSpan.AllTime, (data) => { easyHighScore = data.PlayerScore.value; });
 
-    /// <summary>
-    /// Save the current game time as the new highscore
-    /// </summary>
-    private static void SaveScore()
-    {
-        BinaryFormatter bf = new BinaryFormatter();
-        using (StreamWriter sw = new StreamWriter(Application.persistentDataPath + LEADERBOARD_PATH, false))
-        {
-            bf.Serialize(sw.BaseStream, highScores);
-        }
-    }
+            PlayGamesPlatform.Instance.LoadScores("", LeaderboardStart.PlayerCentered,
+                1, LeaderboardCollection.Social,
+                LeaderboardTimeSpan.AllTime, (data) => { mediumHighScore = data.PlayerScore.value; });
 
-    /// <summary>
-    /// Load the player's highest score
-    /// </summary>
-    private static void LoadScore()
-    {
-        //New highscore
-        if (!File.Exists(Application.persistentDataPath + LEADERBOARD_PATH) ||
-            string.IsNullOrWhiteSpace(Application.persistentDataPath + LEADERBOARD_PATH))
-        {
-            highScores = new HighScoreEntries();
-            highScores.easy = new LeaderboardEntry(0);
-            highScores.medium = new LeaderboardEntry(0);
-            highScores.hard = new LeaderboardEntry(0);
-            return;
-        }
-
-        //Load old highscore
-        BinaryFormatter bf = new BinaryFormatter();
-        using (StreamReader sw = new StreamReader(Application.persistentDataPath + LEADERBOARD_PATH))
-        {
-            highScores = (HighScoreEntries)bf.Deserialize(sw.BaseStream);
+            PlayGamesPlatform.Instance.LoadScores("", LeaderboardStart.PlayerCentered,
+                1, LeaderboardCollection.Social,
+                LeaderboardTimeSpan.AllTime, (data) => { hardHighScore = data.PlayerScore.value; });
         }
     }
 
@@ -93,39 +44,45 @@ public class Leaderboard
     /// </summary>
     public static void UpdateHighScore()
     {
+        long time = (long)(GameManager.Instance.GameTime * 1000);
         switch (Config.Difficulty)
         {
             case Difficulty.Easy:
-                highScores.easy = new LeaderboardEntry(GameManager.Instance.GameTime);
+                easyHighScore = time;
+                if(Social.localUser.authenticated)
+                    Social.ReportScore(time, EASY_LEADERBOARD_ID, (success) => { });
                 break;
 
             case Difficulty.Medium:
-                highScores.medium = new LeaderboardEntry(GameManager.Instance.GameTime);
+                mediumHighScore = time;
+                if(Social.localUser.authenticated)
+                    Social.ReportScore(time, MEDIUM_LEADERBOARD_ID, (success) => { });
                 break;
 
             case Difficulty.Hard:
-                highScores.hard = new LeaderboardEntry(GameManager.Instance.GameTime);
+                hardHighScore = time;
+                if(Social.localUser.authenticated)
+                    Social.ReportScore(time, HARD_LEADERBOARD_ID, (success) => { });
                 break;
         }
-        SaveScore();
     }
 
     /// <summary>
     /// Get the current highscore
     /// </summary>
     /// <returns></returns>
-    public static double GetCurrentHighScore()
+    public static long GetCurrentHighScore()
     {
         switch (Config.Difficulty)
         {
             case Difficulty.Easy:
-                return highScores.easy.Time;
+                return easyHighScore;
 
             case Difficulty.Medium:
-                return highScores.medium.Time;
+                return mediumHighScore;
 
             case Difficulty.Hard:
-                return highScores.hard.Time;
+                return hardHighScore;
         }
         return 0;
     }
@@ -135,16 +92,17 @@ public class Leaderboard
     /// </summary>
     public static bool IsNewHighScore()
     {
+        long time = (long)(GameManager.Instance.GameTime * 1000);
         switch (Config.Difficulty)
         {
             case Difficulty.Easy:
-                return highScores.easy.Time < GameManager.Instance.GameTime;
+                return easyHighScore < time;
 
             case Difficulty.Medium:
-                return highScores.medium.Time < GameManager.Instance.GameTime;
+                return mediumHighScore < time;
 
             case Difficulty.Hard:
-                return highScores.hard.Time < GameManager.Instance.GameTime;
+                return hardHighScore < time;
         }
         return false;
     }
