@@ -4,14 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+
+#if !UNITY_EDITOR && UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+#endif
 
 public class Leaderboard
 {
+#if !UNITY_EDITOR && UNITY_ANDROID
     private static string EASY_LEADERBOARD_ID = "CgkIwq22wv0HEAIQAw";
     private static string MEDIUM_LEADERBOARD_ID = "CgkIwq22wv0HEAIQAg";
     private static string HARD_LEADERBOARD_ID = "CgkIwq22wv0HEAIQBA";
+#endif
 
     private static long easyHighScore = 0;
     private static long mediumHighScore = 0;
@@ -22,6 +27,7 @@ public class Leaderboard
     /// </summary>
     public static void Init()
     {
+#if !UNITY_EDITOR && UNITY_ANDROID
         //Load highscores
         if (Social.localUser.authenticated)
         {
@@ -37,6 +43,7 @@ public class Leaderboard
                 1, LeaderboardCollection.Social,
                 LeaderboardTimeSpan.AllTime, (data) => { hardHighScore = data.PlayerScore.value; });
         }
+#endif
     }
 
     /// <summary>
@@ -49,20 +56,26 @@ public class Leaderboard
         {
             case Difficulty.Easy:
                 easyHighScore = time;
+#if !UNITY_EDITOR && UNITY_ANDROID
                 if(Social.localUser.authenticated)
                     Social.ReportScore(time, EASY_LEADERBOARD_ID, (success) => { });
+#endif
                 break;
 
             case Difficulty.Medium:
                 mediumHighScore = time;
+#if !UNITY_EDITOR && UNITY_ANDROID
                 if(Social.localUser.authenticated)
                     Social.ReportScore(time, MEDIUM_LEADERBOARD_ID, (success) => { });
+#endif
                 break;
 
             case Difficulty.Hard:
                 hardHighScore = time;
+#if !UNITY_EDITOR && UNITY_ANDROID
                 if(Social.localUser.authenticated)
                     Social.ReportScore(time, HARD_LEADERBOARD_ID, (success) => { });
+#endif
                 break;
         }
     }

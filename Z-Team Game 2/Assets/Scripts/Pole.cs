@@ -5,7 +5,14 @@ using UnityEngine.EventSystems;
 
 public class Pole : MonoBehaviour
 {
-    public float Rotation { get; private set; }
+    /// <summary>
+    /// The actual rotation the pole's transform is
+    /// </summary>
+    public float ActualRotation { get; private set; }
+    /// <summary>
+    /// The target rotation we want the pole to be
+    /// </summary>
+    public float TargetRotation { get; private set; }
     public bool hapticFeedback { get; private set; } = true;
     public bool visualFeedback { get; private set; } = true;
 	public SpriteRenderer SpriteRenderer { get; private set; }
@@ -74,7 +81,8 @@ public class Pole : MonoBehaviour
         //Reset vars
         mass = 1.0f;
         totalForce = 0;
-        Rotation = 0;
+        TargetRotation = 0;
+        ActualRotation = 0;
         rotationalVelocity = 0;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         gravScale = 1;
@@ -85,7 +93,7 @@ public class Pole : MonoBehaviour
         AddForce((Random.value < .5 ? 1 : -1) * STARTING_FORCE);
     }
 
-    public void OnUpdate()
+    public void Update()
     {
         if (!GameManager.Instance.IsPlaying)
             return;
@@ -125,11 +133,11 @@ public class Pole : MonoBehaviour
                 {
                     //Calculate the angle between the click position and the top of the pole
                     Vector2 top = new Vector2(0, 1);
-                    if(Rotation > 65)
+                    if(ActualRotation > 65)
                     {
                         top = Quaternion.AngleAxis(-15, Vector3.forward) * top;
                     }
-                    else if(Rotation < -65)
+                    else if(ActualRotation < -65)
                     {
                         top = Quaternion.AngleAxis(15, Vector3.forward) * top;
                     }
@@ -175,10 +183,6 @@ public class Pole : MonoBehaviour
             }
         }
 
-        //Apply physics
-        RotatePole();
-        totalForce = 0.0f;
-
         //Update gravity
         gravTimer += Time.deltaTime;
         if(gravTimer > GRAVITY_INCREMENT_TIME_INTERVAL)
@@ -192,6 +196,17 @@ public class Pole : MonoBehaviour
         {
             UpdateCircles();
         }
+
+        //Set transform rotation
+        ActualRotation = Mathf.LerpAngle(ActualRotation, TargetRotation, 0.8f);
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, ActualRotation);
+    }
+
+    private void FixedUpdate()
+    {        
+        //Apply physics
+        RotatePole();
+        totalForce = 0.0f;
     }
 
     private bool Vibrate()
@@ -235,9 +250,8 @@ public class Pole : MonoBehaviour
     {
         CalculateRotationalVelocity();
 
-        Rotation += rotationalVelocity * Time.deltaTime;
-        Rotation = Mathf.Clamp(Rotation, -90.0f, 90.0f);
-        transform.rotation = Quaternion.Euler(0.0f, 0.0f, Rotation);
+        TargetRotation += rotationalVelocity * Time.deltaTime;
+        TargetRotation = Mathf.Clamp(TargetRotation, -90.0f, 90.0f);
     }
 
     /// <summary>

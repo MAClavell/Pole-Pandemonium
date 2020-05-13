@@ -6,6 +6,10 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+#if !UNITY_EDITOR && UNITY_ANDROID
+    using GooglePlayGames;
+#endif
+
 public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Cosmetics=5 }
 
 public class MenuManager : MonoBehaviour
@@ -162,8 +166,22 @@ public class MenuManager : MonoBehaviour
         SetActiveCanvases(new MenuCanvas[] { MenuCanvas.Settings, MenuCanvas.Game });
     }
 
+    /// <summary>
+    /// Set the gravity scale UI to a number
+    /// </summary>
+    /// <param name="gravityScale">New scale</param>
     public void SetGravityScaleUI(float gravityScale)
     {
         ((GameUI)menuCanvases[(int)MenuCanvas.Game]).UpdateGravityText(gravityScale);
+    }
+
+    /// <summary>
+    /// Show the leaderboard UI
+    /// </summary>
+    public void ShowLeaderboard()
+    {
+#if !UNITY_EDITOR && UNITY_ANDROID
+        PlayGamesPlatform.ShowLeaderboardUI();
+#endif
     }
 }

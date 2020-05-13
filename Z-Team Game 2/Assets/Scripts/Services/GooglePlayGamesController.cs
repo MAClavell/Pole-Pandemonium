@@ -1,4 +1,6 @@
-﻿using GooglePlayGames;
+﻿#if !UNITY_EDITOR && UNITY_ANDROID
+
+using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,3 +43,5 @@ public class GooglePlayGamesController
 		});
 	}
 }
+
+#endif

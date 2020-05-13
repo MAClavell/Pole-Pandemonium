@@ -102,13 +102,12 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             case GameState.Playing:
-                pole.OnUpdate();
 
                 //Update UI timer
                 GameTime += Time.deltaTime;
                 menuManager.SetTimerText(GameTime);
 
-                if (Mathf.Abs(pole.Rotation) > LOSING_ROTATION)
+                if (Mathf.Abs(pole.ActualRotation) > LOSING_ROTATION)
                     EndGame();
                 break;
             
