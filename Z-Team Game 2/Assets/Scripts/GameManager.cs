@@ -72,7 +72,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Awake()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID
         var local = GooglePlayGamesController.Instance;
 #endif
 
@@ -147,6 +147,7 @@ public class GameManager : Singleton<GameManager>
     private void EndGame()
     {
         menuManager.SetEndTimerText(GameTime);
+        Leaderboard.UpdateHighScore();
         menuManager.SetActiveCanvases(new MenuCanvas[] { MenuCanvas.End });
         CurrentState = GameState.GameOver;
         gameOverSound.Play();

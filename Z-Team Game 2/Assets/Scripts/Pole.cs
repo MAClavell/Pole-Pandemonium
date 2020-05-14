@@ -41,8 +41,10 @@ public class Pole : MonoBehaviour
     private AudioSource swipedOff;
 
 #if !UNITY_EDITOR && UNITY_ANDROID
+    /*
     private int hapticFeedbackKey;
     private AndroidJavaObject currentActivity;
+    */
 #endif
 
     void Awake()
@@ -56,6 +58,7 @@ public class Pole : MonoBehaviour
         swipedOff = GameObject.Find("enemySwipedOff").GetComponent<AudioSource>();
 
 #if !UNITY_EDITOR && UNITY_ANDROID
+        /*
         AndroidJavaClass hfc = new AndroidJavaClass("android.view.HapticFeedbackConstants");
 
         hapticFeedbackKey = hfc.GetStatic<int>("VIRTUAL_KEY");
@@ -65,6 +68,7 @@ public class Pole : MonoBehaviour
         currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
         currentActivity.Call("setHapticFeedbackEnabled", true);
+        */
 #endif
     }
 
@@ -98,7 +102,6 @@ public class Pole : MonoBehaviour
         if (!GameManager.Instance.IsPlaying)
             return;
 
-        Touch[] touches = null;
         //Detect tap input
         //Sorry for the odd preprocessors, blame unity for not allowing touch simulation in the editor
 #if UNITY_EDITOR
@@ -107,7 +110,7 @@ public class Pole : MonoBehaviour
             {
                 Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 #else
-        touches = Input.touches;
+        Touch[] touches = Input.touches;
         if (Input.touchCount > 0)
         {
             Touch? touch = null;
@@ -203,7 +206,10 @@ public class Pole : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {        
+    {
+        if (!GameManager.Instance.IsPlaying)
+            return;
+
         //Apply physics
         RotatePole();
         totalForce = 0.0f;
@@ -212,9 +218,12 @@ public class Pole : MonoBehaviour
     private bool Vibrate()
     {
 #if !UNITY_EDITOR && UNITY_ANDROID
+        /*
         bool result = currentActivity.Call<bool>("performHapticFeedback", hapticFeedbackKey);
 
         return result;
+        */
+        return false;
 #else
         return false;
 #endif

@@ -1,9 +1,9 @@
 lastUpgrade=01009
 proj.pluginVersion=0.10.09
-proj.AppId=274211903170
+proj.AppId=350773201623
 and.BundleId=com.ZedTeam.PolePandemonium
 proj.classDir=Assets
 proj.ConstantsClassName=GPGSIds
-and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e274211903170%3c%2fstring%3e%0d%0a++%3c%21--+package_name+--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.ZedTeam.PolePandemonium%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+Easy+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_easy%22+translatable%3d%22false%22%3eCgkIwq22wv0HEAIQAw%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+Medium+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_medium%22+translatable%3d%22false%22%3eCgkIwq22wv0HEAIQAg%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+Hard+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_hard%22+translatable%3d%22false%22%3eCgkIwq22wv0HEAIQBA%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e350773201623%3c%2fstring%3e%0d%0a++%3c%21--+package_name+--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.ZedTeam.PolePandemonium%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+Easy+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_easy%22+translatable%3d%22false%22%3eCgkI15XZ3ZoKEAIQAQ%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+Medium+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_medium%22+translatable%3d%22false%22%3eCgkI15XZ3ZoKEAIQAg%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+Hard+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_hard%22+translatable%3d%22false%22%3eCgkI15XZ3ZoKEAIQAw%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
 and.ClientId=
 android.SetupDone=true

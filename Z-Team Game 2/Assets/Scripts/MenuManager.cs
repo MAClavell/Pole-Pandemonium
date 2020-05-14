@@ -6,10 +6,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-#if !UNITY_EDITOR && UNITY_ANDROID
-    using GooglePlayGames;
-#endif
-
 public enum MenuCanvas { Main=0, Settings=1, Game=2, Pause=3, End=4, Cosmetics=5 }
 
 public class MenuManager : MonoBehaviour
@@ -95,12 +91,18 @@ public class MenuManager : MonoBehaviour
     public void SetEndTimerText(double time)
     {
         endTimerText.text = $"<mspace=0.6em>{TimeSpan.FromSeconds(time).ToString("mm'.'ss'.'ff")}</mspace>";
+    }
 
+    /// <summary>
+    /// Set the highscore text
+    /// </summary>
+    /// <param name="isNewHighScore">Whether there is a new highscore or not</param>
+    public void SetHighScoreText(bool isNewHighScore)
+    {
         //Set highscore text
-        if(Leaderboard.IsNewHighScore())
+        if (isNewHighScore)
         {
             highScoreText.text = "New highscore!";
-            Leaderboard.UpdateHighScore();
         }
         else
         {
@@ -180,8 +182,8 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void ShowLeaderboard()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
-        PlayGamesPlatform.ShowLeaderboardUI();
+#if UNITY_ANDROID
+        GooglePlayGamesController.Instance.ShowLeaderboardUI();
 #endif
     }
 }
