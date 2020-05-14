@@ -6,13 +6,9 @@ using UnityEngine.EventSystems;
 public class Pole : MonoBehaviour
 {
     /// <summary>
-    /// The actual rotation the pole's transform is
+    /// The actual (interpolated) rotation of the pole
     /// </summary>
     public float ActualRotation { get; private set; }
-    /// <summary>
-    /// The target rotation we want the pole to be
-    /// </summary>
-    public float TargetRotation { get; private set; }
     public bool hapticFeedback { get; private set; } = true;
     public bool visualFeedback { get; private set; } = true;
 	public SpriteRenderer SpriteRenderer { get; private set; }
@@ -30,6 +26,8 @@ public class Pole : MonoBehaviour
     private float totalForce;
     private float rotationalVelocity;
     private float mass;
+    private float prevRotation;
+    private float targetRotation;
 
     // Gravity scaling
     private float gravTimer;
@@ -85,8 +83,9 @@ public class Pole : MonoBehaviour
         //Reset vars
         mass = 1.0f;
         totalForce = 0;
-        TargetRotation = 0;
+        targetRotation = 0;
         ActualRotation = 0;
+        prevRotation = 0;
         rotationalVelocity = 0;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         gravScale = 1;
@@ -200,8 +199,9 @@ public class Pole : MonoBehaviour
             UpdateCircles();
         }
 
-        //Set transform rotation
-        ActualRotation = Mathf.LerpAngle(ActualRotation, TargetRotation, 0.8f);
+        //Interpolate rotations between frames
+        float alpha = (Time.time - Time.fixedTime) / Time.fixedDeltaTime;
+        ActualRotation = Mathf.LerpAngle(prevRotation, targetRotation, alpha);
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, ActualRotation);
     }
 
@@ -259,8 +259,9 @@ public class Pole : MonoBehaviour
     {
         CalculateRotationalVelocity();
 
-        TargetRotation += rotationalVelocity * Time.deltaTime;
-        TargetRotation = Mathf.Clamp(TargetRotation, -90.0f, 90.0f);
+        prevRotation = targetRotation;
+        targetRotation += rotationalVelocity * Time.fixedDeltaTime;
+        targetRotation = Mathf.Clamp(targetRotation, -90.0f, 90.0f);
     }
 
     /// <summary>
@@ -272,7 +273,7 @@ public class Pole : MonoBehaviour
         
         float rotationalAcceleration = gravAcceleration + totalForce / mass;
 
-        rotationalVelocity += rotationalAcceleration * Time.deltaTime;
+        rotationalVelocity += rotationalAcceleration * Time.fixedDeltaTime;
     }
 
     /// <summary>
