@@ -6,32 +6,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GooglePlayGamesController
+public class GamesServicesController
 {
-	//Singleton
-	private static GooglePlayGamesController instance = null;
 	/// <summary>
-	/// Get the instance of our Google Play Games API
+	/// If the user has authenticated with the respective game service
 	/// </summary>
-	public static GooglePlayGamesController Instance
+	public static bool Authenticated 
 	{
-		get
+		get =>
+#if UNITY_ANDROID
+			PlayGamesPlatform.Instance.IsAuthenticated();
+#else
+		false;
+#endif
+	}
+	
+	private static bool initiated = false;
+	/// <summary>
+	/// Initialize the platform's game service
+	/// </summary>
+	public static void Init()
+	{
+		if(!initiated)
 		{
-			if (instance == null)
-				instance = new GooglePlayGamesController();
-			return instance;
+			initiated = true;
+			AuthenticateUser();
 		}
 	}
 
-	public bool Authenticated { get => PlayGamesPlatform.Instance.IsAuthenticated(); }
-
-	private GooglePlayGamesController()
+	/// <summary>
+	/// Authenticate the user with the platform's game service
+	/// </summary>
+	private static void AuthenticateUser()
 	{
-		AuthenticateUser();
-	}
-
-	private void AuthenticateUser()
-	{
+#if UNITY_ANDROID
 		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
 		PlayGamesPlatform.InitializeInstance(config);
 		PlayGamesPlatform.Activate();
@@ -40,13 +48,18 @@ public class GooglePlayGamesController
 			//Successful signin
 			if (result == SignInStatus.Success)
 			{
-				Leaderboard.Init();
+				Leaderboard.InitLeaderboard();
 			}
 		});
+#endif
 	}
 
-	public void ShowLeaderboardUI()
+	/// <summary>
+	/// Show the platform's leaderboard UI
+	/// </summary>
+	public static void ShowLeaderboardUI()
 	{
+#if UNITY_ANDROID
 		//Try to sign in if we aren't
 		if (!PlayGamesPlatform.Instance.IsAuthenticated())
 		{
@@ -61,6 +74,7 @@ public class GooglePlayGamesController
 		{
 			PlayGamesPlatform.Instance.ShowLeaderboardUI();
 		}
+#endif
 	}
 }
 

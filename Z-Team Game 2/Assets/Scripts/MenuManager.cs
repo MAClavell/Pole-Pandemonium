@@ -183,7 +183,7 @@ public class MenuManager : MonoBehaviour
     public void ShowLeaderboard()
     {
 #if UNITY_ANDROID
-        GooglePlayGamesController.Instance.ShowLeaderboardUI();
+        GamesServicesController.ShowLeaderboardUI();
 #endif
     }
 }

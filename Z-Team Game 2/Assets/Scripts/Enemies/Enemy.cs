@@ -6,8 +6,8 @@ public abstract class Enemy : MonoBehaviour
 {
     private const int X_VELOCITY_MIN = 750;
     private const int X_VELOCITY_MAX = 800;
-    private const int Y_VELOCITY_MIN = 7;
-    private const int Y_VELOCITY_MAX = 13;
+    private const int Y_VELOCITY_MIN = 6;
+    private const int Y_VELOCITY_MAX = 12;
 
     public int Side { get; set; }
     protected Vector2 velocity;
