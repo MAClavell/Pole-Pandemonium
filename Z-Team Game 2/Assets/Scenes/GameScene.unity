@@ -12520,7 +12520,6 @@ MonoBehaviour:
   highScoreText: {fileID: 73452980}
   filter: {fileID: 1176606899}
   fadeIn: {fileID: 165754758}
-  testText: {fileID: 0}
 --- !u!1 &1519261167
 GameObject:
   m_ObjectHideFlags: 0
