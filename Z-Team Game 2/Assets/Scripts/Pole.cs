@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Pole : MonoBehaviour
 {
     public float Rotation { get; private set; }
-    public bool hapticFeedback { get; private set; } = true;
     public bool visualFeedback { get; private set; } = true;
 	public SpriteRenderer SpriteRenderer { get; private set; }
 
@@ -33,11 +35,6 @@ public class Pole : MonoBehaviour
     private AudioSource stickPole;
     private AudioSource swipedOff;
 
-#if !UNITY_EDITOR && UNITY_ANDROID
-    private int hapticFeedbackKey;
-    private AndroidJavaObject currentActivity;
-#endif
-
     void Awake()
     {
         SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -47,18 +44,6 @@ public class Pole : MonoBehaviour
         hitPole = GameObject.Find("enemyHitPole").GetComponent<AudioSource>();
         stickPole = GameObject.Find("enemyStickPole").GetComponent<AudioSource>();
         swipedOff = GameObject.Find("enemySwipedOff").GetComponent<AudioSource>();
-
-#if !UNITY_EDITOR && UNITY_ANDROID
-        AndroidJavaClass hfc = new AndroidJavaClass("android.view.HapticFeedbackConstants");
-
-        hapticFeedbackKey = hfc.GetStatic<int>("VIRTUAL_KEY");
-
-        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-
-        currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-
-        currentActivity.Call("setHapticFeedbackEnabled", true);
-#endif
     }
 
     private void Start()
@@ -82,7 +67,7 @@ public class Pole : MonoBehaviour
         GameManager.Instance.MenuManager.SetGravityScaleUI(gravScale);
 
         // Add an initial force to make the pole fall for testing purposes
-        AddForce((Random.value < .5 ? 1 : -1) * STARTING_FORCE);
+        AddForce((UnityEngine.Random.value < .5 ? 1 : -1) * STARTING_FORCE);
     }
 
     public void OnUpdate()
@@ -149,15 +134,6 @@ public class Pole : MonoBehaviour
                     else angle = -1;
                 }
 
-                if (hapticFeedback)
-                {
-                    // Vibrate();
-                }
-                if (visualFeedback)
-                {
-                    CreateTouchCircle(position);
-                }
-
                 //Touch was to the left of the pole
                 if (angle > 0)
                 {
@@ -171,7 +147,13 @@ public class Pole : MonoBehaviour
                     //Debug.Log("Right touch");
                     AddForce(-1200 * invertScalar);
                 }
+
                 tapSound.Play();
+
+                if (visualFeedback)
+                {
+                    CreateTouchCircle(position);
+                }
             }
         }
 
@@ -192,17 +174,6 @@ public class Pole : MonoBehaviour
         {
             UpdateCircles();
         }
-    }
-
-    private bool Vibrate()
-    {
-#if !UNITY_EDITOR && UNITY_ANDROID
-        bool result = currentActivity.Call<bool>("performHapticFeedback", hapticFeedbackKey);
-
-        return result;
-#else
-        return false;
-#endif
     }
 
     private void CreateTouchCircle(Vector2 position)

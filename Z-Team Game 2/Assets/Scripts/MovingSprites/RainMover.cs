@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RainMover : MonoBehaviour
 {
-    const float MIN_DELAY = 0.02f;
-    const float MAX_DELAY = 0.05f;
+    const float MIN_DELAY = 0.05f;
+    const float MAX_DELAY = 0.012f;
 
     const float MIN_SPEED = 6.5f;
     const float MAX_SPEED = 8.5f;
@@ -69,19 +69,23 @@ public class RainMover : MonoBehaviour
                 spawnTimer = 0;
                 spawnDelay = Random.Range(MIN_DELAY, MAX_DELAY);
 
-                currentSprite = (currentSprite + 1) % sprites.Count;
+                currentSprite = (currentSprite + 2) % sprites.Count;
 
-                if (sprites[currentSprite].active)
-                {
-                    return;
-                }
-                else
+                if (!sprites[currentSprite].active)
                 {
                     float speed = Random.Range(MIN_SPEED, MAX_SPEED);
                     float startX = Random.Range(minStartX, maxStartX);
                     Vector2 startPos = new Vector2(startX, startY);
                     Vector2 endPos = new Vector2(startX, targetY);
                     sprites[currentSprite].SpawnTarget(speed, startPos, endPos);
+                }
+                if (!sprites[currentSprite + 1].active)
+                {
+                    float speed = Random.Range(MIN_SPEED, MAX_SPEED);
+                    float startX = Random.Range(minStartX, maxStartX);
+                    Vector2 startPos = new Vector2(startX, startY);
+                    Vector2 endPos = new Vector2(startX, targetY);
+                    sprites[currentSprite + 1].SpawnTarget(speed, startPos, endPos);
                 }
             }
         }
